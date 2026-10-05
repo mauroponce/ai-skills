@@ -24,6 +24,7 @@ This project therefore uses a small number of high-level skills:
 UX
 ux-discovery
 ux-visual-direction
+ux-user-flow
 ux-wireframe
 ux-prototype-html
 ux-design-system
@@ -56,6 +57,9 @@ ux-discovery
 
 ux-visual-direction
 → What should this product visually feel like?
+
+ux-user-flow
+→ How does a user complete one meaningful task?
 
 ux-wireframe
 → How should the experience be structured?
@@ -495,6 +499,7 @@ This is the foundation of the UX and DEV workflows in this repository.
 |---|---|---|
 | `ux-discovery` | What problem are we solving? | Initiative `SPEC.md`, product context |
 | `ux-visual-direction` | What should the product feel and look like? | `VISUAL_DIRECTION.md`, saved references |
+| `ux-user-flow` | How does a user complete one meaningful task? | FigJam user flow + updated `SPEC.md` |
 | `ux-wireframe` | How should the experience be structured? | Low-fidelity Figma wireframes |
 | `ux-prototype-html` | How should this interaction behave in a browser? | `prototype.html` |
 | `ux-design-system` | What reusable visual rules and components do we need? | Figma library + `DESIGN_SYSTEM.md` |
@@ -609,21 +614,22 @@ The skill inspects relevant repository and permitted production evidence, detect
 
 ## Choosing a UX skill
 
-Choose by the task you have in mind, not by a mandatory phase checklist. Visual direction is transversal and can be revisited whenever references or preferences change. Wireframes and HTML prototypes are optional. A mature product may go directly from discovery to final design and validation. New products often need more exploration. Use the minimum fidelity and artifacts that resolve the real design question.
+Choose by the task you have in mind, not by a mandatory phase checklist. Visual direction is transversal and can be revisited whenever references or preferences change. User flows, wireframes, and HTML prototypes are optional. Use `ux-user-flow` when one task's entry point, decisions, or outcomes need alignment before screens are explored. A mature product may go directly from discovery to final design and validation. New products often need more exploration. Use the minimum fidelity and artifacts that resolve the real design question.
 
 ```text
-ux-discovery ───────────────→ ux-wireframe ──→ ux-prototype-html ──→ ux-validate
-     │                             │                                      │
-     └─────────────────────────────┴──────────→ ux-final-design ──────────┘
-                                                    ↑
-                                            ux-design-system
+ux-discovery ──→ ux-user-flow ──→ ux-wireframe ──→ ux-prototype-html ──→ ux-validate
+     │                 │                  │                                      │
+     └─────────────────┴──────────────────┴────────→ ux-final-design ──────────┘
+                                                       ↑
+                                               ux-design-system
 
 ux-visual-direction can inform or update any of these at any point.
 ```
 
-Figma-oriented skills use Figma MCP: `ux-wireframe`, `ux-design-system`, and `ux-final-design`. They inspect before editing and reuse existing files/libraries where suitable. Keep conceptually separate artifacts in separate Figma destinations:
+Figma-oriented skills use Figma MCP: `ux-user-flow`, `ux-wireframe`, `ux-design-system`, and `ux-final-design`. They inspect before editing and reuse existing files/libraries where suitable. Keep conceptually separate artifacts in separate Figma destinations:
 
 - `<Product> — Design System` (its own library/file)
+- `<Product> — <Initiative> — User Flow` (FigJam)
 - `<Product> — <Initiative> — Wireframes`
 - `<Product> — <Initiative> — Final Design`
 
@@ -678,6 +684,7 @@ Ownership prevents duplicated or drifting documentation:
 | Visual direction and references | `ux-visual-direction` |
 | Design-system contract and library | `ux-design-system` |
 | Initiative `SPEC.md` | The relevant UX/DEV skill when initiative state changes |
+| FigJam user flow | `ux-user-flow` |
 | Wireframes / prototype / final design | `ux-wireframe` / `ux-prototype-html` / `ux-final-design` |
 | Transient bug diagnosis | `dev-debug` in the active chat by default |
 | Engineering plan / production code | `dev-plan` / `dev-implement` |
@@ -754,11 +761,12 @@ Examples are copy-pasteable Codex invocations. In Claude Code, invoke the same s
 
 1. `$ux-discovery Quiero diseñar una aplicación para que equipos pequeños coordinen turnos de voluntariado.` It recovers what exists, asks only consequential product questions, and creates/updates the minimal context and SPEC. Stay in the chat while defining the problem.
 2. `$ux-visual-direction Quiero una dirección visual sobria y editorial. Me gustan estas referencias: [URL 1], [URL 2].` It interprets and preserves visual evidence in `VISUAL_DIRECTION.md`.
-3. `$ux-wireframe` It recovers the initiative and creates/reuses separate low-fidelity wireframes. Optional if flow structure is already clear.
-4. Optional: `$ux-prototype-html Quiero probar en browser si crear un turno y anotarse resulta comprensible.` It creates one self-contained prototype using established context.
-5. `$ux-validate` It identifies the available target, reviews it, and persists findings. Prefer a fresh chat for independence.
-6. `$ux-design-system` It creates/reuses the separate system library and updates `DESIGN_SYSTEM.md` only as product need warrants.
-7. `$ux-final-design` It creates/reuses a separate final-design file from the durable initiative and visual context. Validate again after material design changes.
+3. Optional: `$ux-user-flow Quiero mapear el recorrido para que un voluntario encuentre un turno y se anote.` It creates or updates the initiative's dedicated FigJam board with the primary path, meaningful branches, and open assumptions.
+4. `$ux-wireframe` It recovers the initiative and creates/reuses separate low-fidelity wireframes. Optional if flow structure is already clear.
+5. Optional: `$ux-prototype-html Quiero probar en browser si crear un turno y anotarse resulta comprensible.` It creates one self-contained prototype using established context.
+6. `$ux-validate` It identifies the available target, reviews it, and persists findings. Prefer a fresh chat for independence.
+7. `$ux-design-system` It creates/reuses the separate system library and updates `DESIGN_SYSTEM.md` only as product need warrants.
+8. `$ux-final-design` It creates/reuses a separate final-design file from the durable initiative and visual context. Validate again after material design changes.
 
 ### B — Existing codebase, undocumented product
 
@@ -766,7 +774,8 @@ Examples are copy-pasteable Codex invocations. In Claude Code, invoke the same s
 
 1. `$ux-discovery Quiero mejorar el flujo de invitación de usuarios.` It creates a minimal stable context and SPEC from evidence, and marks undocumented rules as unknown instead of inventing them. Stay in the same chat for wireframing if ambiguity is still being resolved.
 2. `$ux-visual-direction Me gusta esta referencia: [URL].` Optional; it reads current UI and evolves visual intent/references.
-3. `$ux-wireframe` and/or `$ux-final-design` as needed. Wireframe file, if useful, remains separate from final Figma. A prototype is optional for interaction uncertainty. `ux-design-system` is used only if reusable rules need to be formalized. Validate independently when useful.
+3. Optional: `$ux-user-flow` when the invitation path, its entry point, or alternate outcomes are unclear. Its FigJam board remains separate from wireframes and final Figma.
+4. `$ux-wireframe` and/or `$ux-final-design` as needed. Wireframe file, if useful, remains separate from final Figma. A prototype is optional for interaction uncertainty. `ux-design-system` is used only if reusable rules need to be formalized. Validate independently when useful.
 
 ### C — Mature product with established definitions
 

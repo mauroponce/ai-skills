@@ -32,6 +32,7 @@ The task is incomplete when knowledge that must survive beyond the active workfl
 | `design/VISUAL_DIRECTION.md`, `design/references/` | `ux-visual-direction` |
 | `design/DESIGN_SYSTEM.md`, Figma design-system library | `ux-design-system` |
 | Initiative `SPEC.md` | Relevant UX and DEV skill that changes initiative state |
+| FigJam user flows | `ux-user-flow` |
 | Figma wireframes | `ux-wireframe` |
 | HTML prototype | `ux-prototype-html` |
 | Figma final design | `ux-final-design` |

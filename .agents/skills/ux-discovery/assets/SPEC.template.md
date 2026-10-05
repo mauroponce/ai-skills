@@ -19,6 +19,7 @@ Current stage: Discovery
 
 ### Relevant artifacts
 
+- User flow: <FigJam reference when relevant>
 - Wireframes: <Figma reference when relevant>
 - HTML prototype: `prototype/<initiative>/prototype.html` (when relevant)
 - Final design: <Figma reference when relevant>
