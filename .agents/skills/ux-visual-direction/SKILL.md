@@ -7,11 +7,17 @@ description: Turn visual references and user preferences into a durable product 
 
 Build and evolve the product's visual intent from references, screenshots, URLs, current UI, Figma, brand material, anti-references, and user preferences. This is a transversal skill: it may be used at any point and repeated as the direction evolves. It defines visual intent; it does not design screens, create a component library, or replace product discovery.
 
+## Invocation contract
+
+The user only needs to state visual intent and optionally attach references. Interpret provided screenshots, links, and Figma references; recover existing direction and durable visual context without requiring workflow instructions in the prompt.
+
 ## Language and evidence
 
 Use the user's current language for conversation. Write durable artifacts in English unless the current request explicitly selects another language or the initiative SPEC records one. Product UI language is independent; infer it from explicit instruction, existing product, Figma, and product context, asking only if material and unresolved.
 
-Inspect relevant `AGENTS.md`, `product/CONTEXT.md`, active `SPEC.md`, `design/VISUAL_DIRECTION.md`, `design/DESIGN_SYSTEM.md`, `design/references/`, existing product UI, Figma, and supplied references before asking questions. Use available image, browser, and Figma read tools; disclose inaccessible sources rather than claiming inspection. Separate observed properties, interpretation, preference, and unknowns. Ask only about consequential unresolved choices.
+Start with existing `VISUAL_DIRECTION.md`, supplied references, relevant product UI, and brand context. Load initiative context, design-system detail, Figma, or broader documentation only when it constrains the visual decision. Use available image, browser, and Figma read tools; disclose inaccessible sources rather than claiming inspection. Separate observed properties, interpretation, preference, and unknowns. Ask only about consequential unresolved choices.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns visual direction and references; it records initiative-specific consequences in SPEC only when they materially change the initiative.
 
 ## Reconcile, do not reset
 
@@ -29,3 +35,7 @@ Translate vague words such as “clean”, “premium”, or “modern” into v
 Create or update `design/VISUAL_DIRECTION.md`, recording overall intent, principles, reference interpretations, anti-references, hierarchy, typography/color/shape/density/spacing/motion/imagery direction, unresolved questions, and source links. Preserve useful supplied visual evidence in `design/references/` when it is available locally and appropriate; do not download or duplicate assets unnecessarily. Keep a `design/references/README.md` with source, intended use, what not to copy, and notes when storing assets. URLs and annotated observations are valid durable evidence when image capture is unavailable.
 
 Keep `VISUAL_DIRECTION.md` consistent with any durable initiative-specific decision in `SPEC.md`; link rather than duplicate. Never silently turn an assumption into a rule. Report sources inspected, decisions captured, files updated, and unresolved conflicts.
+
+## Definition of Done
+
+The task is complete when relevant visual evidence and existing direction have been reconciled, actionable visual intent and material conflicts are recorded in `VISUAL_DIRECTION.md`, useful evidence is referenced or preserved appropriately, and any affected initiative workflow state can be reconstructed without chat history.

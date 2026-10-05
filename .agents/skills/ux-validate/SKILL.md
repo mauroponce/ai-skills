@@ -7,6 +7,10 @@ description: Validate wireframes, HTML prototypes, final Figma designs, or exist
 
 Use this skill as an evidence-oriented gate between design and implementation.
 
+## Invocation contract
+
+The user only needs to name a target when it cannot be inferred. Determine the active initiative and whether the target is a wireframe, prototype, final design, or implementation, then apply the appropriate criteria internally.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## User interaction
@@ -27,19 +31,11 @@ This is an evidence-led review skill, not an interview phase. Inspect the design
 
 ## 1. Resolve and reload the initiative
 
-Resolve the active `SPEC.md`, then read relevant durable context from disk and Figma rather than relying on prior chat conclusions.
-
-Read as relevant:
-
-- `AGENTS.md`;
-- active `SPEC.md`;
-- `product/CONTEXT.md`;
-- `design/DESIGN_SYSTEM.md`;
-- relevant Figma frames/prototype;
-- `prototype/<initiative>/prototype.html` if it exists and is relevant;
-- existing implementation if validating a redesign of live behavior.
+Resolve the active `SPEC.md`, then start with the target artifact and its relevant success/acceptance criteria. Treat supplied screenshots, Figma links, prototype URLs, research notes, and implementation links as potential target or evidence. Load product context, system rules, Figma, prototype, implementation, or local instructions only when needed to substantiate a specific finding. Do not rely on prior chat conclusions.
 
 A fresh chat is beneficial but not required.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns validation findings and their initiative consequences; it updates system documentation only when a reusable system issue is demonstrated.
 
 ## 2. Separate expert review from empirical validation
 
@@ -162,3 +158,7 @@ Report concisely, in the conversation language:
 - whether to return to the relevant UX design skill or hand off to `dev-discovery`.
 
 Do not automatically invoke another skill.
+
+## Definition of Done
+
+The task is complete when the target and relevant criteria have been reviewed, findings distinguish inspection from real user evidence, material issues are prioritized and grounded in evidence, resulting decisions/risks are persisted in SPEC/workflow state, and the next action is explicit.

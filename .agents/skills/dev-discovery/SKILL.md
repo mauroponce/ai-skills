@@ -7,6 +7,10 @@ description: Understand a software change before planning or coding. Inspect the
 
 Use this skill to establish shared technical understanding before an implementation plan is written.
 
+## Invocation contract
+
+The user only needs to state the intended software change and relevant task-specific facts. Recover the active initiative, relevant technical context, production implications, and material questions from the repository.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## Language policy
@@ -27,17 +31,19 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 Do not start implementation during discovery unless the user explicitly asks to collapse phases for a trivial task.
 
+Follow [workflow governance](../references/workflow-governance.md): begin with high-signal project context, persist only durable technical knowledge, and update initiative workflow state when discovery materially changes it.
+
 ## User interaction
 
 This is a decision-oriented skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
 
-Investigate code, tests, configuration, documentation, and current behavior before asking. Ask only about unresolved externally visible behavior or material business, security, data, API, compatibility, rollout, or hard-to-reverse architecture decisions. Recommend an option when repository evidence supports it. Do not ask the user where something is implemented; search the repository.
+Investigate code, tests, configuration, documentation, and current behavior before asking. Treat supplied issue links, documents, API references, logs, and code links as additional evidence; verify them against the repository where appropriate. Ask only about unresolved externally visible behavior or material business, security, data, API, compatibility, rollout, or hard-to-reverse architecture decisions. Recommend an option when repository evidence supports it. Do not ask the user where something is implemented; search the repository.
 
 ## 1. Resolve the task and existing sources of truth
 
 Resolve the active initiative from the user request, current context, or an existing `work/*/SPEC.md`.
 
-Read relevant durable context:
+Start with the active SPEC (if any), local instructions/README, relevant architecture documentation, and the implementation surfaces named by the request. Expand into only relevant durable context such as:
 
 - root/local `AGENTS.md`;
 - existing `work/<initiative>/SPEC.md`;
@@ -126,7 +132,7 @@ Prefer existing documentation conventions.
 
 ### `AGENTS.md`
 
-If absent, create a lean root file or merge in the guidance from `assets/AGENTS.engineering-section.md`.
+Create or modify it only when a stable repository-wide engineering rule is genuinely missing. If absent, create a lean root file or merge in the guidance from `assets/AGENTS.engineering-section.md`.
 
 If present, preserve it and add only missing durable guidance. Do not copy an entire architecture guide into `AGENTS.md`.
 
@@ -177,3 +183,7 @@ Report concisely, in the conversation language:
 - whether the initiative is ready for `dev-plan`.
 
 Do not automatically invoke another skill.
+
+## Definition of Done
+
+The task is complete when the relevant technical context and implementation seams are understood, material behavior and constraints are explicit, the shared SPEC and stable architecture context are updated only where warranted, and the workflow state gives a fresh chat a viable planning next step.

@@ -7,6 +7,10 @@ description: Convert a sufficiently defined software initiative into an executab
 
 Use this skill to decide **how** to implement already-understood behavior.
 
+## Invocation contract
+
+The user can invoke this after discovery without repeating paths or conventions. Resolve the active initiative from workflow state, SPEC, and repository evidence; ask only when multiple plausible initiatives or a material decision remain unresolved.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## User interaction
@@ -14,6 +18,8 @@ The user's explicit instructions take precedence over workflow defaults in this 
 This is a decision-oriented planning skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
 
 Consume decisions from `SPEC.md` and verified repository structure. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns `PLAN.md` and updates the initiative workflow state when plan readiness or a material implementation decision changes.
 
 ## Language policy
 
@@ -29,13 +35,13 @@ Consume decisions from `SPEC.md` and verified repository structure. If a materia
 
 ## 1. Resolve inputs
 
-Resolve the active initiative and read:
+Resolve the active initiative and start with:
 
-- `AGENTS.md` relevant to the target paths;
 - active `SPEC.md`;
-- `engineering/ARCHITECTURE.md` and relevant ADRs;
-- product/design context when it constrains behavior;
-- relevant implementation code and tests.
+- relevant implementation code and tests;
+- applicable architecture/documentation for the target seams.
+
+Load `AGENTS.md`, ADRs, and product/design context only when they constrain the change.
 
 Do not plan from the spec alone when the repository exists. Verify the proposed seams against actual code.
 
@@ -155,13 +161,7 @@ Do not invent command names; derive them from the repo or mark them to be resolv
 
 ## 9. Plan status
 
-Update workflow status:
-
-- discovery complete;
-- plan complete;
-- implementation not-started.
-
-Do not mark implementation progress during planning.
+Update the SPEC workflow state with plan reference, material implementation decisions/open questions, and the next action. Do not record implementation progress during planning.
 
 ## 10. Finish the phase
 
@@ -175,3 +175,7 @@ Report concisely, in the conversation language:
 - whether the work is ready for `dev-implement`.
 
 Do not automatically invoke another skill.
+
+## Definition of Done
+
+The task is complete when the plan is grounded in the active SPEC and relevant repository seams, material decisions are resolved or explicit, slices and verification are executable by a fresh chat, `PLAN.md` is current when warranted, and SPEC workflow state identifies implementation readiness.

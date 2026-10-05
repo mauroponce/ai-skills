@@ -7,11 +7,17 @@ description: Implement an approved software SPEC/PLAN in small verified slices w
 
 Use this skill to build work that has already been sufficiently decided.
 
+## Invocation contract
+
+The user can invoke this after planning without repeating the plan or repository conventions. Recover the active SPEC, approved plan, target code, and material implementation constraints internally.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## User interaction
 
 This is an execution skill, not an interview phase. Consume decisions in the spec/plan and make routine implementation choices using repository conventions. Do not reopen settled decisions or ask about ordinary implementation details. If repository reality exposes a material decision that cannot be resolved safely, pause only the affected work and ask one concise question; otherwise document a reasonable assumption and proceed.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns production code; it updates plan progress and initiative workflow state only for material completion, deviations, or remaining blockers.
 
 ## Language policy
 
@@ -27,14 +33,13 @@ This is an execution skill, not an interview phase. Consume decisions in the spe
 
 ## 1. Resolve implementation scope
 
-Read:
+Start with:
 
-- relevant `AGENTS.md`;
 - active `SPEC.md`;
 - `PLAN.md` when present;
-- `engineering/ARCHITECTURE.md` / relevant ADRs;
-- product/design sources when behavior/UI depends on them;
 - actual target code/tests.
+
+Load local instructions, architecture/ADRs, and product/design sources only when they constrain the target change.
 
 If the user specifies a particular plan slice, implement only that slice unless adjacent changes are required for correctness.
 
@@ -152,3 +157,7 @@ Report concisely, in the conversation language:
 - any plan deviations and why;
 - remaining known risks/issues;
 - whether the branch is ready for `dev-review`.
+
+## Definition of Done
+
+The task is complete when in-scope acceptance criteria and relevant plan slices are implemented or explicitly deferred, appropriate verification has run or its limitation is explicit, material deviations and rollout concerns are durable, and SPEC/PLAN workflow state supports an independent review.

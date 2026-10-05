@@ -7,9 +7,15 @@ description: Create a standalone interactive browser prototype as one self-conta
 
 Answer a specific design question with one runnable browser artifact. This is an exploratory UX deliverable and never production application code.
 
+## Invocation contract
+
+The user only needs to state the interaction to explore and supply any task-specific references. Recover initiative, visual evidence, output constraints, and relevant existing design context internally.
+
 ## Language and context
 
-Use the user's current language in conversation. Artifacts default to English unless explicitly changed now or in the initiative SPEC. Infer product UI language independently from explicit instruction, product, Figma, and context. Read relevant `AGENTS.md`, active `SPEC.md`, `product/CONTEXT.md`, design documentation, existing UI, and relevant Figma before building. Identify the question being explored; do not prototype an entire product when a smaller artifact suffices. Ask only for missing material behavior that cannot be inferred.
+Use the user's current language in conversation. Artifacts default to English unless explicitly changed now or in the initiative SPEC. Infer product UI language independently from explicit instruction, product, Figma, and context. Start with the active SPEC, relevant product context, visual direction, stored references, and wireframes when present. Load Figma, design-system detail, or existing UI only when they constrain the prototype. Identify the question being explored; do not prototype an entire product when a smaller artifact suffices. Ask only for missing material behavior that cannot be inferred.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns the HTML prototype and records its question, reference, and material results in the initiative SPEC/state.
 
 ## Visual evidence is required
 
@@ -33,3 +39,7 @@ Create exactly one self-contained file at `prototype/<initiative>/prototype.html
 Implement enough behavior to evaluate the question: navigation, forms, validation, dialogs, menus, transitions, simulated loading, errors, success, sample data, keyboard/focus, and responsive behavior as relevant. Use semantic HTML and label the artifact as a prototype. It must run from a basic local HTTP server, e.g. `python3 -m http.server 8000`.
 
 Update the initiative `SPEC.md` with the prototype path, question, relevant visual sources, and status. Do not claim validation until actual evaluation evidence exists. Report how to run it and what to evaluate next, often with `ux-validate`.
+
+## Definition of Done
+
+The task is complete when one self-contained `prototype.html` represents the intended flow and relevant states, applicable visual direction has been considered, it runs without a build step or external framework, and its purpose, unresolved questions, and next action are durable in the initiative SPEC.

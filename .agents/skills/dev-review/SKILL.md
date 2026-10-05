@@ -7,11 +7,17 @@ description: Independently review a branch/diff against both the initiative spec
 
 Use this skill as an independent engineering review, ideally in a fresh agent session.
 
+## Invocation contract
+
+The user can invoke this without naming routine review dimensions. Recover the active initiative, diff/base, SPEC, plan, changed code, tests, and relevant conventions; ask only if the review target cannot be inferred safely.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## User interaction
 
 This is an independent review skill, not an interview phase. Inspect the actual diff and relevant sources, then report evidence-based findings. Do not question the user while reviewing; ask only for essential target/base information that cannot be inferred safely, and never use clarification as a substitute for repository investigation.
+
+Follow [workflow governance](../references/workflow-governance.md). This skill owns review findings; it updates SPEC/PLAN workflow state only when findings change accepted completion, deviations, blockers, or readiness.
 
 ## Language policy
 
@@ -27,13 +33,13 @@ This is an independent review skill, not an interview phase. Inspect the actual 
 
 ## 1. Establish the review target
 
-Determine:
+Start with:
 
-- the diff/branch/PR to review;
-- the comparison base;
-- the active `SPEC.md`;
-- `PLAN.md` when present;
-- relevant `AGENTS.md` / architecture / design context.
+- the diff/branch/PR and comparison base;
+- the active `SPEC.md` and `PLAN.md` when present;
+- changed implementation and relevant tests.
+
+Load architecture, design context, and local instructions only when they bear on a potential finding.
 
 If the user provides a specific diff/commit range, use it.
 
@@ -151,3 +157,7 @@ Report, in the conversation language:
 2. verification run and results;
 3. residual unverified areas;
 4. whether the change is ready to merge from the review perspective.
+
+## Definition of Done
+
+The review is complete when implementation has been checked against the approved SPEC/plan, material correctness, security, maintainability, and regression risks have been examined, findings are impact-prioritized and evidence-based, blockers are explicit, and durable state is updated only for accepted decision or readiness changes.

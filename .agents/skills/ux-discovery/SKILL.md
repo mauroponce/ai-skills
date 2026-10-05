@@ -7,6 +7,10 @@ description: Understand a product-design problem before solution work. Inspect t
 
 Use this skill to turn a product/design request into a shared, evidence-aware understanding that downstream design work can trust.
 
+## Invocation contract
+
+The user only needs to state the product intent and any task-specific context or references. Recover the initiative, repository/Figma context, durable artifacts, language behavior, and next questions internally.
+
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
 ## Language policy
@@ -26,6 +30,8 @@ The user's explicit instructions take precedence over workflow defaults in this 
 **Investigate facts. Ask for decisions. Never make the user answer a question that the repository, existing product, Figma, or available project documentation can answer reliably.**
 
 Do not start by generating polished screens or implementation code. Conceptual flows may be used to clarify scope; use `ux-wireframe` for low-fidelity Figma exploration.
+
+Follow [workflow governance](../references/workflow-governance.md): begin with the smallest useful set of repository signals, persist only owned durable knowledge, and update the initiative workflow state when discovery changes it.
 
 ## User interaction
 
@@ -52,7 +58,7 @@ Do not create a duplicate initiative when a suitable one already exists.
 
 ## 2. Inspect before interviewing
 
-For an existing repository, inspect only what is relevant to the request, including as appropriate:
+Start with repository structure, local instructions, README, existing product context/specs, and the implementation surfaces that express the request. Expand only when needed, for example into:
 
 - `AGENTS.md` and local agent instructions;
 - README/project docs;
@@ -139,7 +145,7 @@ When needed, use the templates bundled with this skill.
 
 ### `AGENTS.md`
 
-If absent, create a lean root `AGENTS.md` using `assets/AGENTS.product-design-section.md` as guidance.
+Create or modify it only when a stable repository-wide product/design rule is genuinely missing. If absent, create a lean root `AGENTS.md` using `assets/AGENTS.product-design-section.md` as guidance.
 
 If present:
 
@@ -153,12 +159,6 @@ If present:
 Create/update stable product context using `assets/CONTEXT.template.md` as guidance.
 
 Do not fill unknown sections with invented content. Mark meaningful unknowns explicitly or omit irrelevant sections.
-
-### `design/DESIGN_SYSTEM.md`
-
-If a design system exists, document its actual structure, links, tokens, component/code mappings, and conventions.
-
-If no design system exists yet, create a minimal file using `assets/DESIGN_SYSTEM.template.md` and mark its status clearly as not established. Do not invent tokens/components merely to complete the template.
 
 ### `work/<initiative>/SPEC.md`
 
@@ -189,7 +189,7 @@ Before declaring it ready, verify that the spec has, when applicable:
 - important assumptions;
 - unresolved questions clearly marked;
 - risks that require validation;
-- current workflow status set to `Discovery: complete` and `Design: not-started` or equivalent.
+- concise `Workflow State` with current stage, confirmed decisions, open questions, relevant artifacts, and a next recommended action.
 
 Do not force false certainty. A spec can be ready for design with explicitly documented research questions.
 
@@ -204,3 +204,7 @@ Report concisely, in the conversation language:
 - whether the initiative is ready for `ux-wireframe`, `ux-final-design`, or another appropriate next task.
 
 Do not automatically invoke another skill.
+
+## Definition of Done
+
+The task is complete when the relevant repository/Figma evidence has been inspected, material product decisions and unknowns are explicit, the initiative SPEC reflects the problem and constraints, stable context is updated only where warranted, and its workflow state points a fresh chat to the next useful action.

@@ -5,12 +5,29 @@
 - Artifact language: English (default; change only when explicitly requested for this initiative)
 - Product UI/content language: <inherit from product context or determine separately>
 
-## Workflow
+## Workflow State
 
-- Discovery: in-progress
-- Design: not-started
-- Validation: not-started
-- Build: not-started
+Current stage: Discovery
+
+### Confirmed decisions
+
+- Record only decisions that change downstream work.
+
+### Open questions
+
+- Record material unresolved decisions, research, or validation needs.
+
+### Relevant artifacts
+
+- Wireframes: <Figma reference when relevant>
+- HTML prototype: `prototype/<initiative>/prototype.html` (when relevant)
+- Final design: <Figma reference when relevant>
+- Design system: <Figma reference when relevant>
+- Implementation plan: `work/<initiative>/PLAN.md` (when relevant)
+
+### Next recommended action
+
+<The smallest useful next skill or action.>
 
 ## Problem
 
