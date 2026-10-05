@@ -1,787 +1,195 @@
 # AI Skills for Codex and Claude Code
 
-This repository provides one shared set of skills for product design and software development in Codex and Claude Code.
+One shared skill source for product design and software development. The UX skills help a designer investigate, explore, prototype, systematize, finalize, and validate product experiences. They do not implement production application code. DEV skills own engineering implementation.
 
-Invocation syntax differs by host: Codex uses `$skill-name`; Claude Code uses `/skill-name`. Examples below show Codex syntax unless labeled otherwise. For example, invoke UX discovery as `$ux-discovery` in Codex or `/ux-discovery` in Claude Code.
+Codex invocation uses `$skill-name`; Claude Code uses `/skill-name`. Examples below use Codex syntax. Skills inspect durable repository and Figma context on every invocation, so a workflow can span chats. **Chat is working memory; repository artifacts are durable product memory; Figma is the durable design artifact.**
 
-The skills are written in English because they are instructions for the agent. Invoke and converse in the language you prefer.
+## Skills at a glance
 
-## Included skills
+| Skill | Primary question | Main output |
+|---|---|---|
+| `ux-discovery` | What problem are we solving? | Initiative `SPEC.md`, product context |
+| `ux-visual-direction` | What should the product feel and look like? | `VISUAL_DIRECTION.md`, saved references |
+| `ux-wireframe` | How should the experience be structured? | Low-fidelity Figma wireframes |
+| `ux-prototype-html` | How should this interaction behave in a browser? | `prototype.html` |
+| `ux-design-system` | What reusable visual rules and components do we need? | Figma library + `DESIGN_SYSTEM.md` |
+| `ux-final-design` | What should the production-intent UI be? | High-fidelity Figma design |
+| `ux-validate` | Does this solution work, and what evidence supports that? | Findings + updated `SPEC.md` |
 
-### UX / Product Design
+DEV skills remain a separate engineering workflow:
 
-```text
-$ux-discovery
-$ux-visual-direction
-$ux-design
-$ux-validate
-$ux-build
-$ux-prototype
-```
+| Skill | Primary question | Main output |
+|---|---|---|
+| `dev-discovery` | What technical behavior and constraints matter? | Technical context and initiative spec |
+| `dev-plan` | How should the change be implemented? | `PLAN.md` when warranted |
+| `dev-implement` | Can we implement the approved plan safely? | Production code and verification |
+| `dev-review` | Does the change meet its spec and engineering bar? | Evidence-based review findings |
 
-Main flow:
+## Choosing a UX skill
 
-```text
-$ux-discovery → [$ux-visual-direction when useful] → $ux-design → $ux-validate → $ux-build
-                        ↘
-                         $ux-prototype   (optional)
-```
-
-### Software Development
-
-```text
-$dev-discovery
-$dev-plan
-$dev-implement
-$dev-review
-```
-
-Main flow:
+Choose by the task you have in mind, not by a mandatory phase checklist. Visual direction is transversal and can be revisited whenever references or preferences change. Wireframes and HTML prototypes are optional. A mature product may go directly from discovery to final design and validation. New products often need more exploration. Use the minimum fidelity and artifacts that resolve the real design question.
 
 ```text
-$dev-discovery → $dev-plan → $dev-implement → $dev-review
+ux-discovery ───────────────→ ux-wireframe ──→ ux-prototype-html ──→ ux-validate
+     │                             │                                      │
+     └─────────────────────────────┴──────────→ ux-final-design ──────────┘
+                                                    ↑
+                                            ux-design-system
+
+ux-visual-direction can inform or update any of these at any point.
 ```
 
-The goal is for each skill to represent a recognizable professional phase, not a microtask. The best ideas from larger workflows —inspect before asking, document decisions, plan in slices, implement with rapid feedback, and review against spec + standards— are absorbed into these few skills.
+Figma-oriented skills use Figma MCP: `ux-wireframe`, `ux-design-system`, and `ux-final-design`. They inspect before editing and reuse existing files/libraries where suitable. Keep conceptually separate artifacts in separate Figma destinations:
 
-## Decision and execution phases
+- `<Product> — Design System` (its own library/file)
+- `<Product> — <Initiative> — Wireframes`
+- `<Product> — <Initiative> — Final Design`
 
-Use **Plan mode** for decision-oriented skills. Enter it explicitly with `/plan` before invocation; a skill cannot switch the current agent's mode.
+Reuse an existing file that already serves the purpose; do not create duplicates. `ux-prototype-html` creates a browser prototype, not a Figma artifact. The UX-to-DEV handoff is the durable SPEC, Figma links, design-system contract, validation findings, and approved design—not a chat transcript.
 
-Decision-oriented skills in this repository:
+## Same chat or a new chat?
 
-- `$ux-discovery` — product goals and behavior;
-- `$ux-visual-direction` — visual references and preferences;
-- `$dev-discovery` — software behavior and technical constraints;
-- `$dev-plan` — implementation approach, after requirements are decided.
+Stay in the same chat while resolving ambiguity, when one skill directly continues the reasoning of another, or when rapid iteration is useful. `ux-discovery → ux-wireframe` and `ux-wireframe → ux-prototype-html` can often stay together.
 
-These skills investigate repository and reference evidence before asking questions, then produce decision-complete artifacts. Use the host's native structured question tool for material decisions: `request_user_input` in Codex and `AskUserQuestion` in Claude Code. Offer concise, evidence-based options and a recommendation when supported; allow a custom answer when the tool permits it. Ask no more than 1–3 questions per round. If structured input is unavailable, ask one concise question in ordinary conversation. See [the shared interaction policy](.agents/skills/references/interactive-decision-policy.md).
+Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. No skill should depend only on chat history: a new chat must reconstruct context from repository files, the active initiative, and Figma.
 
-Plan mode is read-only in Claude Code. Complete investigation and interviews there, then leave Plan mode before creating or updating durable project artifacts. After decisions are complete, use the normal execution context for execution-oriented skills.
+## Language policy
 
-Execution-oriented skills apply, generate, validate, or review already-decided work: `$ux-design`, `$ux-validate`, `$ux-build`, `$ux-prototype`, `$dev-implement`, and `$dev-review`. They investigate their inputs and repository, avoid reopening settled decisions, and ask only for a genuine blocker or missing target detail that cannot be inferred safely.
+- Conversation, questions, clarifications, and progress follow the user's current language unless asked to switch.
+- Durable artifacts are English by default. Precedence: explicit instruction in the current request, explicit artifact language recorded for the initiative, then English. Persist an initiative-wide language choice in `SPEC.md`.
+- Product UI copy is independent of both. Infer it from explicit instruction, existing product, Figma, and product context; ask only when it is materially unclear.
+- DEV skills preserve the same language-detection behavior.
 
----
+## Durable project artifacts
 
-# 1. Language policy
-
-All skills follow the same contract.
-
-## Conversation language
-
-The active agent detects the language of the current message and uses it for:
-
-- questions;
-- interviews;
-- clarifications;
-- explanations;
-- progress summaries.
-
-For example:
-
-```text
-/plan
-$ux-discovery Quiero mejorar el onboarding porque muchos usuarios abandonan antes de terminar.
-```
-
-The interview should happen in Spanish.
-
-## File language
-
-Repository artifacts are written in **English by default**, even if the conversation is in another language.
-
-For example:
+Use the repository's existing conventions. A project may gradually use:
 
 ```text
 AGENTS.md
 product/CONTEXT.md
+design/VISUAL_DIRECTION.md
 design/DESIGN_SYSTEM.md
-engineering/ARCHITECTURE.md
+design/references/
 work/<initiative>/SPEC.md
-work/<initiative>/PLAN.md
-```
-
-To change this, it must be requested explicitly:
-
-```text
-/plan
-$ux-discovery Quiero mejorar el onboarding. Para esta iniciativa, generá también todos los artefactos en español.
-```
-
-The precedence is:
-
-```text
-1. explicit instruction from the current message
-2. artifact language explicitly recorded for the initiative in SPEC.md
-3. English by default
-```
-
-This means that if discovery records that **the entire initiative** should be documented in Spanish, the following skills keep that decision. If only a specific file is requested in another language, the change does not automatically apply to all other files.
-
-## Product language is independent
-
-You should not assume that the conversation language is the same as the interface language.
-
-It is perfectly valid to have:
-
-```text
-Conversation with the agent: Spanish
-Repository documentation: English
-Product UI: Spanish
-```
-
-Or:
-
-```text
-Conversation with the agent: Spanish
-Repository documentation: English
-Product UI: English
-```
-
-The skills attempt to infer the product language from the repository, Figma, or `product/CONTEXT.md`. They only ask if it remains ambiguous and genuinely affects the work.
-
----
-
-# 2. Installation
-
-## Recommended: skills inside the repository
-
-The repository uses `.agents/skills` as the canonical source. Codex discovers skills there. Claude Code discovers them under `.claude/skills`; this repository includes symlinked entries to the canonical skill directories, so it has no second copy of the skills.
-
-```text
-your-project/
-├── .agents/
-│   └── skills/                 # the only copy of each skill and its resources
-└── .claude/
-    ├── settings.json           # Claude-specific invocation policy
-    └── skills/                 # symlinks to individual .agents/skills entries
-        ├── references/
-        ├── ux-discovery/
-        ├── ux-visual-direction/
-        ├── ux-design/
-        ├── ux-validate/
-        ├── ux-build/
-        ├── ux-prototype/
-        ├── dev-discovery/
-        ├── dev-plan/
-        ├── dev-implement/
-        └── dev-review/
-```
-
-Git stores these as symlinks, not copies. If your Git client does not check out symlinks, enable symlink support before cloning or copy the skill directories locally into `.claude/skills/`.
-
-Clone the repository and open it in either tool. Codex loads the canonical `.agents/skills` tree; Claude Code follows the `.claude/skills` symlinks. Codex-specific UI/invocation metadata stays in `agents/openai.yaml`; Claude Code ignores that file. The checked-in `.claude/settings.json` keeps `ux-visual-direction` manually invoked, matching its Codex policy.
-
-## Alternative: user-global installation
-
-If you want to use them across all repositories, copy the individual directories to:
-
-```text
-~/.agents/skills/       # Codex
-~/.claude/skills/       # Claude Code
-```
-
-For a team or project that wants to evolve these rules alongside the code, I prefer the installation inside the repo.
-
----
-
-# 3. Files the workflow may create
-
-Persistent documentation is intentionally minimal.
-
-A mature project may end up with:
-
-```text
-repo/
-├── AGENTS.md
-│
-├── product/
-│   └── CONTEXT.md
-│
-├── design/
-│   └── DESIGN_SYSTEM.md
-│
-├── engineering/
-│   ├── ARCHITECTURE.md
-│   └── decisions/              # only truly justified ADRs
-│
-├── work/
-│   └── <initiative>/
-│       ├── SPEC.md
-│       └── PLAN.md             # created by dev-plan when needed
-│
-└── prototype/
-    └── <initiative>/
-        └── prototype.html      # optional, created by ux-prototype
-```
-
-Not every project needs all of these files from day one.
-
-If the repository already has an equivalent, good convention, the skills should **reuse it**, not create parallel documentation just to enforce this structure.
-
-## Responsibility of each file
-
-### `AGENTS.md`
-
-Permanent, concise instructions for the agents working in the repo. It should point to the relevant context, not duplicate it wholesale.
-
-### `product/CONTEXT.md`
-
-Stable product context: users, domain, terminology, core workflows, roles/permissions, constraints, principles, metrics, and product language.
-
-### `design/DESIGN_SYSTEM.md`
-
-The contract between Figma and code: links, foundations, tokens, components, mappings, naming, accessibility, and known drift.
-
-### `engineering/ARCHITECTURE.md`
-
-Stable technical context: system boundaries, main modules, data, integrations, conventions, operational constraints, and testing strategy.
-
-### `work/<initiative>/SPEC.md`
-
-The source of truth for the initiative: problem, outcome, evidence, requirements, flows/states, decisions, validation, Figma, acceptance criteria, and open questions.
-
-### `work/<initiative>/PLAN.md`
-
-An executable engineering plan for non-trivial work: affected modules, slices, contracts, migrations, tests, rollout, observability, risks, and progress.
-
----
-
-# 4. UX workflow
-
-## Phase 1 — `$ux-discovery`
-
-Open the repository in either agent, enter Plan mode, and start a new session:
-
-```text
-/plan
-$ux-discovery I want to design a new flow for inviting members to a workspace.
-```
-
-The skill should do this first:
-
-```text
-repo + docs + Figma available
-            ↓
-        what we already know
-            ↓
-what is inference / assumption / unknown
-            ↓
-ask only real decisions and ambiguities
-            ↓
-leave read-only Plan mode, then update context + SPEC
-```
-
-It should not ask something it can answer by reading the repository.
-
-Desired example:
-
-```text
-I see that Admin and Member roles already exist, invitations expire,
-and the product uses a creation modal.
-
-I couldn't find a rule for expired invitations.
-Should an Admin be able to resend them or should they create a new invitation?
-```
-
-The conversation follows the user's language; repository artifacts are written in English by default.
-
-### Do we need to open another chat for `$ux-design` afterward?
-
-**Usually no.** It is better to continue in the same chat:
-
-```text
-$ux-design
-```
-
-This preserves the nuances of the interview. In any case, `ux-design` reads `SPEC.md` and the permanent documents again, so it does not depend only on chat memory.
-
-If discovery was large or a clean boundary is desired, opening a new chat is safe because the durable context is on disk.
-
----
-
-## Phase 2 — `$ux-visual-direction` (when references or visual choices matter)
-
-Use after discovery and before defining the design system or designing screens. Enter Plan mode first:
-
-```text
-/plan
-$ux-visual-direction
-
-Use the references in design/references/.
-```
-
-The agent inspects references, records their visible properties and intended roles, then asks only which patterns to adopt, avoid, prioritize, or combine. The durable result is `design/VISUAL_DIRECTION.md`. Skip this phase when the existing visual direction already answers the initiative's needs.
-
-Once discovery and visual direction are settled, leave Plan mode before continuing with `$ux-design`.
-
-When the host keeps Plan mode read-only, finish the interview and agree on the direction there, then leave Plan mode before writing `VISUAL_DIRECTION.md`.
-
-## Phase 3 — `$ux-design`
-
-In the same chat, usually:
-
-```text
-$ux-design
-```
-
-If there are several active initiatives:
-
-```text
-$ux-design work/invite-members/SPEC.md
-```
-
-The phase follows this logic:
-
-```text
-outcome
-  ↓
-information architecture / flow
-  ↓
-alternatives when there is real uncertainty
-  ↓
-interaction design
-  ↓
-states + responsive + accessibility
-  ↓
-visual system
-  ↓
-native Figma
-```
-
-It should not jump from an ambiguous request directly to final screens.
-
-When Figma exists, the skill should first inspect existing libraries, variables, components, and patterns. Only then should it create new elements if needed.
-
----
-
-## Optional — `$ux-prototype`
-
-Use it when something is better understood by running in a browser than by discussing it or looking at static screens:
-
-```text
-$ux-prototype
-```
-
-Creates a single file:
-
-```text
+work/<initiative>/PLAN.md       # engineering plan, when useful
 prototype/<initiative>/prototype.html
 ```
 
-It must use only:
+`SPEC.md` is the durable source of truth for an initiative. `CONTEXT.md` captures stable product context. `VISUAL_DIRECTION.md` describes visual intent; `DESIGN_SYSTEM.md` records reusable rules and the Figma/code contract. Skills preserve and extend useful existing files rather than creating parallel documentation. They inspect the repository before asking questions, distinguish known/inferred/assumed/unknown/conflicting information, and never silently turn assumptions into requirements.
 
-- HTML;
-- inline CSS in `<style>`;
-- vanilla JavaScript in `<script>`.
+## Practical workflows
 
-It does not use:
+Examples are copy-pasteable Codex invocations. In Claude Code, invoke the same skill as `/ux-discovery`, etc. Each step lists its typical reads, writes, and chat recommendation; existing files are updated or reused rather than duplicated.
 
-```text
-React
-Vue
-Svelte
-npm
-Vite
-Webpack
-Tailwind CDN
-Bootstrap
-backend
-external APIs required to function
-```
+### A — Completely new product
 
-To run it:
+**Starting point:** no product context, spec, design system, visual direction, or Figma. Begin in one chat while decisions are forming.
 
-```bash
-python3 -m http.server 8000
-```
+1. `$ux-discovery Quiero diseñar una aplicación para que equipos pequeños coordinen turnos de voluntariado. No hay producto previo; ayudame a definir usuarios, problema, alcance y riesgos antes de diseñar.` Reads what exists; asks about consequential unknowns; creates/updates `AGENTS.md`, `product/CONTEXT.md`, and `work/<initiative>/SPEC.md` as justified. Stay in the chat.
+2. `$ux-visual-direction Tengo estas referencias: [URL 1] y [URL 2]. De la primera me interesa la claridad de navegación; de la segunda, el tono tipográfico. Evitemos una estética corporativa genérica.` Reads the SPEC/context and supplied refs; creates `design/VISUAL_DIRECTION.md` and optionally annotated saved references. Same chat or later, since the direction is durable.
+3. `$ux-wireframe Explorá el flujo principal y los estados alternativos en un archivo Figma de wireframes separado.` Reads SPEC/context and relevant Figma; creates/reuses `<Product> — <Initiative> — Wireframes`. Optional if the flow is already obvious.
+4. Optional: `$ux-prototype-html Quiero probar en browser si crear un turno y anotarse resulta comprensible. Usá la dirección visual y las referencias guardadas.` Reads SPEC, visual direction, screenshots/URLs, system if any, and wireframes; writes only `prototype/<initiative>/prototype.html`.
+5. `$ux-validate Revisá el prototipo y los wireframes contra el objetivo y los riesgos del SPEC.` Reads design and evidence; writes findings/status to SPEC. Prefer a fresh chat for independence.
+6. `$ux-design-system Definí sólo las foundations y componentes que necesita este producto según VISUAL_DIRECTION.md y los flujos explorados.` Creates/reuses the separate Figma library and updates `design/DESIGN_SYSTEM.md`. Optional if no reusable system is needed yet.
+7. `$ux-final-design Convertí el flujo aprobado en pantallas high-fidelity. Usá el design system y mantené un archivo Figma separado de wireframes.` Reads all durable inputs and validation findings; creates/reuses `<Product> — <Initiative> — Final Design`. Validate again after material design changes. This order resolves product and structural uncertainty before investing in polish.
 
-And open the corresponding path from:
+### B — Existing codebase, undocumented product
 
-```text
-http://localhost:8000/
-```
+**Starting point:** working repository/product, little documentation, no CONTEXT or initiative SPEC, perhaps no documented system. Discovery inspects relevant routes, components, copy, tests, roles, and assets before interviewing.
 
-The prototype is meant to answer a design question. **It is not production code.**
+1. `$ux-discovery Quiero mejorar el flujo de invitación de usuarios. Revisá primero el repositorio y preguntame sólo lo que no puedas determinar.` Creates a minimal stable context and SPEC from evidence, marks undocumented rules as unknown instead of inventing them. Stay in the same chat for wireframing if ambiguity is still being resolved.
+2. `$ux-visual-direction Revisá las pantallas actuales y estas referencias [URL]. Conservá lo que sea coherente con el producto y registrá las diferencias.` Optional; reads current UI and adds visual intent/references.
+3. `$ux-wireframe` and/or `$ux-final-design` as needed. Wireframe file, if useful, remains separate from final Figma. A prototype is optional for interaction uncertainty. `ux-design-system` is used only if reusable rules need to be formalized. Validate independently when useful.
 
-It can run in the same chat as `$ux-design` or in a new one.
+### C — Mature product with established definitions
 
----
+**Starting point:** `CONTEXT.md`, `DESIGN_SYSTEM.md`, `VISUAL_DIRECTION.md`, active library, and established UI patterns exist.
 
-## Phase 4 — `$ux-validate`
+1. `$ux-discovery Quiero agregar bulk editing a la tabla de usuarios. Revisá el SPEC y los patrones existentes; preguntame sólo por reglas que no estén documentadas.` Reads existing files and relevant UI/Figma; updates only the active SPEC/context if needed.
+2. `$ux-final-design` may follow directly, reusing existing Figma system and patterns.
+3. `$ux-validate` reviews the result and updates the SPEC. Wireframes, HTML prototypes, and visual-direction work are optional when current artifacts already settle those questions. Often stay together for a small iteration, then use a fresh chat for validation.
 
-Here I recommend a **new chat**:
+### D — Existing Figma files and component library
 
-```text
-$ux-validate work/invite-members/SPEC.md
-```
+**Starting point:** product Figma, library, final screens, and perhaps wireframes already exist. Inspect and reuse them; do not create duplicates.
 
-The reason is simple: it is better if the person critiquing the design is not too anchored to the decisions they just made.
+1. `$ux-design-system Auditá y extendé el design system existente para soportar esta iniciativa. No crees una librería nueva si la actual se puede extender.` Reads Figma libraries, variables, components, code tokens, and visual direction; updates existing library and `DESIGN_SYSTEM.md`.
+2. `$ux-final-design Usá el design system y los archivos existentes de Figma. Creá un archivo final separado para esta iniciativa sólo si no existe uno adecuado.` Reads SPEC and Figma; updates a fitting final file or creates the separately named one. Wireframes stay in their own file.
 
-The skill explicitly distinguishes:
+### E — Visual direction before discovery is complete
 
-```text
-observable problem in the design
-vs
-violation of system/standard
-vs
-hypothesis needing real users
-vs
-real user evidence
-```
+Visual direction may be gathered early without pretending product requirements are settled.
 
-It cannot invent research findings.
+`$ux-visual-direction Todavía no definimos toda la funcionalidad, pero quiero ir fijando la dirección visual. Me gustan: [URL 1], [URL 2]. En la primera referencia me interesa la densidad y navegación; en la segunda, la tipografía. No quiero cards excesivamente redondeadas, gradients ni aspecto de SaaS genérico.`
 
-If important problems appear:
+Reads available context; records visual intent and unresolved choices in `VISUAL_DIRECTION.md` and references. It does not create screens or define requirements. Continue discovery in the same chat if useful.
 
-```text
-$ux-design
-```
+### F — New visual references mid-project
 
-The design is updated and then validated again.
+`$ux-visual-direction Agregá estas nuevas referencias a la dirección visual existente: [URL]. No reemplaces automáticamente lo anterior; identificá conflictos y preguntame cuando una decisión no sea compatible.`
 
----
+Reads current direction and stored evidence, extends rather than resets it, and records accepted changes. Later prototypes, design-system work, and final design consume the updated direction. Can run in a fresh chat because files are durable.
 
-## Phase 5 — `$ux-build`
+### G — Wireframe only
 
-Once validated, I recommend another **new chat**:
+**Starting point:** an adequate active SPEC; need to reason about structure and flow without polish.
 
-```text
-$ux-build work/invite-members/SPEC.md
-```
+`$ux-wireframe Usá el SPEC existente para explorar la estructura, jerarquía, navegación, estados y alternativas relevantes. Mantenelo low-fidelity; no definas estilo visual final.`
 
-The implementation must come from:
+Reads SPEC, context, relevant existing UI/Figma; writes low-fi frames to the dedicated wireframe file and links it in SPEC. Visual direction and system creation are not prerequisites. Same chat as discovery is fine.
 
-```text
-SPEC
-+
-approved Figma
-+
-DESIGN_SYSTEM
-+
-real repo
-```
+### H — HTML prototype instead of Figma wireframes
 
-not from memory of the exploratory conversation.
+`$ux-prototype-html Quiero validar la interacción en browser antes de hacer el diseño final. Usá la dirección visual y las referencias existentes para evitar un estilo genérico.`
 
-Before writing code, the skill looks for mappings:
+Reads SPEC, `VISUAL_DIRECTION.md`, stored screenshots and reference URLs, current UI, system, and relevant Figma. Writes exactly one `prototype/<initiative>/prototype.html`. Use when interaction itself is the question; wireframes are optional. Follow with validation, often in a new chat.
 
-```text
-Figma Button primary/md
-        ↓
-existing Button in the repo
-        ↓
-use existing component
-```
+### I — HTML prototype after wireframes
 
-Not:
+`$ux-discovery Quiero simplificar el alta de una organización; inspeccioná el flujo actual y definamos los requisitos.` → `$ux-wireframe Explorá dos modelos de navegación para este flujo en Figma low-fi.` → `$ux-prototype-html Implementá en un único HTML la interacción del modelo elegido. Conservá la estructura de wireframes y aplicá la dirección visual guardada.` → `$ux-validate Revisá el flujo y el prototipo; separá problemas observables de hipótesis.`
+
+Discovery and wireframing can share a chat; prototype can continue there for rapid iteration. The prototype turns structural decisions into interactive behavior and consumes visual references without cloning them. It is disposable UX code, not production code.
+
+### J — Design-system-only work
+
+**Starting point:** system needs organizing or extension independent of a particular screen.
+
+`$ux-design-system Quiero ordenar y completar la librería existente. Revisá Figma, los tokens del repo y VISUAL_DIRECTION.md antes de proponer cambios. Extendé la librería actual.`
+
+Reads Figma, implementation-facing tokens/components, visual direction, and docs; updates the existing system and `design/DESIGN_SYSTEM.md`. It does not require an initiative screen. A fresh chat works well when inputs are documented.
+
+### K — Final design from wireframes
+
+`$ux-final-design Tomá los wireframes de esta iniciativa y convertí la dirección aprobada en diseño final. Usá el design system existente, VISUAL_DIRECTION.md, las referencias visuales guardadas y los findings de validación. No cambies silenciosamente el flujo definido en el SPEC.`
+
+Reads all named durable sources and existing Figma. Writes to a separate high-fi final-design file. If a needed reusable component is missing, the skill records the gap and coordinates it with `ux-design-system`; it does not create an accidental parallel library. Follow with `ux-validate`, preferably fresh.
+
+### L — Small feature in a mature product
+
+`$ux-discovery Quiero agregar una acción de duplicar a las filas de esta tabla. Revisá patrones y reglas existentes.` → `$ux-final-design` → new chat: `$ux-validate Revisá la propuesta contra el SPEC y el design system.`
+
+This minimal workflow is valid when structure, visual direction, and reusable components are already known. Running every skill would add process without resolving extra uncertainty.
+
+### M — UX to DEV handoff
+
+`$ux-discovery Quiero permitir reprogramar una invitación vencida. Inspeccioná el comportamiento actual y documentá reglas y criterios.` → relevant wireframe/prototype/final design → `$ux-validate` → **new chat** `$dev-discovery Implementá el comportamiento aprobado en work/<initiative>/SPEC.md. Revisá el repo, la especificación, los links Figma y design/DESIGN_SYSTEM.md antes de preguntar.` → `$dev-plan` → `$dev-implement` → **new chat** `$dev-review Revisá el diff contra work/<initiative>/SPEC.md y las convenciones de ingeniería.`
+
+DEV skills consume product context, requirements, design links/system, and validation findings; the designer need not re-explain settled decisions. DEV owns production implementation and verification. Use `$dev-plan` for non-trivial work; minimal changes may not need a PLAN. Follow the existing DEV workflow.
+
+## Installation
+
+The canonical source is `.agents/skills/`. Codex reads it directly. `.claude/skills/` contains symlinks to those same skill folders for Claude Code; these are links, not duplicated files.
 
 ```text
-Figma Button
-        ↓
-create another button with arbitrary CSS
+.agents/skills/                  # one copy of skills and resources
+.claude/settings.json            # Claude-specific invocation policy
+.claude/skills/<skill-name>      # symlink to .agents/skills/<skill-name>
 ```
 
-If, during implementation, an important decision about architecture, database, API, security, concurrency, infrastructure, etc. arises that UX did not resolve, `ux-build` should not invent it. That problem moves to the DEV flow:
+Clone and open the repository in either host. Git must preserve symlinks; if a platform/client does not, enable symlink support or copy the canonical skill folders into `.claude/skills/` locally. Codex-only metadata such as `agents/openai.yaml` is ignored by Claude Code. The checked-in Claude setting keeps visual direction manually invoked, matching its Codex metadata.
 
-```text
-$dev-discovery
-$dev-plan
-```
+Global installation is also possible by copying each skill folder into `~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code.
 
----
+## UX / DEV boundary
 
-# 5. DEV workflow
-
-## Phase 1 — `$dev-discovery`
-
-Example:
-
-```text
-/plan
-$dev-discovery I want to add support for invitations with expiration and resend.
-```
-
-The skill:
-
-1. reads the repo before asking questions;
-2. reuses existing UX/Product specs if they exist;
-3. separates facts, inferences, assumptions, decisions, and unknowns;
-4. asks only about decisions the code cannot resolve;
-5. creates/updates stable technical context when it genuinely adds value;
-6. leaves the initiative sufficiently defined to plan.
-
-If the user requests a specific technology, discovery tries to separate mechanism from requirement.
-
-Example:
-
-```text
-Request: "add a Redis lock"
-
-Requirement to validate:
-"the same webhook cannot be processed concurrently twice"
-```
-
-### Should `dev-plan` happen in the same chat?
-
-**Yes, recommended.**
-
-When discovery ends, remain in Plan mode:
-
-```text
-/plan
-$dev-plan
-```
-
-while keeping the same thread.
-
-Resolve any remaining technical decisions in Plan mode, then leave it before writing `SPEC.md` or `PLAN.md`.
-
----
-
-## Phase 2 — `$dev-plan`
-
-Generates, for non-trivial work:
-
-```text
-work/<initiative>/PLAN.md
-```
-
-The plan must be executable by a new chat that only has the repo, `SPEC.md`, and `PLAN.md`.
-
-When Plan mode is read-only, finish the planning decisions there, then leave Plan mode to create or update `PLAN.md`.
-
-Implementation is divided into small, verifiable vertical slices.
-
-Prefer:
-
-```text
-receive webhook
-→ persist dedupe key
-→ test duplicate behavior
-```
-
-over:
-
-```text
-create all models
-→ create all services
-→ create all controllers
-→ write tests at the end
-```
-
-For minimal changes, `dev-plan` may explicitly decide that `PLAN.md` would be unnecessary bureaucracy.
-
----
-
-## Phase 3 — `$dev-implement`
-
-For non-trivial work I recommend a **new chat**:
-
-```text
-$dev-implement work/invite-members/PLAN.md
-```
-
-This has one advantage: it proves that the plan and the repo contain enough information to implement without depending on the mental context of whoever performed discovery.
-
-Implementation:
-
-```text
-slice
-→ test/feedback loop
-→ minimal implementation
-→ verification
-→ next slice
-```
-
-It does not reopen product decisions already resolved unless the reality of the repo proves the plan is invalid.
-
-For a very small change, it is acceptable to continue in the same discovery/plan chat.
-
----
-
-## Phase 4 — `$dev-review`
-
-Whenever practical, use **another new chat**:
-
-```text
-$dev-review work/invite-members/SPEC.md
-```
-
-Or:
-
-```text
-$dev-review Review the current branch against work/invite-members/SPEC.md
-```
-
-The review has two mandatory axes:
-
-```text
-1. compliance with the SPEC
-2. engineering quality
-```
-
-It must look at the real diff and run relevant verification. It should not review only the summary generated by the person who implemented it.
-
-By default it is review only. To also fix findings:
-
-```text
-$dev-review Review the branch, fix the confirmed issues, and rerun verification.
-```
-
----
-
-# 6. Same chat or separate chats?
-
-Recommended summary:
-
-| Flow | Transition | Recommendation |
-| --- | --- | --- |
-| UX | `ux-discovery → ux-visual-direction` | Same chat, enter/remain in Plan mode |
-| UX | `ux-visual-direction → ux-design` | Leave Plan mode; continue with documented direction |
-| UX | `ux-discovery → ux-design` | Same chat normally when visual direction is already settled |
-| UX | `ux-design → ux-prototype` | Same chat or new |
-| UX | `ux-design → ux-validate` | New chat recommended |
-| UX | `ux-validate → ux-build` | New chat recommended |
-| DEV | `dev-discovery → dev-plan` | Same chat recommended |
-| DEV | `dev-plan → dev-implement` | New chat for non-trivial work |
-| DEV | `dev-implement → dev-review` | New chat strongly recommended |
-
-General principle:
-
-> The chat is working memory. The repository files are the durable memory.
-
-We are not trying to maintain a giant thread just because “it has context.” If a phase needs context to survive, that important context should be recorded in the artifacts.
-
----
-
-# 7. Figma setup
-
-To take full advantage of the UX workflow:
-
-1. set up the Figma MCP integration supported by your agent;
-2. use a **Full seat** for workflows where the agent writes on the canvas;
-3. install the skills recommended by Figma for the MCP client when available;
-4. save relevant Figma links in `design/DESIGN_SYSTEM.md` and/or `SPEC.md`;
-5. prioritize existing variables, components, libraries, and mappings before creating new ones;
-6. use Code Connect when the Figma plan and project allow it.
-
-The MCP is treated as a bridge:
-
-```text
-Figma
-  ↕
-the agent
-  ↕
-repo
-```
-
-Not as a magic button “Figma → perfect code”.
-
----
-
-# 8. Complete examples
-
-## Existing product: speak English, document in English
-
-```text
-/plan
-$ux-discovery I want to improve the onboarding permissions screen. First review what already exists and ask me only what you cannot resolve from the repo or Figma.
-```
-
-Expected:
-
-- the agent inspects first;
-- asks in the user's language;
-- `SPEC.md`, `CONTEXT.md`, etc. remain in English;
-- the UI maintains the real language of the product.
-
-Then, same chat:
-
-```text
-$ux-design
-```
-
-When references should guide the design, run this decision phase before `$ux-design`:
-
-```text
-/plan
-$ux-visual-direction
-
-Use these screenshots as references. I like the compact density and inline actions, but avoid dark mode and excessive cards.
-```
-
-After that, new chat:
-
-```text
-$ux-validate work/onboarding-permissions/SPEC.md
-```
-
-And once validated, another chat:
-
-```text
-$ux-build work/onboarding-permissions/SPEC.md
-```
-
-## New software project
-
-```text
-/plan
-$dev-discovery I want to create an API to process payment webhooks and define the behavior and architecture clearly before implementing.
-```
-
-After discovery, remain in Plan mode in the same chat:
-
-```text
-/plan
-$dev-plan
-```
-
-Then a new chat:
-
-```text
-$dev-implement work/payment-webhooks/PLAN.md
-```
-
-Finally, another chat:
-
-```text
-$dev-review work/payment-webhooks/SPEC.md
-```
-
-## An entire initiative documented in Spanish
-
-```text
-/plan
-$ux-discovery I want to design the new checkout. For this entire initiative, also write the repository artifacts in Spanish.
-```
-
-Discovery records that preference in `SPEC.md`; `ux-design`, `ux-validate`, and `ux-build` follow it while working on that initiative unless a new explicit instruction overrides it.
-
----
-
-# 9. Package principles
-
-- **Repo first:** facts are investigated; the user is not asked about things the code already knows.
-- **Ask for decisions, not searchable facts.**
-- **Problem before solution.**
-- **Durable context on disk.**
-- **Few skills with broad professional phases.**
-- **Small-step implementation with real feedback.**
-- **Independent validation/review when useful.**
-- **Never invent user research.**
-- **Never duplicate the design system just because generating new CSS is easier.**
-- **`AGENTS.md` is short:** permanent rules and pointers; not a project encyclopedia.
-- **User explicit instructions take priority** over workflow defaults.
-
----
-
-# 10. Useful official references
-
-- OpenAI Skills: https://developers.openai.com/api/docs/guides/tools-skills
-- Skill structure: https://developers.openai.com/plugins/build/skills
-- Current guide on skills and concise `AGENTS.md`: https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra
-- Figma MCP: https://developers.figma.com/docs/figma-mcp-server/
-- Figma Write to Canvas: https://developers.figma.com/docs/figma-mcp-server/write-to-canvas/
-- Figma MCP Tools: https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/
-- Figma Code to Canvas: https://developers.figma.com/docs/figma-mcp-server/code-to-canvas/
+UX produces specs, Figma artifacts, visual/design-system documentation, validation findings, and the standalone HTML prototype. It never implements production application code. Once design decisions and acceptance criteria are ready, DEV takes over technical discovery, planning, implementation, and review using the durable artifacts.

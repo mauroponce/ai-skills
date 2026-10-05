@@ -1,6 +1,6 @@
 ---
 name: ux-validate
-description: Validate an existing product design against its problem, requirements, usability, accessibility, design system, and available real user evidence. Use after ux-design, after an HTML prototype, or to revalidate a changed design. Never invent user research results.
+description: Validate wireframes, HTML prototypes, final Figma designs, or existing implementation against the problem, requirements, usability, accessibility, design system, and available real evidence. Never invent user research results.
 ---
 
 # UX Validate
@@ -159,6 +159,6 @@ Report concisely, in the conversation language:
 - evidence status (expert vs real user evidence);
 - changes made/recommended;
 - remaining risks;
-- whether to return to `ux-design` or proceed to `ux-build`.
+- whether to return to the relevant UX design skill or hand off to `dev-discovery`.
 
 Do not automatically invoke another skill.

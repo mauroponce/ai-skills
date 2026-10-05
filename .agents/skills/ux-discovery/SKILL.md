@@ -1,6 +1,6 @@
 ---
 name: ux-discovery
-description: Understand a product-design problem before designing. Inspect the repo and existing Figma/context first, interview the user only about meaningful unknowns, and create or update the minimal durable product/design artifacts needed for the initiative. Use for new or existing products when a UX/product request is still ambiguous or not yet specified.
+description: Understand a product-design problem before solution work. Inspect the repo and existing Figma/context first, interview only about meaningful unknowns, and create or update minimal durable product/design artifacts. Use for greenfield or existing products when requirements need clarification or documentation.
 ---
 
 # UX Discovery
@@ -25,7 +25,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 **Investigate facts. Ask for decisions. Never make the user answer a question that the repository, existing product, Figma, or available project documentation can answer reliably.**
 
-Do not start by generating screens, UI, wireframes, or implementation code.
+Do not start by generating polished screens or implementation code. Conceptual flows may be used to clarify scope; use `ux-wireframe` for low-fidelity Figma exploration.
 
 ## User interaction
 
@@ -201,6 +201,6 @@ Report concisely, in the conversation language:
 - which decisions the user made;
 - which files were created or updated;
 - remaining material unknowns;
-- whether the initiative is ready for `ux-design`.
+- whether the initiative is ready for `ux-wireframe`, `ux-final-design`, or another appropriate next task.
 
 Do not automatically invoke another skill.
