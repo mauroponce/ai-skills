@@ -1,0 +1,179 @@
+---
+name: dev-discovery
+description: Understand a software change before planning or coding. Inspect the repository and existing product/design specs first, resolve facts from code, interview the user only about consequential unknowns, and create/update minimal durable engineering context and the initiative spec. Use for new projects, features, refactors, integrations, or non-trivial bug work.
+---
+
+# DEV Discovery
+
+Use this skill to establish shared technical understanding before an implementation plan is written.
+
+The user's explicit instructions take precedence over workflow defaults in this skill.
+
+## Language policy
+
+- Detect the language of the user's current request.
+- Use that language for conversation, questions, interview rounds, explanations, and summaries unless the user explicitly asks to switch.
+- Determine repository artifact language in this order: (1) an explicit instruction in the current request, (2) an explicit initiative/workflow artifact language already recorded in the active `SPEC.md`, (3) English by default.
+- When the user explicitly requests another artifact language for the whole initiative/workflow, record that preference in the active `SPEC.md` and preserve it in later phases. A clearly one-off language request applies only to the requested artifact.
+- Never infer repository artifact language merely from the conversation language.
+- Treat product UI/content language as independent from conversation and artifact language. Infer it from the existing product, repository, Figma, or product context. Ask only when it is materially ambiguous.
+- Preserve existing code identifiers, domain terms, and established naming conventions; do not translate them merely because the conversation is in another language.
+- For Figma names (components, variables, layers, pages), default to English unless the existing design system uses another convention, the active initiative records another artifact/naming convention, or the user explicitly requests otherwise.
+
+
+## Core rule
+
+**Facts are the agent's job to investigate. Decisions that cannot be derived safely are the user's job to make with the agent's help.**
+
+Do not start implementation during discovery unless the user explicitly asks to collapse phases for a trivial task.
+
+## User interaction
+
+This is a decision-oriented skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
+
+Investigate code, tests, configuration, documentation, and current behavior before asking. Ask only about unresolved externally visible behavior or material business, security, data, API, compatibility, rollout, or hard-to-reverse architecture decisions. Recommend an option when repository evidence supports it. Do not ask the user where something is implemented; search the repository.
+
+## 1. Resolve the task and existing sources of truth
+
+Resolve the active initiative from the user request, current context, or an existing `work/*/SPEC.md`.
+
+Read relevant durable context:
+
+- root/local `AGENTS.md`;
+- existing `work/<initiative>/SPEC.md`;
+- `product/CONTEXT.md`;
+- `design/DESIGN_SYSTEM.md` when UI/design behavior matters;
+- `engineering/ARCHITECTURE.md` or equivalent;
+- README/developer docs;
+- relevant ADRs;
+- relevant code/tests/configuration.
+
+If a UX/product spec already defines behavior, treat it as an input. Do not create a second competing requirements document.
+
+## 2. Inspect the repository before asking questions
+
+Follow the relevant execution path through the codebase. Inspect as appropriate:
+
+- entry points/routes/controllers/handlers;
+- domain/service/module boundaries;
+- data models/schema/migrations;
+- authorization/authentication;
+- external APIs/integrations;
+- jobs/queues/events;
+- error handling;
+- tests and fixtures;
+- configuration/environment;
+- observability/logging/metrics;
+- deployment/runtime constraints;
+- recent relevant git history when it clarifies intent.
+
+Do not perform a full-repo archaeology pass when the change is local.
+
+For a new/greenfield repo, inspect existing scaffolding before interviewing about stack choices.
+
+## 3. Build a technical evidence ledger
+
+Internally distinguish:
+
+- **Known:** directly supported by code/config/docs/tests/user input.
+- **Inferred:** strongly suggested by evidence.
+- **Assumed:** temporary choice pending confirmation.
+- **Unknown:** unresolved.
+- **Conflicting:** sources disagree.
+
+Never disguise a guess as architecture.
+
+## 4. Recover the real requirement
+
+If the request is phrased as an implementation instruction, identify the behavior/outcome behind it.
+
+Example:
+
+```text
+Requested implementation: add Redis locking
+Underlying requirement to verify: prevent duplicate concurrent processing of the same webhook
+```
+
+Preserve hard constraints, but do not mistake a proposed mechanism for the requirement unless it is explicitly fixed.
+
+## 5. Interview only on consequential unknowns
+
+Prefer one question at a time. Group only independent decisions.
+
+Do not ask about facts the repo can answer.
+
+Ask when ambiguity materially affects:
+
+- externally observable behavior;
+- domain/business rules;
+- API/data contracts;
+- authorization/security/privacy;
+- consistency/concurrency/idempotency;
+- durability/data loss risk;
+- migration/backward compatibility;
+- performance/SLO expectations;
+- rollout/operational constraints;
+- architecture that is expensive to reverse;
+- scope/non-goals.
+
+For each non-obvious technical decision, offer a recommended option and concise trade-off when possible.
+
+Do not block on low-risk reversible choices that are already guided by repository convention.
+
+## 6. Maintain minimal durable engineering context
+
+Prefer existing documentation conventions.
+
+### `AGENTS.md`
+
+If absent, create a lean root file or merge in the guidance from `assets/AGENTS.engineering-section.md`.
+
+If present, preserve it and add only missing durable guidance. Do not copy an entire architecture guide into `AGENTS.md`.
+
+### `engineering/ARCHITECTURE.md`
+
+Create/update it only when stable architectural knowledge would help future work. Use `assets/ARCHITECTURE.template.md` as guidance.
+
+Do not invent sections or details merely to complete the template.
+
+### `work/<initiative>/SPEC.md`
+
+If an initiative spec already exists from product/UX work, enrich it only where necessary to make engineering requirements/constraints explicit. Do not rewrite validated product intent into a separate technical version.
+
+If no suitable spec exists, create one using `assets/SPEC.template.md`.
+
+Keep implementation sequencing out of the spec; that belongs in `dev-plan` / `PLAN.md` for non-trivial work.
+
+### ADRs / durable decisions
+
+Create an ADR under `engineering/decisions/` only when a decision is:
+
+- materially expensive to reverse;
+- non-obvious without context;
+- a genuine trade-off with durable architectural consequences.
+
+Most discovery sessions should create zero ADRs. Do not create ADRs for ordinary reversible implementation choices.
+
+## 7. Discovery completion gate
+
+Discovery is ready for planning when:
+
+- desired behavior/outcome is clear;
+- relevant current architecture/code paths are understood;
+- material constraints are known;
+- significant unknowns are either resolved or explicitly listed;
+- acceptance criteria are testable enough to plan against;
+- no hidden product decision is being smuggled into an implementation detail.
+
+## 8. Finish the phase
+
+Report concisely, in the conversation language:
+
+- current-system findings;
+- decisions made;
+- relevant files/modules likely involved;
+- durable docs created/updated;
+- remaining risks/unknowns;
+- whether the initiative is ready for `dev-plan`.
+
+Do not automatically invoke another skill.
