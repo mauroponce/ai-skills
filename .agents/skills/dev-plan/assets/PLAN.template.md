@@ -23,6 +23,10 @@ Key modules/files/seams expected to change. Keep this navigational, not a dump o
 
 Material implementation/architecture decisions and trade-offs. Link ADRs only when truly warranted.
 
+## Applicable engineering lenses
+
+Record only task-relevant Rails, React, PostgreSQL/MySQL, security, production-safety, and testing implications. State why an elevated-risk lens does not apply when that omission would otherwise be ambiguous.
+
 ## Data / contracts
 
 Schema, migration, API, event, compatibility, or external contract changes when applicable.

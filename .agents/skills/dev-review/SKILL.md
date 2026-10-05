@@ -19,6 +19,8 @@ This is an independent review skill, not an interview phase. Inspect the actual 
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns review findings; it updates SPEC/PLAN workflow state only when findings change accepted completion, deviations, blockers, or readiness.
 
+Read the [stack-aware engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only the applicable internal playbooks. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
+
 ## Language policy
 
 - Detect the language of the user's current request.
@@ -79,6 +81,8 @@ Inspect material risk in categories that apply:
 - UI accessibility/design-system reuse where relevant.
 
 Do not invent theoretical issues detached from this diff's realistic behavior.
+
+Apply selected expert lenses independently: Rails modeling, transactions, queries, jobs, auth, and concurrency; React state/effects/async/UI accessibility/design-system reuse; the detected database's constraints, indexes, locking, query and migration behavior; security; production compatibility; and testing quality. Keep review relevance-based: a CSS-only change does not require transaction analysis.
 
 ## 3. Verification
 
@@ -160,4 +164,4 @@ Report, in the conversation language:
 
 ## Definition of Done
 
-The review is complete when implementation has been checked against the approved SPEC/plan, material correctness, security, maintainability, and regression risks have been examined, findings are impact-prioritized and evidence-based, blockers are explicit, and durable state is updated only for accepted decision or readiness changes.
+The review is complete when implementation has been checked against the approved SPEC/plan, applicable stack-aware correctness, security, data, production, and test risks have been examined, findings are impact-prioritized and evidence-based, blockers are explicit, and durable state is updated only for accepted decision or readiness changes.

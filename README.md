@@ -509,6 +509,59 @@ DEV skills remain a separate engineering workflow:
 | `dev-implement` | Can we implement the approved plan safely? | Production code and verification |
 | `dev-review` | Does the change meet its spec and engineering bar? | Evidence-based review findings |
 
+## Stack-Aware Engineering
+
+The four DEV skills automatically detect the relevant stack from repository evidence and load only the internal expertise that applies. A Rails + React + PostgreSQL feature can activate Rails, React, PostgreSQL, web-security, production-safety, and testing reasoning. A Rails + MySQL + Hotwire task does not load React or PostgreSQL guidance without an independent reason.
+
+The public interface stays small:
+
+```text
+$dev-discovery
+$dev-plan
+$dev-implement
+$dev-review
+```
+
+The workflow uses this priority when sources conflict:
+
+1. Correctness, security, and data integrity
+2. Explicit initiative decisions
+3. Repository architecture and conventions
+4. Detected framework/database idioms
+5. General engineering preferences
+
+Repository conventions are normally preserved. A demonstrated correctness, security, concurrency, or data-integrity flaw is surfaced rather than copied. The workflow applies decision lenses, not arbitrary architecture rules: Rails service objects, React memoization, indexes, and migration strategies are chosen only when the task and repository justify them.
+
+### Minimal Rails login example
+
+```text
+$dev-discovery
+
+Quiero agregar login con Google.
+```
+
+Discovery automatically detects Rails, the current auth/session model, the database, users and tests; activates OAuth/OIDC and production-safety reasoning; and asks only if a material policy such as account linking remains unresolved. Then run `$dev-plan`, `$dev-implement`, and `$dev-review`; each applies the relevant Rails, database, security, production, and testing lenses internally.
+
+### Minimal React example
+
+```text
+$dev-discovery
+
+Quiero agregar edición inline a la tabla de usuarios.
+```
+
+The workflow inspects the existing React/component conventions, state ownership, async updates, loading/error behavior, API contract, authorization, accessibility, and tests when those concerns apply.
+
+### Minimal data-model example
+
+```text
+$dev-discovery
+
+Necesito permitir múltiples administradores por organización.
+```
+
+Planning then evaluates the actual database's schema, constraints, indexes, authorization, concurrency, migration/backfill, and production rollout requirements. The user does not need to enumerate those concerns.
+
 ## Choosing a UX skill
 
 Choose by the task you have in mind, not by a mandatory phase checklist. Visual direction is transversal and can be revisited whenever references or preferences change. Wireframes and HTML prototypes are optional. A mature product may go directly from discovery to final design and validation. New products often need more exploration. Use the minimum fidelity and artifacts that resolve the real design question.

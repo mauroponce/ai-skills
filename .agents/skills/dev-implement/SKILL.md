@@ -19,6 +19,8 @@ This is an execution skill, not an interview phase. Consume decisions in the spe
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns production code; it updates plan progress and initiative workflow state only for material completion, deviations, or remaining blockers.
 
+Read the [stack-aware engineering router](../references/engineering/README.md) when implementation touches a selected technology or risk area, then load only the relevant playbooks. Follow the precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, framework/database idioms, then general preference. Do not reproduce a demonstrated dangerous convention.
+
 ## Language policy
 
 - Detect the language of the user's current request.
@@ -104,6 +106,8 @@ Address relevant concerns from the spec/plan, including when applicable:
 - logs/metrics/auditability;
 - accessibility and design-system compliance for UI code.
 
+Apply Rails, React, PostgreSQL/MySQL, security, production-safety, and testing guidance only when the target change activates it. In particular, do not rely on application validation alone for a concurrency-sensitive data invariant; do not introduce framework abstractions/dependencies unless existing primitives and repository patterns are insufficient; and surface material plan contradictions before inventing architecture.
+
 ## 6. Verification
 
 Run the most relevant verification after each slice and final broader checks appropriate to risk.
@@ -160,4 +164,4 @@ Report concisely, in the conversation language:
 
 ## Definition of Done
 
-The task is complete when in-scope acceptance criteria and relevant plan slices are implemented or explicitly deferred, appropriate verification has run or its limitation is explicit, material deviations and rollout concerns are durable, and SPEC/PLAN workflow state supports an independent review.
+The task is complete when in-scope acceptance criteria and relevant plan slices are implemented or explicitly deferred, applicable stack-specific correctness concerns are addressed, appropriate verification has run or its limitation is explicit, material deviations and rollout concerns are durable, and SPEC/PLAN workflow state supports an independent review.

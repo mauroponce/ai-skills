@@ -21,6 +21,8 @@ Consume decisions from `SPEC.md` and verified repository structure. If a materia
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns `PLAN.md` and updates the initiative workflow state when plan readiness or a material implementation decision changes.
 
+Read the [stack-aware engineering router](../references/engineering/README.md) and load only playbooks selected by the detected stack and task risk. Apply correctness/security/data integrity before repository convention, then explicit initiative decisions, repository architecture, framework/database idioms, and general preference. Surface a dangerous local convention rather than reproducing it.
+
 ## Language policy
 
 - Detect the language of the user's current request.
@@ -115,6 +117,8 @@ Include only what applies:
 - test strategy;
 - documentation changes.
 
+For applicable Rails, React, database, security, production, and testing lenses, record the decision or verification needed in the plan rather than pasting a generic checklist. Treat schema changes in production as migration-safety work; treat auth, OAuth/OIDC, payments, jobs, multi-tenancy, public contracts, and concurrency as elevated-risk triggers.
+
 ## 6. Use disposable experiments when facts require execution
 
 If a technical question cannot be settled by reading/docs and a small executable experiment can settle it:
@@ -178,4 +182,4 @@ Do not automatically invoke another skill.
 
 ## Definition of Done
 
-The task is complete when the plan is grounded in the active SPEC and relevant repository seams, material decisions are resolved or explicit, slices and verification are executable by a fresh chat, `PLAN.md` is current when warranted, and SPEC workflow state identifies implementation readiness.
+The task is complete when the plan is grounded in the active SPEC, repository seams, and applicable stack guidance; material security/data/production decisions are resolved or explicit; slices and verification are executable by a fresh chat; `PLAN.md` is current when warranted; and SPEC workflow state identifies implementation readiness.

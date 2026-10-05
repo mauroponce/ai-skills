@@ -33,6 +33,8 @@ Do not start implementation during discovery unless the user explicitly asks to 
 
 Follow [workflow governance](../references/workflow-governance.md): begin with high-signal project context, persist only durable technical knowledge, and update initiative workflow state when discovery materially changes it.
 
+Use the [stack-aware engineering router](../references/engineering/README.md). Detect the stack from high-signal repository evidence, then load only the applicable Rails, React, PostgreSQL/MySQL, security, production-safety, and testing playbooks. Do not load an irrelevant handbook for a local low-risk change.
+
 ## User interaction
 
 This is a decision-oriented skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
@@ -77,7 +79,20 @@ Do not perform a full-repo archaeology pass when the change is local.
 
 For a new/greenfield repo, inspect existing scaffolding before interviewing about stack choices.
 
-## 3. Build a technical evidence ledger
+## 3. Build or refresh the technical profile
+
+Start with high-signal stack files when present: `.ruby-version`, `Gemfile`/lockfile, Rails config/routes, `config/database.yml`, schema/migrations, `package.json`/lockfiles/build config, frontend entry points, tests/CI, deployment files, job configuration, and auth/authorization/observability seams. Determine only facts useful beyond this feature:
+
+- backend runtime/framework/version and application shape;
+- authentication, authorization, jobs, cache, storage, and local architecture conventions;
+- frontend integration/version/build/state/component/testing conventions;
+- database engine/version when discoverable, schema format, important extensions/constraints/index conventions;
+- testing frameworks and CI execution;
+- stable production/deployment, queue, feature-flag, and monitoring constraints.
+
+Persist stable findings in `engineering/ARCHITECTURE.md` when it exists or the information will guide future work. Keep feature decisions in SPEC/PLAN; do not create an infrastructure inventory for its own sake.
+
+## 4. Build a technical evidence ledger
 
 Internally distinguish:
 
@@ -89,7 +104,7 @@ Internally distinguish:
 
 Never disguise a guess as architecture.
 
-## 4. Recover the real requirement
+## 5. Recover the real requirement
 
 If the request is phrased as an implementation instruction, identify the behavior/outcome behind it.
 
@@ -102,7 +117,7 @@ Underlying requirement to verify: prevent duplicate concurrent processing of the
 
 Preserve hard constraints, but do not mistake a proposed mechanism for the requirement unless it is explicitly fixed.
 
-## 5. Interview only on consequential unknowns
+## 6. Interview only on consequential unknowns
 
 Prefer one question at a time. Group only independent decisions.
 
@@ -126,7 +141,7 @@ For each non-obvious technical decision, offer a recommended option and concise 
 
 Do not block on low-risk reversible choices that are already guided by repository convention.
 
-## 6. Maintain minimal durable engineering context
+## 7. Maintain minimal durable engineering context
 
 Prefer existing documentation conventions.
 
@@ -160,18 +175,19 @@ Create an ADR under `engineering/decisions/` only when a decision is:
 
 Most discovery sessions should create zero ADRs. Do not create ADRs for ordinary reversible implementation choices.
 
-## 7. Discovery completion gate
+## 8. Discovery completion gate
 
 Discovery is ready for planning when:
 
 - desired behavior/outcome is clear;
 - relevant current architecture/code paths are understood;
+- relevant stack and production constraints are detected where they affect the task;
 - material constraints are known;
 - significant unknowns are either resolved or explicitly listed;
 - acceptance criteria are testable enough to plan against;
 - no hidden product decision is being smuggled into an implementation detail.
 
-## 8. Finish the phase
+## 9. Finish the phase
 
 Report concisely, in the conversation language:
 
@@ -186,4 +202,4 @@ Do not automatically invoke another skill.
 
 ## Definition of Done
 
-The task is complete when the relevant technical context and implementation seams are understood, material behavior and constraints are explicit, the shared SPEC and stable architecture context are updated only where warranted, and the workflow state gives a fresh chat a viable planning next step.
+The task is complete when relevant stack, technical context, and implementation seams are understood; material behavior, security/data, and production constraints are explicit; the shared SPEC and stable architecture context are updated only where warranted; and workflow state gives a fresh chat a viable planning next step.

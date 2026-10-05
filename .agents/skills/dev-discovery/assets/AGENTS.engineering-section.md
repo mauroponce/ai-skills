@@ -16,4 +16,5 @@ Rules:
 - Implement non-trivial plans in small verifiable slices.
 - Run relevant tests/checks and report what actually ran.
 - Avoid unrelated refactors during feature work.
+- DEV skills detect the applicable stack and load focused internal engineering guidance; preserve local conventions unless they conflict with correctness, security, or data integrity.
 - Keep this file lean; detailed initiative context belongs in `SPEC.md` / `PLAN.md`.

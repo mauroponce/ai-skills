@@ -1,5 +1,34 @@
 # Engineering Architecture
 
+## Technology Stack
+
+Document only stable, discovered facts useful for future engineering work.
+
+### Backend
+
+- Runtime / version:
+- Framework / version:
+- Application shape:
+- Authentication / authorization:
+- Background jobs / cache / storage:
+
+### Frontend
+
+- Framework / version:
+- Integration and build system:
+- State/data and component conventions:
+
+### Database
+
+- Engine / version:
+- Schema format:
+- Relevant extensions, constraints, or conventions:
+
+### Testing and production
+
+- Test frameworks / CI:
+- Deployment, release, queue, feature-flag, and observability constraints:
+
 ## System overview
 
 A concise description of the system and its major runtime boundaries.
