@@ -14,6 +14,7 @@ Run the relevant cases after changing a skill, its template, or shared governanc
 | `ux-final-design` | `ux-final-design` |
 | `ux-validate` | `ux-validate` |
 | `dev-discovery` | `dev-discovery` |
+| `dev-debug` | `dev-debug` |
 | `dev-plan` | `dev-plan` |
 | `dev-implement` | `dev-implement` |
 | `dev-review` | `dev-review` |

@@ -32,6 +32,7 @@ ux-validate
 
 DEV
 dev-discovery
+dev-debug
 dev-plan
 dev-implement
 dev-review
@@ -505,6 +506,7 @@ DEV skills remain a separate engineering workflow:
 | Skill | Primary question | Main output |
 |---|---|---|
 | `dev-discovery` | What technical behavior and constraints matter? | Technical context and initiative spec |
+| `dev-debug` | What is broken, and why? | Evidence-based diagnosis and next-step recommendation |
 | `dev-plan` | How should the change be implemented? | `PLAN.md` when warranted |
 | `dev-implement` | Can we implement the approved plan safely? | Production code and verification |
 | `dev-review` | Does the change meet its spec and engineering bar? | Evidence-based review findings |
@@ -517,6 +519,7 @@ The public interface stays small:
 
 ```text
 $dev-discovery
+$dev-debug
 $dev-plan
 $dev-implement
 $dev-review
@@ -562,6 +565,48 @@ Necesito permitir múltiples administradores por organización.
 
 Planning then evaluates the actual database's schema, constraints, indexes, authorization, concurrency, migration/backfill, and production rollout requirements. The user does not need to enumerate those concerns.
 
+## Feature and bug workflows
+
+For a new feature:
+
+```text
+$dev-discovery
+↓
+$dev-plan
+↓
+$dev-implement
+↓
+$dev-review
+```
+
+For a narrow bug correction, keep the diagnosis and remediation in the same chat:
+
+```text
+$dev-debug
+↓
+$dev-implement
+
+new chat recommended
+↓
+$dev-review
+```
+
+When remediation needs architecture, migration, integration, or other material design work, insert `$dev-plan` between debug and implementation. Debugging never creates a `DEBUG.md` by default.
+
+### Minimal debugging example
+
+```text
+$dev-debug
+
+Después del último deploy los exports quedan trabados en producción.
+```
+
+The skill inspects relevant repository and permitted production evidence, detects the implicated stack, loads only useful Rails/React/database/security/production guidance, correlates deploy evidence, and tests hypotheses safely. It reports diagnosis and confidence, changes nothing, then recommends `$dev-implement`, `$dev-plan`, or continued debugging.
+
+### Debugging safety boundary
+
+`dev-debug` observes, diagnoses, explains, and recommends. It never edits code, deploys, restarts services, changes production data/configuration/flags, runs migrations, rolls back, flushes caches, retries jobs, or mutates infrastructure. Moving to remediation is explicit through `$dev-implement` or `$dev-plan`.
+
 ## Choosing a UX skill
 
 Choose by the task you have in mind, not by a mandatory phase checklist. Visual direction is transversal and can be revisited whenever references or preferences change. Wireframes and HTML prototypes are optional. A mature product may go directly from discovery to final design and validation. New products often need more exploration. Use the minimum fidelity and artifacts that resolve the real design question.
@@ -588,7 +633,7 @@ Reuse an existing file that already serves the purpose; do not create duplicates
 
 Stay in the same chat while resolving ambiguity, when one skill directly continues the reasoning of another, or when rapid iteration is useful. `ux-discovery → ux-wireframe` and `ux-wireframe → ux-prototype-html` can often stay together.
 
-Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. No skill should depend only on chat history: a new chat must reconstruct context from repository files, the active initiative, and Figma.
+Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained work may use active chat context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
 
 ## Language policy
 
@@ -634,6 +679,7 @@ Ownership prevents duplicated or drifting documentation:
 | Design-system contract and library | `ux-design-system` |
 | Initiative `SPEC.md` | The relevant UX/DEV skill when initiative state changes |
 | Wireframes / prototype / final design | `ux-wireframe` / `ux-prototype-html` / `ux-final-design` |
+| Transient bug diagnosis | `dev-debug` in the active chat by default |
 | Engineering plan / production code | `dev-plan` / `dev-implement` |
 
 `AGENTS.md` remains deliberately small: stable repository-wide rules, context locations, universal conventions, and safety boundaries. Initiative requirements, temporary decisions, research, and feature history belong in the initiative artifacts.
@@ -654,7 +700,7 @@ A visually good final design can still expose that `ux-final-design` ignored est
 
 Repository-local, human-readable eval cases live in [`.evals/README.md`](.evals/README.md). They exercise behavioral contracts such as language handling, repository-first investigation, durable-state updates, ownership, prohibited behavior, and completion criteria. They are development infrastructure, not a user-facing command.
 
-Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, missing project context, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
+Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, stack playbook, context retrieval, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. The same rule applies to debugging failures. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
 
 ## Why there are no subagents
 

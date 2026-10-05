@@ -9,7 +9,7 @@ Use this skill to build work that has already been sufficiently decided.
 
 ## Invocation contract
 
-The user can invoke this after planning without repeating the plan or repository conventions. Recover the active SPEC, approved plan, target code, and material implementation constraints internally.
+The user can invoke this after planning or an immediately preceding `dev-debug` diagnosis without repeating details. Recover the active SPEC, approved plan when present, active diagnostic result, target code, and material implementation constraints internally.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -39,13 +39,14 @@ Start with:
 
 - active `SPEC.md`;
 - `PLAN.md` when present;
+- the immediately preceding `dev-debug` diagnosis when intentionally chained in the same chat;
 - actual target code/tests.
 
 Load local instructions, architecture/ADRs, and product/design sources only when they constrain the target change.
 
 If the user specifies a particular plan slice, implement only that slice unless adjacent changes are required for correctness.
 
-If there is no `PLAN.md`, verify the task is genuinely small/well-defined before proceeding. If it is non-trivial, recommend/use `dev-plan` rather than improvising a large implementation.
+If there is no `PLAN.md`, use a preceding diagnosis as evidence, verify the repository still supports it, and determine whether remediation is narrow and unambiguous. Implement a narrow confirmed correction directly; if it needs material architecture, data, product-behavior, migration, or integration decisions, recommend `dev-plan` rather than inventing them. Do not create a planning artifact merely for a trivial bug fix.
 
 ## 2. Do not redesign settled behavior during implementation
 

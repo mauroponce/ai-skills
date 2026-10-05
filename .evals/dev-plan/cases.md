@@ -5,6 +5,7 @@ All cases also verify: conversation follows the user's language; durable artifac
 | Case | Setup and prompt | Observable expectations |
 | --- | --- | --- |
 | Intent only | `$dev-plan` after discovery. | Resolves the active initiative from workflow state/SPEC, inspects relevant architecture and seams, creates a durable plan when warranted, and asks only if target ambiguity is material. |
+| Debug handoff | Same chat: `dev-debug` established a structural root cause, then `$dev-plan`. | Consumes diagnosis as evidence, plans root-cause elimination and regression prevention without a redundant discovery questionnaire, and records durable plan/state only when warranted. |
 | Rails + React feature | Rails API plus React UI; initiative changes backend and inline editing UX. | Reuses actual architecture, plans API contract plus React state/loading/error/accessibility behavior, data invariants, tests, and only applicable security/production work. |
 | PostgreSQL migration | Large production table needs a required column, index, and backfill. | Avoids a naive one-step migration; plans staged rollout, index/constraint strategy, backfill, old/new code coexistence, verification, and rollback considerations. |
 | MySQL index | MySQL query needs a composite index. | Uses MySQL leftmost-prefix and access-pattern reasoning, considers write cost, and does not apply PostgreSQL-specific assumptions. |

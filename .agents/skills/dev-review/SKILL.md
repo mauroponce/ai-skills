@@ -63,6 +63,8 @@ Verify:
 - intentional deviations are documented;
 - relevant approved Figma/design behavior is preserved for UI work.
 
+For a bug fix, also determine from the observable bug scenario, code, tests, and any durable context whether the change eliminates the diagnosed cause or only masks the symptom. Do not require a `DEBUG.md` or prior chat transcript to perform this check; ask for the minimal missing symptom/context only when repository evidence cannot reconstruct it.
+
 ### Axis B — Engineering quality
 
 Inspect material risk in categories that apply:

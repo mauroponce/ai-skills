@@ -2,7 +2,7 @@
 
 ## Shared operating pattern
 
-Use this pattern in every skill: inspect the minimum high-signal context, understand the task, clarify only material ambiguity, act, persist durable knowledge, then check the skill's Definition of Done. Do not depend exclusively on chat history.
+Use this pattern in every skill: inspect the minimum high-signal context, understand the task, clarify only material ambiguity, act, persist durable knowledge when it must survive, then check the skill's Definition of Done. Intentionally chained skills may consume active conversation context; a new chat must rely on durable artifacts for knowledge that needs to survive across sessions, people, or long-running work.
 
 The user supplies intent, task-specific constraints, and optional references. The skill supplies the professional workflow. A user never needs to name repository paths, repeat language policy, request inspection, or restate reuse, durability, or validation rules already encoded here. Treat supplied screenshots, links, Figma URLs, documents, issue links, code links, and notes as evidence relevant to the skill; interpret their contribution rather than copying them literally.
 
@@ -21,7 +21,7 @@ Before finishing:
 5. Correct information demonstrably made outdated by the task.
 6. Preserve unrelated existing documentation.
 
-The task is incomplete when material decisions exist only in chat history.
+The task is incomplete when knowledge that must survive beyond the active workflow exists only in chat history. Transient investigation, hypotheses, and same-chat handoffs do not require a new artifact by default.
 
 ## Artifact ownership
 
