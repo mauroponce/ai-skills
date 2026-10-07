@@ -34,9 +34,11 @@ ux-validate
 DEV
 dev-discovery
 dev-debug
+dev-rails-audit
 dev-plan
 dev-implement
 dev-review
+dev-release
 ```
 
 A new skill should only be introduced when it represents a genuinely different user goal, trigger, input, or success criterion.
@@ -510,24 +512,28 @@ DEV skills remain a separate engineering workflow:
 
 | Skill | Primary question | Main output |
 |---|---|---|
-| `dev-discovery` | What technical behavior and constraints matter? | Technical context and initiative spec |
-| `dev-debug` | What is broken, and why? | Evidence-based diagnosis and next-step recommendation |
-| `dev-plan` | How should the change be implemented? | `PLAN.md` when warranted |
-| `dev-implement` | Can we implement the approved plan safely? | Production code and verification |
-| `dev-review` | Does the change meet its spec and engineering bar? | Evidence-based review findings |
+| `dev-discovery` | What change do we need and what constraints already exist? | Technical context and initiative spec |
+| `dev-debug` | What is broken and why? | Evidence-based diagnosis |
+| `dev-rails-audit` | Where can this Rails application be improved? | Prioritized, evidence-based findings in chat |
+| `dev-plan` | How should the selected change be implemented? | `PLAN.md` when warranted |
+| `dev-implement` | Implement the approved or sufficiently defined change. | Production code and verification |
+| `dev-review` | Is the implementation correct, safe, and aligned with intent? | Evidence-based review findings |
+| `dev-release` | How do we ship this change safely? | Release sequence and observed status |
 
 ## Stack-Aware Engineering
 
-The four DEV skills automatically detect the relevant stack from repository evidence and load only the internal expertise that applies. A Rails + React + PostgreSQL feature can activate Rails, React, PostgreSQL, web-security, production-safety, and testing reasoning. A Rails + MySQL + Hotwire task does not load React or PostgreSQL guidance without an independent reason.
+The DEV skills automatically detect the relevant stack from repository evidence and load only the internal expertise that applies. A Rails + React + PostgreSQL feature can activate Rails, React, PostgreSQL, web-security, production-safety, and testing reasoning. A Rails + MySQL + Hotwire task does not load React or PostgreSQL guidance without an independent reason.
 
 The public interface stays small:
 
 ```text
 $dev-discovery
 $dev-debug
+$dev-rails-audit
 $dev-plan
 $dev-implement
 $dev-review
+$dev-release
 ```
 
 The workflow uses this priority when sources conflict:
@@ -570,33 +576,93 @@ Necesito permitir múltiples administradores por organización.
 
 Planning then evaluates the actual database's schema, constraints, indexes, authorization, concurrency, migration/backfill, and production rollout requirements. The user does not need to enumerate those concerns.
 
-## Feature and bug workflows
+## DEV workflows
 
-For a new feature:
+Choose the entry point by the question. `dev-debug` starts with a known problem and seeks its cause. `dev-review` checks a known change against intent and engineering quality. `dev-rails-audit` proactively inspects an existing Rails system or selected concern; it needs no known symptom and never implements fixes.
 
 ```text
-$dev-discovery
-↓
-$dev-plan
-↓
-$dev-implement
-↓
+NEW FEATURE          BUG                   PROACTIVE IMPROVEMENT
+dev-discovery        dev-debug             dev-rails-audit
+→ dev-plan           → dev-plan?           → dev-plan?
+→ dev-implement      → dev-implement       → dev-implement
+→ dev-review         → dev-review          → dev-review
+→ dev-release        → dev-release         → dev-release
+```
+
+`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Use a new chat for independent `dev-review` when useful.
+
+### Rails audit invocations
+
+General audit:
+
+```text
+$dev-rails-audit
+```
+
+The skill detects the Rails version, database, jobs, cache, testing stack, and production considerations, then reports prioritized findings. Focus by intent when useful:
+
+```text
+$dev-rails-audit
+
+Quiero enfocarme en performance.
+```
+
+```text
+$dev-rails-audit
+
+Revisá especialmente Active Record.
+```
+
+```text
+$dev-rails-audit
+
+Quiero revisar caching y background jobs.
+```
+
+Example output:
+
+```text
+Rails Audit Summary
+
+HIGH
+RAILS-001 — N+1 on project dashboard
+Impact: High | Effort: Low | Confidence: Confirmed
+RAILS-002 — Report generation blocks request lifecycle
+Impact: High | Effort: Medium | Confidence: High
+
+MEDIUM
+RAILS-003 — Repeated account statistics are a caching candidate
+Impact: Medium | Effort: Medium | Confidence: Measure first
+
+LOW
+RAILS-004 — Duplicate exception-reporting wrapper can likely be simplified
+Impact: Low | Effort: Low | Confidence: High
+
+Quick Wins: RAILS-001
+Strategic: RAILS-002
+Measure First: RAILS-003
+Housekeeping: RAILS-004
+```
+
+Same-chat handoffs use the finding ID; the user need not repeat the evidence:
+
+```text
+SAME CHAT — narrow improvement
+$dev-rails-audit
+→ $dev-implement
+  "Implementá RAILS-001."
+
+SAME CHAT — structural improvement
+$dev-rails-audit
+→ $dev-plan
+  "Quiero avanzar con RAILS-002."
+→ $dev-implement
+
+NEW CHAT — independent review
 $dev-review
 ```
 
-For a narrow bug correction, keep the diagnosis and remediation in the same chat:
-
-```text
-$dev-debug
-↓
-$dev-implement
-
-new chat recommended
-↓
-$dev-review
-```
-
-When remediation needs architecture, migration, integration, or other material design work, insert `$dev-plan` between debug and implementation. Debugging never creates a `DEBUG.md` by default.
+Audit findings stay in chat by default. A durable report is created only when requested or needed for a cross-chat/team handoff. Production is not accessed by default; an explicitly requested production-backed audit uses bounded read-only evidence.
 
 ### Minimal debugging example
 
@@ -606,11 +672,7 @@ $dev-debug
 Después del último deploy los exports quedan trabados en producción.
 ```
 
-The skill inspects relevant repository and permitted production evidence, detects the implicated stack, loads only useful Rails/React/database/security/production guidance, correlates deploy evidence, and tests hypotheses safely. It reports diagnosis and confidence, changes nothing, then recommends `$dev-implement`, `$dev-plan`, or continued debugging.
-
-### Debugging safety boundary
-
-`dev-debug` observes, diagnoses, explains, and recommends. It never edits code, deploys, restarts services, changes production data/configuration/flags, runs migrations, rolls back, flushes caches, retries jobs, or mutates infrastructure. Moving to remediation is explicit through `$dev-implement` or `$dev-plan`.
+The skill inspects relevant repository and permitted production evidence, tests hypotheses safely, and recommends `$dev-implement`, `$dev-plan`, or continued debugging. It never edits code, deploys, restarts services, changes production data/configuration/flags, runs migrations, rolls back, flushes caches, retries jobs, or mutates infrastructure.
 
 ## Choosing a UX skill
 
@@ -639,7 +701,7 @@ Reuse an existing file that already serves the purpose; do not create duplicates
 
 Stay in the same chat while resolving ambiguity, when one skill directly continues the reasoning of another, or when rapid iteration is useful. `ux-discovery → ux-wireframe` and `ux-wireframe → ux-prototype-html` can often stay together.
 
-Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained work may use active chat context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
+Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained work may use active chat context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, `dev-rails-audit → dev-plan → dev-implement`, `dev-rails-audit → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
 
 ## Language policy
 
@@ -687,6 +749,7 @@ Ownership prevents duplicated or drifting documentation:
 | FigJam user flow | `ux-user-flow` |
 | Wireframes / prototype / final design | `ux-wireframe` / `ux-prototype-html` / `ux-final-design` |
 | Transient bug diagnosis | `dev-debug` in the active chat by default |
+| Transient Rails audit findings | `dev-rails-audit` in the active chat by default |
 | Engineering plan / production code | `dev-plan` / `dev-implement` |
 
 `AGENTS.md` remains deliberately small: stable repository-wide rules, context locations, universal conventions, and safety boundaries. Initiative requirements, temporary decisions, research, and feature history belong in the initiative artifacts.
@@ -707,7 +770,7 @@ A visually good final design can still expose that `ux-final-design` ignored est
 
 Repository-local, human-readable eval cases live in [`.evals/README.md`](.evals/README.md). They exercise behavioral contracts such as language handling, repository-first investigation, durable-state updates, ownership, prohibited behavior, and completion criteria. They are development infrastructure, not a user-facing command.
 
-Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, stack playbook, context retrieval, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. The same rule applies to debugging failures. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
+Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, stack playbook, context retrieval, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. For a missed or falsely reported Rails audit pattern, reproduce it, add an eval, identify whether the failure belongs to audit orchestration, `rails.md`, the DB playbook, production safety, or context retrieval, make the smallest correction, and rerun adjacent cases. The same rule applies to debugging failures. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
 
 ## Why there are no subagents
 

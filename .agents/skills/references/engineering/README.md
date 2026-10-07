@@ -31,6 +31,7 @@ Load only applicable references:
 | Auth, OAuth/OIDC, authorization, sensitive input/output, tenancy, uploads, or external URLs | [web-security.md](web-security.md) |
 | Existing production app, schema/API/job/deploy change, rollout, or backward compatibility risk | [production-safety.md](production-safety.md) |
 | Any behavior change, failure path, or regression risk | [testing.md](testing.md) |
+| Explicitly requested live/production evidence | [runtime-diagnostics.md](runtime-diagnostics.md) |
 
 Do not load a playbook merely because its technology exists. A copy-only UI change normally needs neither database nor transaction analysis. Financial changes, background jobs, authentication, multi-tenancy, and public API contracts receive elevated scrutiny when present.
 

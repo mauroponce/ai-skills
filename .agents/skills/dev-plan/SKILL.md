@@ -9,7 +9,7 @@ Use this skill to decide **how** to implement already-understood behavior.
 
 ## Invocation contract
 
-The user can invoke this after discovery or an active `dev-debug` diagnosis without repeating paths or conventions. Resolve the active initiative from workflow state, SPEC, repository evidence, and active diagnostic context; ask only when multiple plausible initiatives or a material decision remain unresolved.
+The user can invoke this after discovery, an active `dev-debug` diagnosis, or selected `dev-rails-audit` findings without repeating paths, conventions, or finding text. Resolve the active initiative from workflow state, SPEC, repository evidence, and any active diagnosis or `RAILS-###` IDs in the same conversation. Verify finding evidence against current code; ask only when multiple plausible initiatives or a material decision remain unresolved.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -17,7 +17,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 This is a decision-oriented planning skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
 
-Consume decisions from `SPEC.md`, an active diagnosis when intentionally chained in the same chat, and verified repository structure. For a diagnosed bug, plan root-cause elimination, regression prevention, relevant tests, and rollout/migration concerns rather than repeating discovery. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
+Consume decisions from `SPEC.md`, an active diagnosis or selected audit findings when intentionally chained in the same chat, and verified repository structure. For audit findings, preserve the cited evidence, uncertainty, production constraints, and measurement needed; do not repeat a discovery questionnaire or treat a candidate as confirmed. For a diagnosed bug, plan root-cause elimination, regression prevention, relevant tests, and rollout/migration concerns rather than repeating discovery. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns `PLAN.md` and updates the initiative workflow state when plan readiness or a material implementation decision changes.
 

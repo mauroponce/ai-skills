@@ -9,7 +9,7 @@ Use this skill to build work that has already been sufficiently decided.
 
 ## Invocation contract
 
-The user can invoke this after planning or an immediately preceding `dev-debug` diagnosis without repeating details. Recover the active SPEC, approved plan when present, active diagnostic result, target code, and material implementation constraints internally.
+The user can invoke this after planning, an immediately preceding `dev-debug` diagnosis, or a narrow `dev-rails-audit` finding without repeating details. Recover the active SPEC, approved plan when present, active diagnosis or selected `RAILS-###` findings from this chat, target code, and material implementation constraints internally.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -39,14 +39,14 @@ Start with:
 
 - active `SPEC.md`;
 - `PLAN.md` when present;
-- the immediately preceding `dev-debug` diagnosis when intentionally chained in the same chat;
+- the immediately preceding `dev-debug` diagnosis or selected `dev-rails-audit` findings when intentionally chained in the same chat;
 - actual target code/tests.
 
 Load local instructions, architecture/ADRs, and product/design sources only when they constrain the target change.
 
 If the user specifies a particular plan slice, implement only that slice unless adjacent changes are required for correctness.
 
-If there is no `PLAN.md`, use a preceding diagnosis as evidence, verify the repository still supports it, and determine whether remediation is narrow and unambiguous. Implement a narrow confirmed correction directly; if it needs material architecture, data, product-behavior, migration, or integration decisions, recommend `dev-plan` rather than inventing them. Do not create a planning artifact merely for a trivial bug fix.
+If there is no `PLAN.md`, use a preceding diagnosis or selected audit finding as evidence, verify the repository still supports it, and determine whether remediation is narrow and unambiguous. Implement a narrow, sufficiently defined correction directly with relevant regression verification. If the finding needs material architecture, product-behavior, data/migration, caching, job, transaction, or integration decisions, recommend `dev-plan` rather than inventing them. A `MEASURE FIRST` candidate needs discriminating evidence before implementation. Do not create a planning artifact merely for a trivial correction.
 
 ## 2. Do not redesign settled behavior during implementation
 

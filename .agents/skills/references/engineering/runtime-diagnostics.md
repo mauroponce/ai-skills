@@ -1,0 +1,7 @@
+# Runtime Diagnostics Playbook
+
+Use only when a task needs live-environment evidence. Resolve the environment and access from existing repository or environment metadata; never assume production access or infer a production host from a familiar name. Classify each proposed command before execution as observation, bounded diagnostic, or mutation. Observation and safe bounded read-only diagnostics may be used when authorized by the task and access policy; mutations belong to the appropriate implementation or operational workflow.
+
+Prefer existing request traces, query timings, error metrics, queue depth/failure metrics, cache hit rates, memory/CPU metrics, and bounded logs. Correlate time windows, request/job identity, deployment version, and code path before inferring cause. Scrub secrets and personal data from outputs. Bound log ranges, result counts, and query cost. Use read-only SQL with limits and safe `EXPLAIN` where appropriate; `EXPLAIN ANALYZE` executes a query and requires an explicit safety assessment, especially in production. Never run an unbounded scan or expensive benchmark on a live database merely to confirm a static suspicion.
+
+For audit/debug observation, do not deploy, restart, kill processes, run migrations, change flags/configuration, write data, flush caches, retry/requeue jobs, or change infrastructure. If evidence is inaccessible or unsafe to collect, state the limit and the smallest safe measurement needed rather than fabricating confirmation.

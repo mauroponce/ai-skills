@@ -15,8 +15,10 @@ Run the relevant cases after changing a skill, its template, or shared governanc
 | `ux-validate` | `ux-validate` |
 | `dev-discovery` | `dev-discovery` |
 | `dev-debug` | `dev-debug` |
+| `dev-rails-audit` | `dev-rails-audit` |
 | `dev-plan` | `dev-plan` |
 | `dev-implement` | `dev-implement` |
 | `dev-review` | `dev-review` |
+| `dev-release` | `dev-release` |
 
 Each suite covers positive and negative behavior where relevant: trigger/boundary correctness, language, just-in-time context, ambiguity, artifact ownership, durable state, forbidden behavior, and completion.
