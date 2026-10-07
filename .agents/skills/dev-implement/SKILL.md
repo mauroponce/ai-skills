@@ -19,7 +19,7 @@ This is an execution skill, not an interview phase. Consume decisions in the spe
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns production code; it updates plan progress and initiative workflow state only for material completion, deviations, or remaining blockers.
 
-Read the [stack-aware engineering router](../references/engineering/README.md) when implementation touches a selected technology or risk area, then load only the relevant playbooks. Follow the precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, framework/database idioms, then general preference. Do not reproduce a demonstrated dangerous convention.
+Read the [stack-aware engineering router](../references/engineering/README.md) when implementation touches a selected technology or risk area, then load only the relevant playbooks. Follow the precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Do not reproduce a demonstrated dangerous convention.
 
 ## Language policy
 
@@ -47,6 +47,8 @@ Load local instructions, architecture/ADRs, and product/design sources only when
 If the user specifies a particular plan slice, implement only that slice unless adjacent changes are required for correctness.
 
 If there is no `PLAN.md`, use a preceding diagnosis or selected audit finding as evidence, verify the repository still supports it, and determine whether remediation is narrow and unambiguous. Implement a narrow, sufficiently defined correction directly with relevant regression verification. If the finding needs material architecture, product-behavior, data/migration, caching, job, transaction, or integration decisions, recommend `dev-plan` rather than inventing them. A `MEASURE FIRST` candidate needs discriminating evidence before implementation. Do not create a planning artifact merely for a trivial correction.
+
+An architecture finding that names a possible operation, query, state, or integration boundary is directional; it does not alone settle ownership, migration order, or trade-offs. Use a current plan for consequential extraction, while retaining direct implementation for a narrow finding whose behavior and repository seam are already clear.
 
 ## 2. Do not redesign settled behavior during implementation
 

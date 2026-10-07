@@ -524,6 +524,8 @@ DEV skills remain a separate engineering workflow:
 
 The DEV skills automatically detect the relevant stack from repository evidence and load only the internal expertise that applies. A Rails + React + PostgreSQL feature can activate Rails, React, PostgreSQL, web-security, production-safety, and testing reasoning. A Rails + MySQL + Hotwire task does not load React or PostgreSQL guidance without an independent reason.
 
+`dev-rails-audit` is a deep Rails system audit covering performance, data access, reliability, Rails usage, architecture, workflow design, and long-term sustainability. General audits load Rails mechanics plus architecture and sustainability guidance; focused query audits start with Rails and the relevant database playbook. Additional references are loaded when evidence makes them useful. Its architecture lens is pressure-driven, Rails-aware, evidence-based, incremental, and non-dogmatic.
+
 The public interface stays small:
 
 ```text
@@ -541,10 +543,11 @@ The workflow uses this priority when sources conflict:
 1. Correctness, security, and data integrity
 2. Explicit initiative decisions
 3. Repository architecture and conventions
-4. Detected framework/database idioms
-5. General engineering preferences
+4. Demonstrated architectural pressure
+5. Detected framework/database idioms
+6. General engineering preferences
 
-Repository conventions are normally preserved. A demonstrated correctness, security, concurrency, or data-integrity flaw is surfaced rather than copied. The workflow applies decision lenses, not arbitrary architecture rules: Rails service objects, React memoization, indexes, and migration strategies are chosen only when the task and repository justify them.
+Repository conventions are normally preserved. A demonstrated correctness, security, concurrency, or data-integrity flaw is surfaced rather than copied; substantial, evidenced maintenance friction can justify a targeted architectural recommendation. The workflow applies decision lenses, not arbitrary architecture rules: Rails service objects, React memoization, indexes, and migration strategies are chosen only when the task and repository justify them.
 
 ### Minimal Rails login example
 
@@ -619,6 +622,20 @@ $dev-rails-audit
 Quiero revisar caching y background jobs.
 ```
 
+```text
+$dev-rails-audit
+
+Quiero enfocarme especialmente en arquitectura y mantenibilidad.
+```
+
+```text
+$dev-rails-audit
+
+Quiero entender si estamos abusando de service objects.
+```
+
+The audit observes actual pressure, weighs trade-offs, starts with Rails and established conventions, and adds boundaries when they earn their carrying cost. It does not enforce fat-model/thin-controller rules, service objects everywhere, no-service-object rules, mandatory repositories/query objects/state machines, callback prohibition, zero-gem purity, or architecture patterns for their own sake. File size is a reason to inspect, not proof of a bad boundary. A useful existing operation or repository can remain; a pass-through layer may warrant targeted simplification. Correctness, security, data integrity, reliability, and significant performance take priority over aesthetic cleanup.
+
 Example output:
 
 ```text
@@ -642,6 +659,25 @@ Quick Wins: RAILS-001
 Strategic: RAILS-002
 Measure First: RAILS-003
 Housekeeping: RAILS-004
+```
+
+An architecture finding explains why a boundary may help and what it would cost:
+
+```text
+RAILS-012 — Checkout orchestration is spread across model callbacks
+Category: Architecture / Workflow / Reliability
+Impact: High | Effort: Medium | Confidence: High
+
+Evidence: Completing an order triggers state changes, payment capture,
+inventory mutation, job scheduling, and notifications through callbacks
+across Order and Payment.
+Architectural pressure: A business workflow is implicit in lifecycle behavior.
+Current carrying cost: A checkout change requires tracing callbacks,
+provider behavior, jobs, and transaction timing.
+Recommended direction: Introduce one explicit checkout-completion operation;
+keep local invariant callbacks in their models.
+Why not a global service layer: Evidence supports this workflow boundary,
+not a universal abstraction.
 ```
 
 Same-chat handoffs use the finding ID; the user need not repeat the evidence:
@@ -770,7 +806,11 @@ A visually good final design can still expose that `ux-final-design` ignored est
 
 Repository-local, human-readable eval cases live in [`.evals/README.md`](.evals/README.md). They exercise behavioral contracts such as language handling, repository-first investigation, durable-state updates, ownership, prohibited behavior, and completion criteria. They are development infrastructure, not a user-facing command.
 
-Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, stack playbook, context retrieval, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. For a missed or falsely reported Rails audit pattern, reproduce it, add an eval, identify whether the failure belongs to audit orchestration, `rails.md`, the DB playbook, production safety, or context retrieval, make the smallest correction, and rerun adjacent cases. The same rule applies to debugging failures. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
+Do not add an instruction every time an agent makes one mistake. Instead: reproduce the failure; add or update an eval; identify whether the source is the description, instructions, stack playbook, context retrieval, tooling, ownership, or model behavior; make the smallest useful change; rerun the relevant and adjacent evals; then remove obsolete instructions. For a missed or falsely reported Rails audit pattern, reproduce it, add an eval, identify whether the failure belongs to audit orchestration, `rails.md`, the architecture or sustainability playbook, the DB playbook, production safety, or context retrieval, make the smallest correction, and rerun adjacent cases. The same rule applies to debugging failures. Skills, templates, and `AGENTS.md` are versioned workflow infrastructure and should become simpler as models and tools improve.
+
+### Maintaining Rails architecture guidance
+
+Treat books, articles, and Rails documentation as inputs to maintainer synthesis: extract general principles, rewrite them in original wording, identify counterexamples and trade-offs, turn them into observable audit heuristics, add positive and negative evals, then integrate them into the reusable architecture or sustainability playbook. Keep `dev-rails-audit/SKILL.md` focused on orchestration and selective loading. Optional `.agents/source-notes/` may hold the maintainer's own notes or legally usable excerpts, but those notes are not runtime audit context by default. Avoid chapter summaries in the skill, long quotations, hard rules from individual authors, and one playbook per book. Findings cite the application, never a book as proof.
 
 ## Why there are no subagents
 

@@ -19,9 +19,11 @@ This is a decision-oriented planning skill intended to start in Plan mode (`/pla
 
 Consume decisions from `SPEC.md`, an active diagnosis or selected audit findings when intentionally chained in the same chat, and verified repository structure. For audit findings, preserve the cited evidence, uncertainty, production constraints, and measurement needed; do not repeat a discovery questionnaire or treat a candidate as confirmed. For a diagnosed bug, plan root-cause elimination, regression prevention, relevant tests, and rollout/migration concerns rather than repeating discovery. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
 
+For a selected architecture finding, compare the smallest Rails/repository-native correction with the proposed boundary, state the pressure each addresses and its carrying cost, and plan incremental migration, behavior preservation, transaction/async safety, and verification where relevant. Do not turn the audit's directional recommendation into an unexamined global style rule.
+
 Follow [workflow governance](../references/workflow-governance.md). This skill owns `PLAN.md` and updates the initiative workflow state when plan readiness or a material implementation decision changes.
 
-Read the [stack-aware engineering router](../references/engineering/README.md) and load only playbooks selected by the detected stack and task risk. Apply correctness/security/data integrity before repository convention, then explicit initiative decisions, repository architecture, framework/database idioms, and general preference. Surface a dangerous local convention rather than reproducing it.
+Read the [stack-aware engineering router](../references/engineering/README.md) and load only playbooks selected by the detected stack and task risk. Apply correctness/security/data integrity first, then explicit initiative decisions, repository architecture and conventions, demonstrated architectural pressure, framework/database idioms, and general preference. Surface a dangerous local convention rather than reproducing it.
 
 ## Language policy
 

@@ -19,7 +19,7 @@ This is an independent review skill, not an interview phase. Inspect the actual 
 
 Follow [workflow governance](../references/workflow-governance.md). This skill owns review findings; it updates SPEC/PLAN workflow state only when findings change accepted completion, deviations, blockers, or readiness.
 
-Read the [stack-aware engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only the applicable internal playbooks. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
+Read the [stack-aware engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only the applicable internal playbooks. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
 
 ## Language policy
 
