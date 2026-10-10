@@ -23,7 +23,7 @@ Before finishing:
 5. Correct information demonstrably made outdated by the task.
 6. Preserve unrelated existing documentation.
 
-The task is incomplete when knowledge that must survive beyond the active workflow exists only in chat history. Transient investigation, hypotheses, and same-chat handoffs do not require a new artifact by default.
+The task is incomplete when knowledge that must survive beyond the active workflow exists only in chat history. Transient investigation, system exploration, hypotheses, and same-chat handoffs do not require a new artifact by default.
 
 ## Mechanism and knowledge boundaries
 

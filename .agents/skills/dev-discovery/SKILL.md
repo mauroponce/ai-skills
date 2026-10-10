@@ -9,7 +9,7 @@ Use this skill to establish shared technical understanding before an implementat
 
 ## Invocation contract
 
-The user only needs to state the intended software change and relevant task-specific facts. Recover the active initiative, relevant technical context, production implications, and material questions from the repository.
+The user only needs to state the intended software change and relevant task-specific facts. If `dev-explore` already mapped this area in the same Codex conversation, use that map as context and verify the relevant current code rather than repeating basic reconnaissance. Exploration remains an input; this skill still defines the requested change and its constraints. Recover the active initiative, relevant technical context, production implications, and material questions from the repository.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 

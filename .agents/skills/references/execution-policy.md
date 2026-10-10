@@ -13,7 +13,7 @@ Assess scope, architectural ambiguity, production risk, security sensitivity, co
 | COMPLEX | Architecture, multi-layer features, substantial review, complex DB changes/integrations, broad Rails audit, consequential rollout. |
 | HARD | Unknown production failures, distributed state/concurrency, sensitive identity or payments failure semantics, difficult legacy architecture or migrations. |
 
-Defaults are tendencies, not fixed assignments: discovery ROUTINE; plan COMPLEX (ROUTINE for conventional work); implement ROUTINE (FAST when mechanical); debug ROUTINE through HARD; general Rails audit COMPLEX (focused query audit ROUTINE); review COMPLEX (small diff ROUTINE); release ROUTINE (complex migration/rolling compatibility COMPLEX or HARD). A complete plan can lower implementation to ROUTINE / Low even if planning needed COMPLEX / Medium.
+Defaults are tendencies, not fixed assignments: explore ROUTINE for scoped paths and COMPLEX for broad legacy/cross-domain mapping; discovery ROUTINE; plan COMPLEX (ROUTINE for conventional work); implement ROUTINE (FAST when mechanical); debug ROUTINE through HARD; general Rails audit COMPLEX (focused query audit ROUTINE); review COMPLEX (small diff ROUTINE); release ROUTINE (complex migration/rolling compatibility COMPLEX or HARD). A complete plan can lower implementation to ROUTINE / Low even if planning needed COMPLEX / Medium.
 
 ## Current model mapping
 

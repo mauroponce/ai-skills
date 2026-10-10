@@ -1,6 +1,6 @@
 # Stack-Aware Engineering
 
-The user thinks about the feature. The DEV workflow remembers to consider Rails, React, the database, security, production safety, testing, compatibility, concurrency, and performance when they materially apply.
+The user may ask how the current system works or what change to make. The DEV workflow remembers to consider Rails, React, the database, security, production safety, testing, compatibility, concurrency, and performance when they materially apply.
 
 Operationally: detect → inspect → load relevant expertise → understand → clarify material ambiguity → plan / implement / review → persist durable decisions → verify.
 
@@ -21,7 +21,7 @@ Preserve repository conventions when they work well. Surface concrete correctnes
 
 Start from high-signal evidence: Ruby/Rails and dependency files, frontend package/build files, database configuration/schema/migrations, test/CI setup, deployment files, and the target code path. Detect versions where behavior materially differs. Build on an existing architecture profile instead of re-inventorying the application.
 
-Load only applicable references:
+Load only applicable references. `dev-explore` selects references that clarify existing behavior; it does not load evaluative architecture playbooks merely to judge the design:
 
 | Signal or task | Load |
 | --- | --- |

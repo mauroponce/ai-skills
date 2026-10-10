@@ -9,7 +9,7 @@ Investigate what is broken, establish the strongest evidence-supported explanati
 
 ## Invocation contract
 
-The user only needs to describe the symptom and include any task-specific evidence. Recover relevant repository, runtime, deployment, stack, and durable context internally. Do not require the user to request logs, git history, production safety, Rails/React/database analysis, or read-only behavior.
+The user only needs to describe the symptom and include any task-specific evidence. Use a preceding same-chat `dev-explore` map where relevant, but verify the implicated path and investigate the failure independently; exploration is never a prerequisite. Recover relevant repository, runtime, deployment, stack, and durable context internally. Do not require the user to request logs, git history, production safety, Rails/React/database analysis, or read-only behavior.
 
 ## Safety boundary
 

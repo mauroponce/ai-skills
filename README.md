@@ -40,6 +40,7 @@ ux-final-design
 ux-validate
 
 DEV
+dev-explore
 dev-discovery
 dev-debug
 dev-rails-audit
@@ -518,6 +519,7 @@ DEV skills remain a separate engineering workflow:
 
 | Skill | Primary question | Main output |
 |---|---|---|
+| `dev-explore` | How does this system or flow work today? | Evidence-based system map in the conversation |
 | `dev-discovery` | What change do we need and what constraints already exist? | Technical context and initiative spec |
 | `dev-debug` | What is broken and why? | Evidence-based diagnosis |
 | `dev-rails-audit` | Where can this Rails application be improved? | Prioritized, evidence-based findings in chat |
@@ -535,6 +537,7 @@ The DEV skills automatically detect the relevant stack from repository evidence 
 The public interface stays small:
 
 ```text
+$dev-explore
 $dev-discovery
 $dev-debug
 $dev-rails-audit
@@ -585,6 +588,36 @@ Necesito permitir múltiples administradores por organización.
 
 Planning then evaluates the actual database's schema, constraints, indexes, authorization, concurrency, migration/backfill, and production rollout requirements. The user does not need to enumerate those concerns.
 
+## Understand an existing application
+
+Start with `$dev-explore` when understanding the current system is the goal. A user opening an unfamiliar mature Rails app can ask for a high-level map or a focused domain explanation; full `dev-discovery` is not required first.
+
+```text
+$dev-explore
+
+Ayudame a entender la arquitectura general de esta aplicación.
+```
+
+```text
+$dev-explore
+
+Quiero entender billing.
+```
+
+```text
+$dev-explore
+
+¿Cómo se relacionan Account, User, Membership e Invitation?
+```
+
+```text
+$dev-explore
+
+Quiero entender el flujo desde que un usuario acepta una invitación hasta que obtiene acceso al account.
+```
+
+Codex traces relevant routes, controllers, models, tables, authorization, jobs, integrations, and frontend/backend boundaries from repository evidence. It explains domain roles, relationships, and the flow without requiring the user to prescribe an inspection checklist. The default result stays in the conversation; team documentation is created when requested. Understanding can be the final outcome, or the map can inform a same-chat change, diagnosis, or Rails audit.
+
 ## Execution recommendations
 
 A DEV skill may finish with:
@@ -605,7 +638,18 @@ Public skills represent user goals. Repeatable deployment/test mechanics belong 
 
 ## DEV workflows
 
-Choose the entry point by the question. `dev-debug` starts with a known problem and seeks its cause. `dev-review` checks a known change against intent and engineering quality. `dev-rails-audit` proactively inspects an existing Rails system or selected concern; it needs no known symptom and never implements fixes.
+Choose the entry point by the user goal. `dev-explore` explains the current system; `dev-discovery` defines a requested change; `dev-debug` investigates a known failure; `dev-rails-audit` evaluates improvement opportunities. `dev-review` checks a known change against intent and engineering quality.
+
+```text
+UNDERSTAND  → dev-explore
+CHANGE      → dev-discovery → dev-plan? → dev-implement
+DIAGNOSE    → dev-debug
+IMPROVE     → dev-rails-audit
+VERIFY      → dev-review
+SHIP        → dev-release
+```
+
+`dev-explore` may end after the explanation. The change, debugging, and audit skills perform their own focused repository tracing when invoked directly; exploration is never a prerequisite.
 
 ```text
 NEW FEATURE          BUG                   PROACTIVE IMPROVEMENT
@@ -616,7 +660,7 @@ dev-discovery        dev-debug             dev-rails-audit
 → dev-release        → dev-release         → dev-release
 ```
 
-`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Prefer a fresh Codex conversation for independent `dev-review`. Discovery, debugging, and audit findings can hand off in the same chat; durable SPEC/PLAN and stable project artifacts carry knowledge across chats.
+`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Prefer a fresh Codex conversation for independent `dev-review`. Exploration can hand off in the same Codex conversation to discovery, debugging, or Rails audit; those skills verify relevant facts and retain their own goals. Durable SPEC/PLAN and stable project artifacts carry knowledge across conversations.
 
 The release skill performs evidence-based preflight, requests explicit approval immediately before a concrete production deploy, uses the repository's scripts/CI for deterministic operations, and verifies deployed health and behavior afterward.
 
@@ -763,7 +807,7 @@ Reuse an existing file that already serves the purpose; do not create duplicates
 
 Stay in the same chat while resolving ambiguity, when one skill directly continues the reasoning of another, or when rapid iteration is useful. `ux-discovery → ux-wireframe` and `ux-wireframe → ux-prototype-html` can often stay together.
 
-Prefer a fresh Codex conversation for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained Codex skills may use active conversation context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, `dev-rails-audit → dev-plan → dev-implement`, `dev-rails-audit → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
+Prefer a fresh Codex conversation for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained Codex skills may use active conversation context: `dev-explore → dev-discovery`, `dev-explore → dev-debug`, `dev-explore → dev-rails-audit`, `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, `dev-rails-audit → dev-plan → dev-implement`, `dev-rails-audit → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
 
 ## Language policy
 
@@ -810,6 +854,7 @@ Ownership prevents duplicated or drifting documentation:
 | Initiative `SPEC.md` | The relevant UX/DEV skill when initiative state changes |
 | FigJam user flow | `ux-user-flow` |
 | Wireframes / prototype / final design | `ux-wireframe` / `ux-prototype-html` / `ux-final-design` |
+| Current-system exploration | `dev-explore` in the active conversation by default |
 | Transient bug diagnosis | `dev-debug` in the active chat by default |
 | Transient Rails audit findings | `dev-rails-audit` in the active chat by default |
 | Engineering plan / production code | `dev-plan` / `dev-implement` |

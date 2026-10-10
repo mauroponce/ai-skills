@@ -13,6 +13,7 @@ Run the relevant cases after changing a skill, its template, or shared governanc
 | `ux-design-system` | `ux-design-system` |
 | `ux-final-design` | `ux-final-design` |
 | `ux-validate` | `ux-validate` |
+| `dev-explore` | `dev-explore` |
 | `dev-discovery` | `dev-discovery` |
 | `dev-debug` | `dev-debug` |
 | `dev-rails-audit` | `dev-rails-audit` |
