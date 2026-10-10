@@ -39,4 +39,4 @@ Use **signal → investigate → conclude**: cite concrete code paths and behavi
 
 ## Influences
 
-This original operational guidance synthesizes general principles influenced by *Layered Design for Ruby on Rails Applications*, *Sustainable Web Development with Ruby on Rails*, the [official Rails Guides](https://guides.rubyonrails.org/), harness evals, and repository evidence. Those works are maintenance inputs, never evidence for a finding about an application.
+This original operational guidance synthesizes general principles influenced by *Layered Design for Ruby on Rails Applications*, *Sustainable Web Development with Ruby on Rails*, the [official Rails Guides](https://guides.rubyonrails.org/), and repository evidence. Those works are maintenance inputs, never evidence for a finding about an application.

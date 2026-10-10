@@ -1,6 +1,6 @@
 ---
 name: dev-discovery
-description: Understand a software change before planning or coding. Inspect the repository and existing product/design specs first, resolve facts from code, interview the user only about consequential unknowns, and create/update minimal durable engineering context and the initiative spec. Use for new projects, features, refactors, integrations, or non-trivial bug work.
+description: Understand a software change before planning or coding. Inspect the repository and existing product/design specs first, resolve facts from code, interview the user only about consequential unknowns, and clarify the change in chat or concise personal notes when cross-chat continuity is useful. Use for new projects, features, refactors, integrations, or non-trivial bug work.
 ---
 
 # DEV Discovery
@@ -17,9 +17,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 - Detect the language of the user's current request.
 - Use that language for conversation, questions, interview rounds, explanations, and summaries unless the user explicitly asks to switch.
-- Determine repository artifact language in this order: (1) an explicit instruction in the current request, (2) an explicit initiative/workflow artifact language already recorded in the active `SPEC.md`, (3) English by default.
-- When the user explicitly requests another artifact language for the whole initiative/workflow, record that preference in the active `SPEC.md` and preserve it in later phases. A clearly one-off language request applies only to the requested artifact.
-- Never infer repository artifact language merely from the conversation language.
+- For personal workflow notes, follow an explicit current language request, then a recorded personal initiative preference, otherwise English. Record a cross-chat preference only if useful. Never infer note language merely from conversation language.
 - Treat product UI/content language as independent from conversation and artifact language. Infer it from the existing product, repository, Figma, or product context. Ask only when it is materially ambiguous.
 - Preserve existing code identifiers, domain terms, and established naming conventions; do not translate them merely because the conversation is in another language.
 - For Figma names (components, variables, layers, pages), default to English unless the existing design system uses another convention, the active initiative records another artifact/naming convention, or the user explicitly requests otherwise.
@@ -29,9 +27,9 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 **Facts are the agent's job to investigate. Decisions that cannot be derived safely are the user's job to make with the agent's help.**
 
-Do not start implementation during discovery unless the user explicitly asks to collapse phases for a trivial task.
+Do not modify the target repository during discovery. A trivial, sufficiently defined change may move directly to `dev-implement` in the same chat.
 
-Follow [workflow governance](../references/workflow-governance.md): begin with high-signal project context, persist only durable technical knowledge, and update initiative workflow state when discovery materially changes it.
+Follow [workflow governance](../references/workflow-governance.md): begin with high-signal project context and leave same-chat results in conversation. Save only useful cross-chat context in the personal workspace. This skill does not modify the target repository.
 
 Use the [stack-aware engineering router](../references/engineering/README.md). Detect the stack from high-signal repository evidence, then load only the applicable Rails, React, PostgreSQL/MySQL, security, production-safety, and testing playbooks. Do not load an irrelevant handbook for a local low-risk change.
 
@@ -43,12 +41,12 @@ Investigate code, tests, configuration, documentation, and current behavior befo
 
 ## 1. Resolve the task and existing sources of truth
 
-Resolve the active initiative from the user request, current context, or an existing `work/*/SPEC.md`.
+Resolve the active initiative from the user request, active conversation, relevant personal workspace notes, and current project evidence.
 
-Start with the active SPEC (if any), local instructions/README, relevant architecture documentation, and the implementation surfaces named by the request. Expand into only relevant durable context such as:
+Start with the active behavior context (if any), local instructions/README, relevant architecture documentation, and implementation surfaces named by the request. Expand into only relevant sources such as:
 
 - root/local `AGENTS.md`;
-- existing `work/<initiative>/SPEC.md`;
+- relevant personal specification or existing project-owned spec;
 - `product/CONTEXT.md`;
 - `design/DESIGN_SYSTEM.md` when UI/design behavior matters;
 - `engineering/ARCHITECTURE.md` or equivalent;
@@ -90,7 +88,7 @@ Start with high-signal stack files when present: `.ruby-version`, `Gemfile`/lock
 - testing frameworks and CI execution;
 - stable production/deployment, queue, feature-flag, and monitoring constraints.
 
-Persist stable findings in `engineering/ARCHITECTURE.md` when it exists or the information will guide future work. Keep feature decisions in SPEC/PLAN; do not create an infrastructure inventory for its own sake.
+If useful across chats, keep stable findings and feature decisions in concise personal notes. Read existing architecture docs as evidence; do not update them for personal workflow or create an inventory for its own sake.
 
 ## 4. Build a technical evidence ledger
 
@@ -141,39 +139,9 @@ For each non-obvious technical decision, offer a recommended option and concise 
 
 Do not block on low-risk reversible choices that are already guided by repository convention.
 
-## 7. Maintain minimal durable engineering context
+## 7. Preserve only useful personal context
 
-Prefer existing documentation conventions.
-
-### `AGENTS.md`
-
-Create or modify it only when a stable repository-wide engineering rule is genuinely missing. If absent, create a lean root file or merge in the guidance from `assets/AGENTS.engineering-section.md`.
-
-If present, preserve it and add only missing durable guidance. Do not copy an entire architecture guide into `AGENTS.md`.
-
-### `engineering/ARCHITECTURE.md`
-
-Create/update it only when stable architectural knowledge would help future work. Use `assets/ARCHITECTURE.template.md` as guidance.
-
-Do not invent sections or details merely to complete the template.
-
-### `work/<initiative>/SPEC.md`
-
-If an initiative spec already exists from product/UX work, enrich it only where necessary to make engineering requirements/constraints explicit. Do not rewrite validated product intent into a separate technical version.
-
-If no suitable spec exists, create one using `assets/SPEC.template.md`.
-
-Keep implementation sequencing out of the spec; that belongs in `dev-plan` / `PLAN.md` for non-trivial work.
-
-### ADRs / durable decisions
-
-Create an ADR under `engineering/decisions/` only when a decision is:
-
-- materially expensive to reverse;
-- non-obvious without context;
-- a genuine trade-off with durable architectural consequences.
-
-Most discovery sessions should create zero ADRs. Do not create ADRs for ordinary reversible implementation choices.
+For same-chat work, report the problem, desired behavior, confirmed decisions, constraints, open questions, relevant code, and next step in conversation. For long or cross-chat work, save a minimal personal specification under the project workspace. Existing project specs, ADRs, and architecture docs are evidence, not automatic write targets. Read `AGENTS.md` if present; never create or rewrite it for this workflow. Do not create repository `SPEC.md`, `PLAN.md`, `engineering/ARCHITECTURE.md`, ADRs, or workflow state. Use `assets/SPEC.template.md` only as optional structure for a personal note; omit unused sections.
 
 ## RED FLAGS
 
@@ -201,7 +169,7 @@ Report concisely, in the conversation language:
 - current-system findings;
 - decisions made;
 - relevant files/modules likely involved;
-- durable docs created/updated;
+- personal notes saved, if any;
 - remaining risks/unknowns;
 - whether the initiative is ready for `dev-plan`.
 
@@ -209,4 +177,4 @@ Do not automatically invoke another skill. For a ready initiative, recommend the
 
 ## Definition of Done
 
-The task is complete when relevant stack, technical context, and implementation seams are understood; material behavior, security/data, and production constraints are explicit; the shared SPEC and stable architecture context are updated only where warranted; and workflow state gives a fresh chat a viable planning next step.
+The task is complete when relevant stack, context, and implementation seams are understood; material behavior, security/data, and production constraints are explicit; remaining questions are visible; and a next chat can continue from concise personal context when needed. Explain how significant requirements and constraints shape the implementation when useful.

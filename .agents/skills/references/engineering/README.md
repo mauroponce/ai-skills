@@ -2,7 +2,7 @@
 
 The user may ask how the current system works or what change to make. The DEV workflow remembers to consider Rails, React, the database, security, production safety, testing, compatibility, concurrency, and performance when they materially apply.
 
-Operationally: detect → inspect → load relevant expertise → understand → clarify material ambiguity → plan / implement / review → persist durable decisions → verify.
+Operationally: detect → inspect → load relevant expertise → understand → clarify material ambiguity → plan / implement / review → retain useful cross-chat decisions personally → verify.
 
 ## Source precedence
 
@@ -47,4 +47,4 @@ For a general `dev-rails-audit`, load Rails mechanics, architecture, and sustain
 
 ## Technical profile
 
-`dev-discovery` creates or updates stable, useful stack facts in `engineering/ARCHITECTURE.md` when that artifact exists or is warranted: backend/version/runtime boundaries; frontend integration/version/build/state conventions; database engine/schema format/extensions; testing conventions; and production constraints. Feature decisions remain in initiative SPEC/PLAN.
+`dev-discovery` may retain useful stack facts in concise personal Codex notes for cross-chat work: backend/version/runtime boundaries; frontend integration/version/build/state conventions; database engine/schema format/extensions; testing conventions; and production constraints. Feature decisions stay in chat or personal initiative context. Existing project architecture docs are read as evidence, not automatically edited.

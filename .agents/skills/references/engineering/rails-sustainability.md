@@ -29,4 +29,4 @@ Rank real integrity, security, reliability, and high-impact performance risk abo
 
 ## Influences
 
-This original operational guidance synthesizes general principles influenced by *Sustainable Web Development with Ruby on Rails*, *Layered Design for Ruby on Rails Applications*, the [official Rails Guides](https://guides.rubyonrails.org/), harness evals, and repository evidence. Application findings must cite application evidence, not a book's authority.
+This original operational guidance synthesizes general principles influenced by *Sustainable Web Development with Ruby on Rails*, *Layered Design for Ruby on Rails Applications*, the [official Rails Guides](https://guides.rubyonrails.org/), and repository evidence. Application findings must cite application evidence, not a book's authority.

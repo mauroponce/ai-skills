@@ -1,3 +1,5 @@
+<!-- Optional personal Codex design-system note template; Figma remains the design deliverable. -->
+
 # Design System
 
 ## Status

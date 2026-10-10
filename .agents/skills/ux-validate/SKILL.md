@@ -21,9 +21,7 @@ This is an evidence-led review skill, not an interview phase. Inspect the design
 
 - Detect the language of the user's current request.
 - Use that language for conversation, questions, interview rounds, explanations, and summaries unless the user explicitly asks to switch.
-- Determine repository artifact language in this order: (1) an explicit instruction in the current request, (2) an explicit initiative/workflow artifact language already recorded in the active `SPEC.md`, (3) English by default.
-- When the user explicitly requests another artifact language for the whole initiative/workflow, record that preference in the active `SPEC.md` and preserve it in later phases. A clearly one-off language request applies only to the requested artifact.
-- Never infer repository artifact language merely from the conversation language.
+- For personal workflow notes, follow an explicit current language request, then a recorded personal preference, otherwise English. Do not infer note language from conversation language.
 - Treat product UI/content language as independent from conversation and artifact language. Infer it from the existing product, repository, Figma, or product context. Ask only when it is materially ambiguous.
 - Preserve existing code identifiers, domain terms, and established naming conventions; do not translate them merely because the conversation is in another language.
 - For Figma names (components, variables, layers, pages), default to English unless the existing design system uses another convention, the active initiative records another artifact/naming convention, or the user explicitly requests otherwise.
@@ -31,7 +29,7 @@ This is an evidence-led review skill, not an interview phase. Inspect the design
 
 ## 1. Resolve and reload the initiative
 
-Resolve the active `SPEC.md`, then start with the target artifact and its relevant success/acceptance criteria. Treat supplied screenshots, Figma links, prototype URLs, research notes, and implementation links as potential target or evidence. Load product context, system rules, Figma, prototype, implementation, or local instructions only when needed to substantiate a specific finding. Do not rely on prior chat conclusions.
+Resolve active-chat or personal requirements, then start with the target artifact and its relevant success/acceptance criteria. Treat supplied screenshots, Figma links, prototype URLs, research notes, and implementation links as potential target or evidence. Load product context, system rules, Figma, prototype, implementation, or local instructions only when needed to substantiate a specific finding. Do not rely on prior chat conclusions.
 
 A fresh chat is beneficial but not required.
 
@@ -121,19 +119,9 @@ Likely cause (clearly labeled as interpretation)
 Recommended change or next question
 ```
 
-## 6. Update durable artifacts
+## 6. Keep findings in chat or personal notes
 
-Update `SPEC.md` with:
-
-- validation questions/method;
-- actual findings;
-- changes resulting from validation;
-- remaining risks;
-- workflow status.
-
-If validation reveals a reusable design-system problem, update `design/DESIGN_SYSTEM.md` or record the gap there.
-
-If material product behavior changes, ensure the requirements/acceptance criteria reflect the new decision rather than leaving contradictory sections.
+Report validation questions, methods, observed findings, resulting decisions, remaining risks, and next action. If another chat needs them, save a concise personal note. Do not update repository `SPEC.md`, `design/DESIGN_SYSTEM.md`, or workflow state for personal process. A reusable design-system gap should be reported for `ux-design-system`.
 
 ## 7. Validation gate
 
@@ -161,4 +149,4 @@ Do not automatically invoke another skill.
 
 ## Definition of Done
 
-The task is complete when the target and relevant criteria have been reviewed, findings distinguish inspection from real user evidence, material issues are prioritized and grounded in evidence, resulting decisions/risks are persisted in SPEC/workflow state, and the next action is explicit.
+The task is complete when the target and relevant criteria have been reviewed, findings distinguish inspection from real user evidence, material issues are prioritized and grounded in evidence, resulting decisions/risks are reported in chat or useful personal notes, and the next action is explicit.

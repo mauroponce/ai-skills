@@ -1,3 +1,5 @@
+<!-- Optional personal Codex plan template. Save outside the target repository only when cross-chat context is useful. -->
+
 # <Initiative name> — Implementation Plan
 
 ## Status
@@ -7,8 +9,8 @@
 
 ## Sources of truth
 
-- Spec: `work/<initiative>/SPEC.md`
-- Architecture: `engineering/ARCHITECTURE.md` (when relevant)
+- Confirmed behavior: active chat or personal specification
+- Architecture evidence: current project code/docs (when relevant)
 - Design: <Figma/design reference when relevant>
 
 ## Approach

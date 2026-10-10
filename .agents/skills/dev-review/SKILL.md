@@ -9,7 +9,7 @@ Use this skill as an independent engineering review, ideally in a fresh agent se
 
 ## Invocation contract
 
-The user can invoke this without naming routine review dimensions. Recover the active initiative, diff/base, SPEC, plan, changed code, tests, and relevant conventions; ask only if the review target cannot be inferred safely.
+The user can invoke this without naming routine review dimensions. Recover the active initiative, diff/base, active-chat or personal requirements and plan when available, changed code, tests, and relevant conventions; ask only if the review target cannot be inferred safely.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -17,7 +17,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 This is an independent review skill, not an interview phase. Inspect the actual diff and relevant sources, then report evidence-based findings. Do not question the user while reviewing; ask only for essential target/base information that cannot be inferred safely, and never use clarification as a substitute for repository investigation.
 
-Follow [workflow governance](../references/workflow-governance.md). This skill owns review findings; it updates SPEC/PLAN workflow state only when findings change accepted completion, deviations, blockers, or readiness.
+Follow [workflow governance](../references/workflow-governance.md). This skill reports findings in chat by default; save a concise personal note only when a cross-chat handoff needs it. Default review does not modify the target repository.
 
 Read the [stack-aware engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only the applicable internal playbooks. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
 
@@ -25,9 +25,7 @@ Read the [stack-aware engineering router](../references/engineering/README.md), 
 
 - Detect the language of the user's current request.
 - Use that language for conversation, questions, interview rounds, explanations, and summaries unless the user explicitly asks to switch.
-- Determine repository artifact language in this order: (1) an explicit instruction in the current request, (2) an explicit initiative/workflow artifact language already recorded in the active `SPEC.md`, (3) English by default.
-- When the user explicitly requests another artifact language for the whole initiative/workflow, record that preference in the active `SPEC.md` and preserve it in later phases. A clearly one-off language request applies only to the requested artifact.
-- Never infer repository artifact language merely from the conversation language.
+- For personal workflow notes, follow an explicit current language request, then a recorded personal initiative preference, otherwise English. Record a cross-chat preference only if useful. Never infer note language merely from conversation language.
 - Treat product UI/content language as independent from conversation and artifact language. Infer it from the existing product, repository, Figma, or product context. Ask only when it is materially ambiguous.
 - Preserve existing code identifiers, domain terms, and established naming conventions; do not translate them merely because the conversation is in another language.
 - For Figma names (components, variables, layers, pages), default to English unless the existing design system uses another convention, the active initiative records another artifact/naming convention, or the user explicitly requests otherwise.
@@ -38,7 +36,7 @@ Read the [stack-aware engineering router](../references/engineering/README.md), 
 Start with:
 
 - the diff/branch/PR and comparison base;
-- the active `SPEC.md` and `PLAN.md` when present;
+- active-chat or personal requirements and plan when present, plus any existing project-owned spec;
 - changed implementation and relevant tests.
 
 Load architecture, design context, and local instructions only when they bear on a potential finding.
@@ -160,7 +158,7 @@ Do not use fix mode to redesign requirements.
 
 Do not create `REVIEW.md` by default.
 
-Update `SPEC.md` / `PLAN.md` only when a confirmed review finding changes durable completion status, reveals an accepted deviation, or the user asked for fixes that materially change the documented implementation.
+Do not create or update repository review, SPEC, PLAN, or workflow-state files. For cross-chat continuation, record only material findings, accepted deviations, and readiness in a personal note. Explain why a significant finding matters at its actual boundary.
 
 ## 8. Finish the phase
 
@@ -175,4 +173,4 @@ For a ready change, recommend the next skill and execution tier using [execution
 
 ## Definition of Done
 
-The review is complete when implementation has been checked against the approved SPEC/plan, applicable stack-aware correctness, security, data, production, and test risks have been examined, findings are impact-prioritized and evidence-based, blockers are explicit, and durable state is updated only for accepted decision or readiness changes.
+The review is complete when implementation has been checked against confirmed behavior and any current plan, applicable correctness/security/data/production/test risks have been examined, findings are impact-prioritized and evidence-based, blockers are explicit, and personal handoff context is saved only when useful.

@@ -1,54 +1,29 @@
-# Workflow Governance
+# Workflow governance
 
-## Shared operating pattern
+Inspect the smallest useful set of current project sources, clarify only consequential uncertainty, act within the skill boundary, and verify the result. Intentionally chained skills may use the active conversation. Persist only context that will help another chat or a long task; never create empty scaffolding or ask routinely whether to save notes.
 
-Use this pattern in every skill: inspect the minimum high-signal context, understand the task, clarify only material ambiguity, act, persist durable knowledge when it must survive, then check the skill's Definition of Done. Intentionally chained skills may consume active conversation context; a new chat must rely on durable artifacts for knowledge that needs to survive across sessions, people, or long-running work.
+For DEV handoffs, use the shared [execution policy](execution-policy.md). Skill routing follows the user goal; capability follows uncertainty and risk. Keep concrete model names in that policy.
 
-For Codex DEV handoffs, use the shared [execution policy](execution-policy.md) to recommend the next Codex skill and cheapest suitable capability tier/reasoning effort. Skill routing follows the user goal; Codex model choice follows the next step's uncertainty and risk. Do not scatter concrete model names across skills.
+## Source precedence and freshness
 
-The user supplies intent, task-specific constraints, and optional references. The skill supplies the professional workflow. A user never needs to name repository paths, repeat language policy, request inspection, or restate reuse, durability, or validation rules already encoded here. Treat supplied screenshots, links, Figma URLs, documents, issue links, code links, and notes as evidence relevant to the skill; interpret their contribution rather than copying them literally.
+Use, in order: (1) explicit current user instructions; (2) current repository, Git, and runtime evidence; (3) existing project documentation and instructions, including `AGENTS.md` when present; (4) personal Codex notes; (5) generic engineering assumptions. Read existing project/team RFCs, ADRs, specs, runbooks, and links when relevant. Personal notes are working memory, not project truth. Recheck their claims against current code and Git state; update or invalidate stale notes before acting. Distinguish confirmed facts, inferences, assumptions, unknowns, and conflicts.
 
-Load additional repository, Figma, implementation, or research context only when it can change the current decision or evaluation. Choose routine organization, relevant files, existing components, prototype internals, and comparable local conventions autonomously. Ask only when product behavior, a durable visual/system direction, a hidden requirement, or a high-impact/destructive action remains materially ambiguous.
+## Personal workspace
 
-Classify uncertain information internally as **Known**, **Inferred**, **Assumed**, **Unknown**, or **Conflicting**. Do not turn an inference or assumption into a durable requirement when it materially affects the outcome.
+Chat is transient context. For useful cross-chat context, use `~/.codex/workspaces/<project-key>/` outside the target repository. Derive `<project-key>` as a readable repository-root basename plus the first 12 hexadecimal characters of SHA-256 of the canonical absolute project root path. This remains distinct for same-name projects without storing a remote URL, credentials, or the source path in metadata. Resolve the root from Git when available; otherwise use the canonical working project directory. Create only the needed file or directory, for example `project-context.md`, `active-initiative.md`, `specs/`, `plans/`, `exploration/`, `audit-notes/`, or `environment-notes/`. Keep notes concise: confirmed decisions, evidence pointers, open questions, current Git revision when relevant, and next action. A same-chat or simple task can remain entirely in conversation.
 
-## Durable Context Maintenance
+Do not persist passwords, private keys, API tokens, database passwords, secret-bearing URLs, cookies, or temporary credentials. Non-secret SSH aliases, environment names, app paths, service roles, deployment command names, observability locations, and runbook references may go in personal environment notes. Use SSH configuration, agents, keychains, secret managers, or environment tooling for credentials.
 
-Before finishing:
+## Target repository boundary
 
-1. Identify durable project knowledge created or changed by the task.
-2. Update the artifact that owns that knowledge.
-3. Do not duplicate a decision across documents unnecessarily.
-4. Do not put initiative-specific information in `AGENTS.md`.
-5. Correct information demonstrably made outdated by the task.
-6. Preserve unrelated existing documentation.
+Harness workflow artifacts are personal and local by default. Do not create or update tracked `SPEC.md`, `PLAN.md`, `DEBUG.md`, `RAILS_AUDIT.md`, `SYSTEM_MAP.md`, workflow state, personal architecture/environment/discovery notes, `AGENTS.md`, `ops/ENVIRONMENTS.md`, or equivalent process docs in a target repository. If `AGENTS.md` or project runbooks already exist, read and respect them; do not rewrite them for personal workflow. Do not automatically write to a team's RFC, ADR, issue, design-doc, or knowledge system. No team-tracked artifact mode is defined.
 
-The task is incomplete when knowledge that must survive beyond the active workflow exists only in chat history. Transient investigation, system exploration, hypotheses, and same-chat handoffs do not require a new artifact by default.
+`dev-explore`, `dev-discovery`, `dev-debug`, `dev-rails-audit`, `dev-plan`, and default `dev-review` do not modify the target repository. `dev-implement` may change task-required application code, tests, migrations, configuration, and explicitly requested project/product documentation. `dev-release` may perform authorized release actions through project-native tooling; it does not add harness artifacts. Review fix mode requires the user's explicit fix request. Explicit requests for project documentation are handled as actual task deliverables, not automatic workflow persistence. The harness repository itself can contain its skills, references, README, and eval definitions.
 
-## Mechanism and knowledge boundaries
+For UX skills, Figma/FigJam outputs explicitly requested for the design task remain design deliverables. Any auxiliary workflow notes, specs, design context, reference collections, and standalone exploratory prototypes default to the personal workspace unless the user explicitly asks for project-owned deliverables. Read existing project design documentation as evidence; do not update it merely to keep personal workflow state.
 
-A user goal needing judgment belongs in a public Codex skill. Deterministic repeatable operations belong in scripts, CI, or tasks. Reusable domain expertise belongs in internal playbooks. Stable project-specific facts belong in durable repository artifacts. Conversation carries temporary hypotheses and intentionally chained handoffs. Keep `AGENTS.md` small, stable, and repository-wide; never place a feature requirement, incident diary, or long playbook there.
+## Handoffs and learning
 
-## Artifact ownership
+An active-chat handoff needs no file. For a new chat, read only relevant personal notes alongside current repository and Git state. A local spec or plan can carry the confirmed behavior and next step, but is never mandatory for a small or same-chat task. Correct stale notes when found. Do not duplicate decisions across notes.
 
-| Artifact | Primary owner |
-| --- | --- |
-| `AGENTS.md` | `ux-discovery`, `dev-discovery` |
-| `product/CONTEXT.md` | `ux-discovery` |
-| `design/VISUAL_DIRECTION.md`, `design/references/` | `ux-visual-direction` |
-| `design/DESIGN_SYSTEM.md`, Figma design-system library | `ux-design-system` |
-| Initiative `SPEC.md` | Relevant UX and DEV skill that changes initiative state |
-| FigJam user flows | `ux-user-flow` |
-| Figma wireframes | `ux-wireframe` |
-| HTML prototype | `ux-prototype-html` |
-| Figma final design | `ux-final-design` |
-| `PLAN.md` | `dev-plan` |
-| Production code | `dev-implement` |
-
-Owners maintain their primary artifact. Other skills link to it, record only initiative-specific consequences in `SPEC.md`, and surface drift instead of rewriting it without cause.
-
-## Workflow state in SPEC
-
-Update `## Workflow State` only when the initiative stage, a confirmed decision, an open material question, a relevant artifact reference, or the recommended next action changes. Keep it concise enough for a fresh chat to reconstruct the initiative. Do not use it as an execution diary.
-
-`AGENTS.md` stays small and repository-wide: stable conventions, context locations, universal rules, and safety boundaries. Discovery skills may change it only for a genuinely missing durable rule.
+Explain the specific reason and tradeoff behind a significant, non-obvious engineering decision when useful. One or a few concise engineering notes are enough; avoid generic framework lessons or a tutorial unless requested.

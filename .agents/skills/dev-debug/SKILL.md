@@ -23,13 +23,13 @@ Apply the environment policy before any diagnostic action:
 | Staging | Read-oriented by default. Do not assume data or services are disposable; establish scope and authorization before an active diagnostic. |
 | Production | Strictly read-only: bounded logs, metrics, traces, process/queue inspection, safe bounded `SELECT`/`EXPLAIN`, deployment metadata, and Git evidence. |
 
-Codex sandbox access or tool approval does not expand this skill's diagnostic boundary. Production forbids restarts, rollbacks, deploys, migrations, DB writes, job retries, cache flushes, flag/configuration changes, and killing processes or queries, even during an incident. Prefer existing SSH aliases/config/agents and non-secret `ops/ENVIRONMENTS.md` (or the repository's equivalent) for host roles, app paths, services, logs, DB topology, and observability. Never persist passwords, keys, tokens, secret-bearing URLs, cookies, or temporary credentials there.
+Codex sandbox access or tool approval does not expand this skill's diagnostic boundary. Production forbids restarts, rollbacks, deploys, migrations, DB writes, job retries, cache flushes, flag/configuration changes, and killing processes or queries, even during an incident. Read existing runbooks or `ops/ENVIRONMENTS.md` when present. If useful across chats, keep non-secret environment access facts in the personal Codex workspace. Never create or update repository environment notes for this investigation; never persist passwords, keys, tokens, secret-bearing URLs, cookies, or temporary credentials.
 
 Do not modify source, commit, push, deploy, rollback, change configuration/environment/flags, run migrations, write or delete non-disposable data, flush caches, retry/requeue jobs, rotate secrets, or mutate staging/production infrastructure/runtime state. Severity never expands this boundary. Recommend an action through `dev-implement`, `dev-plan`, or the project's operational process instead.
 
 ## Context and evidence
 
-Follow [workflow governance](../references/workflow-governance.md). Start with the symptom, scope/impact, active conversation diagnosis when present, relevant local instructions, architecture/SPEC, target code path, recent diffs/deploy metadata, and available non-mutating observability evidence. Use progressive disclosure; do not scan the repository or every runtime category blindly.
+Follow [workflow governance](../references/workflow-governance.md). Start with the symptom, scope/impact, active conversation diagnosis when present, relevant local instructions, architecture context and personal notes, target code path, recent diffs/deploy metadata, and available non-mutating observability evidence. Use progressive disclosure; do not scan the repository or every runtime category blindly.
 
 Read the [stack-aware engineering router](../references/engineering/README.md), detect the implicated stack/risk, and load only useful playbooks. For live/production diagnostics, load [runtime diagnostics](../references/engineering/runtime-diagnostics.md). A Rails query failure may need Rails, PostgreSQL, and production safety; a stuck React interaction may need React plus the implicated API path. Authentication, authorization, sessions, OAuth/OIDC, tokens, tenancy, or sensitive data activate security guidance. Jobs activate job/idempotency/deployment compatibility reasoning. Performance work uses timings, query counts/plans, traces, render behavior, and resource evidence rather than speculative optimization.
 
@@ -42,7 +42,7 @@ Read the [stack-aware engineering router](../references/engineering/README.md), 
 5. State confidence: Confirmed, High, Medium, Low, or Inconclusive. An inconclusive result must name remaining hypotheses and discriminating evidence.
 6. Recommend, but never invoke, `dev-implement` for a narrow, confirmed correction with known behavior; recommend `dev-plan` for material architecture, data, migration, integration, or trade-off work. Recommend continued debugging when evidence is insufficient.
 
-Keep temporary hypotheses, failed experiments, and ordinary log observations in chat. Do not create `DEBUG.md` by default. Persist only stable architecture/infrastructure facts to their owning context, product-behavior conflicts to SPEC, or an incident record when the project convention, user, handoff, or compliance requires it.
+Keep temporary hypotheses, failed experiments, and ordinary log observations in chat. Do not create `DEBUG.md` by default. For cross-chat investigation, save a concise personal diagnosis with evidence, confidence, ruled-out hypotheses, and next discriminating action. Do not create or update repository process docs. Explain evidence versus hypothesis and symptom versus root cause when that helps the user.
 
 ## RED FLAGS
 

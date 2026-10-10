@@ -13,11 +13,11 @@ The user only needs to state visual intent and optionally attach references. Int
 
 ## Language and evidence
 
-Use the user's current language for conversation. Write durable artifacts in English unless the current request explicitly selects another language or the initiative SPEC records one. Product UI language is independent; infer it from explicit instruction, existing product, Figma, and product context, asking only if material and unresolved.
+Use the user's current language for conversation. Write personal notes in English unless the current request or a personal initiative preference selects another language. Product UI language is independent; infer it from explicit instruction, existing product, Figma, and product context, asking only if material and unresolved.
 
-Start with existing `VISUAL_DIRECTION.md`, supplied references, relevant product UI, and brand context. Load initiative context, design-system detail, Figma, or broader documentation only when it constrains the visual decision. Use available image, browser, and Figma read tools; disclose inaccessible sources rather than claiming inspection. Separate observed properties, interpretation, preference, and unknowns. Ask only about consequential unresolved choices.
+Start with relevant personal visual direction or existing project-owned direction, supplied references, relevant product UI, and brand context. Load initiative context, design-system detail, Figma, or broader documentation only when it constrains the visual decision. Use available image, browser, and Figma read tools; disclose inaccessible sources rather than claiming inspection. Separate observed properties, interpretation, preference, and unknowns. Ask only about consequential unresolved choices.
 
-Follow [workflow governance](../references/workflow-governance.md). This skill owns visual direction and references; it records initiative-specific consequences in SPEC only when they materially change the initiative.
+Follow [workflow governance](../references/workflow-governance.md). This skill produces visual direction in chat or personal notes and does not modify target repository process docs.
 
 ## Reconcile, do not reset
 
@@ -32,10 +32,10 @@ Translate vague words such as “clean”, “premium”, or “modern” into v
 
 ## Durable output
 
-Create or update `design/VISUAL_DIRECTION.md`, recording overall intent, principles, reference interpretations, anti-references, hierarchy, typography/color/shape/density/spacing/motion/imagery direction, unresolved questions, and source links. Preserve useful supplied visual evidence in `design/references/` when it is available locally and appropriate; do not download or duplicate assets unnecessarily. Keep a `design/references/README.md` with source, intended use, what not to copy, and notes when storing assets. URLs and annotated observations are valid durable evidence when image capture is unavailable.
+When useful across chats, create or update a personal `visual-direction.md` note in the Codex workspace, recording overall intent, principles, reference interpretations, anti-references, hierarchy, typography/color/shape/density/spacing/motion/imagery direction, unresolved questions, and source links. Preserve useful supplied visual evidence in the personal workspace `references/` when it is available locally and appropriate; do not download or duplicate assets unnecessarily. Keep a personal `references/README.md` with source, intended use, what not to copy, and notes when storing assets. URLs and annotated observations are valid durable evidence when image capture is unavailable.
 
-Keep `VISUAL_DIRECTION.md` consistent with any durable initiative-specific decision in `SPEC.md`; link rather than duplicate. Never silently turn an assumption into a rule. Report sources inspected, decisions captured, files updated, and unresolved conflicts.
+Keep personal visual direction consistent with confirmed initiative decisions; link rather than duplicate. Never silently turn an assumption into a rule. Report sources inspected, decisions captured, files updated, and unresolved conflicts.
 
 ## Definition of Done
 
-The task is complete when relevant visual evidence and existing direction have been reconciled, actionable visual intent and material conflicts are recorded in `VISUAL_DIRECTION.md`, useful evidence is referenced or preserved appropriately, and any affected initiative workflow state can be reconstructed without chat history.
+The task is complete when relevant visual evidence and existing direction have been reconciled, actionable visual intent and material conflicts are reported in chat or a useful personal note, useful evidence is referenced or preserved appropriately, and cross-chat context is saved personally when needed.

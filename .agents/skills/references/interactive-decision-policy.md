@@ -2,7 +2,7 @@
 
 Use this policy for decision-oriented Codex skills. Inspect the repository, product/design context, and existing decisions before asking the user. Resolve discoverable facts yourself; ask only when a human preference or consequential product, design, security, data, or architecture decision remains.
 
-If the current Codex session offers Plan mode, it can help investigate and compare options. Do not require a slash command or assume every Codex surface exposes the same mode. When the active mode is read-only, finish the decision work there and switch to a writable mode before updating SPEC, PLAN, or other repository artifacts. A skill cannot change the active mode by itself.
+If the current Codex session offers Plan mode, it can help investigate and compare options. Do not require a slash command or assume every Codex surface exposes the same mode. When the active mode is read-only, finish the decision work there and switch to a writable mode before saving personal notes or implementing task-required project changes. A skill cannot change the active mode by itself.
 
 Use Codex's available structured input tool for a material choice when it improves the answer; otherwise ask one concise question in conversation. Offer a small set of evidence-based options and a recommendation when supported. Ask no more than 1–3 questions per round, usually one decision at a time. Continue once downstream work can proceed without inventing a material decision.
 

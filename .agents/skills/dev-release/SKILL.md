@@ -7,13 +7,13 @@ description: Prepare and coordinate a safe release of an implemented software ch
 
 Ship the approved change through the repository's real deployment path. The skill decides, verifies, and coordinates; existing scripts, CI, and deployment tooling perform deterministic operations. A successful deploy command alone does not complete a release.
 
-Follow [workflow governance](../references/workflow-governance.md). Use the user's current language for conversation and the initiative's recorded artifact language for durable updates, English by default. Load additional playbooks only for release risks present in this change.
+Follow [workflow governance](../references/workflow-governance.md). Use the user's current language for conversation. Personal notes follow an explicit current language request, then a recorded personal preference, otherwise English. Load additional playbooks only for release risks present in this change.
 
 ## Resolve the target and release mechanism
 
-Recover the intended environment and active SPEC/PLAN, review findings, actual diff, tests, operational runbooks, and deployed/current revision. Identify the **exact commit SHA or immutable artifact** to ship. Inspect the repository's actual deployment mechanism, such as Kamal, Capistrano, GitHub Actions, Heroku, Render, Fly.io, Docker/Kubernetes, or project scripts. Use its established commands (`bin/deploy`, CI workflow, `bin/smoke`, etc.) rather than inventing a procedure. Load [release safety](../references/engineering/release-safety.md), [production safety](../references/engineering/production-safety.md), and applicable guidance from the [engineering router](../references/engineering/README.md). Use current framework/tooling docs when version-sensitive behavior changes the decision.
+Recover the intended environment, active-chat or personal initiative context, review findings, actual diff, tests, operational runbooks, and deployed/current revision. Revalidate personal notes against current Git and deployment evidence. Identify the **exact commit SHA or immutable artifact** to ship. Inspect the repository's actual deployment mechanism, such as Kamal, Capistrano, GitHub Actions, Heroku, Render, Fly.io, Docker/Kubernetes, or project scripts. Use its established commands (`bin/deploy`, CI workflow, `bin/smoke`, etc.) rather than inventing a procedure. Load [release safety](../references/engineering/release-safety.md), [production safety](../references/engineering/production-safety.md), and applicable guidance from the [engineering router](../references/engineering/README.md). Use current framework/tooling docs when version-sensitive behavior changes the decision.
 
-Read non-secret environment facts from `ops/ENVIRONMENTS.md` or the existing equivalent when present. It may record environment names, SSH aliases, host roles, app paths, service names, deploy tooling, log locations, DB topology, observability, and safe access notes. Never put credentials, tokens, keys, secret-bearing URLs, cookies, or temporary credentials there. Prefer configured SSH aliases/agents. Do not create an environment inventory merely to complete a checklist.
+Read existing project environment/runbook documentation when present. Otherwise, use personal local notes for useful non-secret SSH aliases, environment names, host roles, app paths, services, deploy tooling, and observability locations. Never create `ops/ENVIRONMENTS.md` or another repository process artifact. Keep credentials, tokens, keys, secret-bearing URLs, cookies, and temporary credentials out of notes; prefer SSH config/agents and secret tooling. Create no inventory merely for a checklist.
 
 ## Preflight: claim → evidence
 
@@ -34,7 +34,7 @@ Codex sandbox permission to run a command is separate from approval of the produ
 
 ## Execute and observe
 
-Use the existing deterministic release mechanism with the approved target and revision. Record the actual command/workflow and observed result. Afterward verify the deployed revision plus relevant health endpoint, web/worker process state, migration status, critical smoke path, new errors/logs, and queue status using configured observability. Check only relevant signals, but do not stop at command success. If a problem appears, report the observed release state and route diagnosis to `dev-debug`; do not silently switch workflows or perform unapproved rollback/restarts.
+Use the existing deterministic release mechanism with the approved target and revision. Record the actual command/workflow and observed result in chat; use a concise personal release note only if another chat will need it. Explain material deploy compatibility and recovery trade-offs when useful. Afterward verify the deployed revision plus relevant health endpoint, web/worker process state, migration status, critical smoke path, new errors/logs, and queue status using configured observability. Check only relevant signals, but do not stop at command success. If a problem appears, report the observed release state and route diagnosis to `dev-debug`; do not silently switch workflows or perform unapproved rollback/restarts.
 
 ## RED FLAGS
 

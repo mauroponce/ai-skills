@@ -1,3 +1,5 @@
+<!-- Optional personal Codex context template. Save outside the target repository only when useful. -->
+
 # Product Context
 
 ## Product

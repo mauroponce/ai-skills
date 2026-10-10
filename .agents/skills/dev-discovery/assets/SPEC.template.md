@@ -1,3 +1,5 @@
+<!-- Optional personal Codex note template. Save outside the target repository only when cross-chat context is useful. -->
+
 # <Initiative name>
 
 ## Working conventions
@@ -20,8 +22,8 @@ Current stage: Discovery
 ### Relevant artifacts
 
 - Wireframes/final design: <Figma reference when relevant>
-- HTML prototype: `prototype/<initiative>/prototype.html` (when relevant)
-- Implementation plan: `work/<initiative>/PLAN.md` (when relevant)
+- HTML prototype: personal workspace prototype path (when relevant)
+- Implementation plan: personal plan path (when relevant)
 - Relevant tests or implementation references: <paths when useful>
 
 ### Next recommended action
@@ -62,7 +64,7 @@ Product, design, technical, security, compatibility, operational, or platform co
 
 ## Interfaces / contracts
 
-Relevant API, event, data, UI, or integration contracts at the requirements level. Keep implementation sequencing in `PLAN.md`.
+Relevant API, event, data, UI, or integration contracts at the requirements level. Keep implementation sequencing in a chat or personal plan.
 
 ## Edge cases / failure behavior
 

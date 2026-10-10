@@ -1,3 +1,5 @@
+<!-- Optional personal Codex note template. Save outside the target repository only when cross-chat context is useful. -->
+
 # <Initiative name>
 
 ## Working conventions
@@ -21,10 +23,10 @@ Current stage: Discovery
 
 - User flow: <FigJam reference when relevant>
 - Wireframes: <Figma reference when relevant>
-- HTML prototype: `prototype/<initiative>/prototype.html` (when relevant)
+- HTML prototype: personal workspace prototype path (when relevant)
 - Final design: <Figma reference when relevant>
 - Design system: <Figma reference when relevant>
-- Implementation plan: `work/<initiative>/PLAN.md` (when relevant)
+- Implementation plan: personal plan path (when relevant)
 
 ### Next recommended action
 
@@ -118,7 +120,7 @@ Record material design decisions and trade-offs as they are made.
 
 ## Implementation notes
 
-Relevant implementation-facing constraints or component mappings; keep detailed engineering planning in `PLAN.md` when needed.
+Relevant implementation-facing constraints or component mappings; keep detailed engineering planning in chat or a personal plan when needed.
 
 ## Acceptance criteria
 

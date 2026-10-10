@@ -11,7 +11,7 @@ Find high-value improvements in an existing Rails application or a requested sub
 
 ## Language and context
 
-Follow [workflow governance](../references/workflow-governance.md). Detect the user's current language and use it for conversation, clarifications, and findings. Durable artifacts use the active initiative's explicit artifact language, otherwise English, unless the user explicitly directs otherwise. Do not infer artifact language from conversational Spanish. Keep transient audit hypotheses and findings in the same chat by default; do not create `RAILS_AUDIT.md`. Persist genuinely stable architecture, stack, or operational facts to an existing owning artifact when useful, never a speculative optimization as fact. Write a report only when requested, a cross-chat/team handoff requires one, or project convention calls for one.
+Follow [workflow governance](../references/workflow-governance.md). Detect the user's current language and use it for conversation, clarifications, and findings. Personal notes use an explicit current language request, then a recorded personal initiative preference, otherwise English. Do not infer note language from conversational Spanish. Keep transient audit hypotheses and findings in the same chat by default; do not create `RAILS_AUDIT.md`. For a cross-chat continuation, save selected findings and evidence as concise personal audit notes. Do not write repository architecture or audit process docs. Explain why a pattern helps or harms this application, including a meaningful trade-off when relevant.
 
 ## Detect, then inspect
 

@@ -1,6 +1,6 @@
 ---
 name: ux-discovery
-description: Understand a product-design problem before solution work. Inspect the repo and existing Figma/context first, interview only about meaningful unknowns, and create or update minimal durable product/design artifacts. Use for greenfield or existing products when requirements need clarification or documentation.
+description: Understand a product-design problem before solution work. Inspect the repo and existing Figma/context first, interview only about meaningful unknowns, and clarify product/design context in chat or minimal personal notes when cross-chat continuity is useful. Use for greenfield or existing products when requirements need clarification or documentation.
 ---
 
 # UX Discovery
@@ -17,9 +17,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 - Detect the language of the user's current request.
 - Use that language for conversation, questions, interview rounds, explanations, and summaries unless the user explicitly asks to switch.
-- Determine repository artifact language in this order: (1) an explicit instruction in the current request, (2) an explicit initiative/workflow artifact language already recorded in the active `SPEC.md`, (3) English by default.
-- When the user explicitly requests another artifact language for the whole initiative/workflow, record that preference in the active `SPEC.md` and preserve it in later phases. A clearly one-off language request applies only to the requested artifact.
-- Never infer repository artifact language merely from the conversation language.
+- For personal workflow notes, follow an explicit current language request, then a recorded personal preference, otherwise English. Do not infer note language from conversation language.
 - Treat product UI/content language as independent from conversation and artifact language. Infer it from the existing product, repository, Figma, or product context. Ask only when it is materially ambiguous.
 - Preserve existing code identifiers, domain terms, and established naming conventions; do not translate them merely because the conversation is in another language.
 - For Figma names (components, variables, layers, pages), default to English unless the existing design system uses another convention, the active initiative records another artifact/naming convention, or the user explicitly requests otherwise.
@@ -31,7 +29,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 Do not start by generating polished screens or implementation code. Conceptual flows may be used to clarify scope; use `ux-wireframe` for low-fidelity Figma exploration.
 
-Follow [workflow governance](../references/workflow-governance.md): begin with the smallest useful set of repository signals, persist only owned durable knowledge, and update the initiative workflow state when discovery changes it.
+Follow [workflow governance](../references/workflow-governance.md): begin with the smallest useful set of repository signals, keep same-chat results in conversation, and save only useful cross-chat context in the personal workspace. Do not modify the target repository.
 
 ## User interaction
 
@@ -45,13 +43,13 @@ Determine whether this is:
 
 - a new project;
 - an existing project with a new initiative;
-- an existing initiative that already has a `SPEC.md`.
+- an existing initiative described in personal notes or a project-owned spec.
 
 Resolve the active initiative from, in order:
 
 1. an explicit file/path/slug in the user's request;
 2. the current conversation;
-3. a single clearly active `work/*/SPEC.md`;
+3. a single clearly active personal initiative note or existing project-owned spec;
 4. otherwise ask the user which initiative to use.
 
 Do not create a duplicate initiative when a suitable one already exists.
@@ -137,47 +135,15 @@ Cover only what is relevant, typically:
 - major risks: value, usability, feasibility, viability;
 - open questions that need later research or validation.
 
-## 6. Create or update durable project context
+## 6. Keep useful context personal
 
-Prefer existing project conventions. Do not create parallel docs when an existing file already fulfills the same purpose.
-
-When needed, use the templates bundled with this skill.
-
-### `AGENTS.md`
-
-Create or modify it only when a stable repository-wide product/design rule is genuinely missing. If absent, create a lean root `AGENTS.md` using `assets/AGENTS.product-design-section.md` as guidance.
-
-If present:
-
-- preserve existing instructions;
-- add only missing durable product/design guidance;
-- never replace the whole file;
-- keep it concise and link to context instead of copying context into it.
-
-### `product/CONTEXT.md`
-
-Create/update stable product context using `assets/CONTEXT.template.md` as guidance.
-
-Do not fill unknown sections with invented content. Mark meaningful unknowns explicitly or omit irrelevant sections.
-
-### `work/<initiative>/SPEC.md`
-
-Create or update the initiative source of truth using `assets/SPEC.template.md`.
-
-The spec must separate:
-
-- evidence/facts;
-- decisions/requirements;
-- assumptions;
-- open questions.
-
-Do not duplicate stable project context that belongs in `CONTEXT.md` or `DESIGN_SYSTEM.md`; link/reference it instead.
+Read existing project instructions, product context, specs, and design-system documentation as evidence. If `AGENTS.md` exists, respect it; never create or rewrite it for this workflow. Same-chat discovery can stay in conversation. For cross-chat work, save a concise personal problem/requirements note under the project workspace; include confirmed decisions, constraints, assumptions, open questions, and next action. `assets/SPEC.template.md` and `assets/CONTEXT.template.md` are optional personal-note guides. Do not create or update repository `SPEC.md`, `product/CONTEXT.md`, `design/DESIGN_SYSTEM.md`, or workflow state.
 
 ## 7. Discovery completion gate
 
 Discovery is sufficiently complete when downstream design can proceed without guessing the core problem or product behavior.
 
-Before declaring it ready, verify that the spec has, when applicable:
+Before declaring it ready, verify that the result contains, when applicable:
 
 - a clear problem statement;
 - target user/context;
@@ -189,7 +155,7 @@ Before declaring it ready, verify that the spec has, when applicable:
 - important assumptions;
 - unresolved questions clearly marked;
 - risks that require validation;
-- concise `Workflow State` with current stage, confirmed decisions, open questions, relevant artifacts, and a next recommended action.
+- a clear next recommended action; save it personally only if another chat needs it.
 
 Do not force false certainty. A spec can be ready for design with explicitly documented research questions.
 
@@ -199,7 +165,7 @@ Report concisely, in the conversation language:
 
 - what the agent learned from the repository/Figma;
 - which decisions the user made;
-- which files were created or updated;
+- which personal notes were saved, if any;
 - remaining material unknowns;
 - whether the initiative is ready for `ux-wireframe`, `ux-final-design`, or another appropriate next task.
 
@@ -207,4 +173,4 @@ Do not automatically invoke another skill.
 
 ## Definition of Done
 
-The task is complete when the relevant repository/Figma evidence has been inspected, material product decisions and unknowns are explicit, the initiative SPEC reflects the problem and constraints, stable context is updated only where warranted, and its workflow state points a fresh chat to the next useful action.
+The task is complete when the relevant repository/Figma evidence has been inspected, material product decisions and unknowns are explicit, the problem and constraints are clear in conversation or useful personal notes, and a fresh chat has the needed context when cross-chat continuation is planned.
