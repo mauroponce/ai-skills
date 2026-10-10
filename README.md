@@ -2,31 +2,33 @@
 
 Skills for understanding, designing, implementing, reviewing, and shipping web applications. Invoke one in your project with `$skill-name`; DEV skills inspect its stack, use relevant [engineering references](.agents/skills/references/engineering/README.md), and check version-specific behavior against authoritative sources.
 
+**Where outputs go:** `Chat` means this Codex conversation. Optional handoff notes live under `~/.codex/workspaces/<project-key>/` only when another chat needs them. `Project` means the application repository. Figma and FigJam files live in those services; their links are reported in Chat. If access is unavailable, the skill reports that limitation in Chat instead. Workflow notes are not added to the project by default.
+
 ## DEV skills
 
-| Skill | What it does |
-| --- | --- |
-| `$dev-explore` | Explains how an existing system or flow works. |
-| `$dev-discovery` | Defines a change's behavior, constraints, and open decisions. |
-| `$dev-debug` | Diagnoses a bug or incident without applying a fix. |
-| `$dev-audit` | Finds and prioritizes improvements in an existing app. |
-| `$dev-plan` | Designs implementation steps, tests, and rollout. |
-| `$dev-implement` | Changes project code and verifies the result. |
-| `$dev-review` | Independently checks a diff against requirements and engineering risks. |
-| `$dev-release` | Prepares, coordinates, and verifies a release. |
+| Skill | What it does | Output and location |
+| --- | --- | --- |
+| `$dev-explore` | Explains how an existing system or flow works. | System explanation in Chat; optional personal exploration note. |
+| `$dev-discovery` | Defines a change's behavior, constraints, and open decisions. | Requirements and decisions in Chat; optional personal specification. |
+| `$dev-debug` | Diagnoses a bug or incident without applying a fix. | Diagnosis in Chat; optional personal diagnosis note. |
+| `$dev-audit` | Finds and prioritizes improvements in an existing app. | Numbered findings in Chat; optional personal audit note. |
+| `$dev-plan` | Designs implementation steps, tests, and rollout. | Plan in Chat; optional personal file under `plans/`. |
+| `$dev-implement` | Changes project code and verifies the result. | Code, tests, and task files in Project; progress in Chat or an optional personal plan. |
+| `$dev-review` | Independently checks a diff against requirements and engineering risks. | Findings in Chat; optional personal review note. Project changes only if fixes are explicitly requested. |
+| `$dev-release` | Prepares, coordinates, and verifies a release. | Readiness or deployment status in Chat; actual release in the target environment, with an optional personal note. |
 
 ## UX skills
 
-| Skill | What it does |
-| --- | --- |
-| `$ux-discovery` | Clarifies the product problem and requirements. |
-| `$ux-visual-direction` | Defines visual intent from product context and references. |
-| `$ux-user-flow` | Maps one user goal and its decisions in FigJam. |
-| `$ux-wireframe` | Explores screen structure and states in Figma. |
-| `$ux-prototype-html` | Tests an interaction in a standalone browser prototype. |
-| `$ux-design-system` | Builds reusable Figma foundations and components. |
-| `$ux-final-design` | Produces detailed Figma screens and states. |
-| `$ux-validate` | Evaluates a design or implementation against available evidence. |
+| Skill | What it does | Output and location |
+| --- | --- | --- |
+| `$ux-discovery` | Clarifies the product problem and requirements. | Requirements in Chat; optional personal problem/specification note. |
+| `$ux-visual-direction` | Defines visual intent from product context and references. | Direction in Chat; optional personal `visual-direction.md` and saved references. |
+| `$ux-user-flow` | Maps one user goal and its decisions in FigJam. | Dedicated FigJam board; link in Chat, optional personal handoff note. |
+| `$ux-wireframe` | Explores screen structure and states in Figma. | Dedicated Figma wireframe file; link in Chat, optional personal handoff note. |
+| `$ux-prototype-html` | Tests an interaction in a standalone browser prototype. | Personal `prototype/<initiative>/prototype.html`; path and results in Chat. |
+| `$ux-design-system` | Builds reusable Figma foundations and components. | Figma design-system library; optional personal `design-system.md`. |
+| `$ux-final-design` | Produces detailed Figma screens and states. | Dedicated Figma final-design file; link in Chat, optional personal handoff note. |
+| `$ux-validate` | Evaluates a design or implementation against available evidence. | Validation findings in Chat; optional personal note. |
 
 ## Example workflows
 
@@ -97,7 +99,7 @@ Choose only steps that resolve real uncertainty. Use Plan mode for visual direct
 ## Working practices
 
 - **Chats and handoffs:** Stay in one chat when the next skill benefits from established context. Start a fresh chat for independent `dev-review`. Long work can carry concise personal notes into another chat; recheck them against current code and Git state.
-- **Personal artifacts:** Workflow notes live in chat or `~/.codex/workspaces/<project-key>/`, outside the target repository. Create a file only when cross-chat continuity helps. The harness does not automatically add `SPEC.md`, `PLAN.md`, audit/debug notes, `AGENTS.md`, or environment notes to a project. Read existing project and company docs as evidence; change project files only for the actual task.
+- **Personal artifacts:** Create a handoff file only when cross-chat continuity helps. The harness does not automatically add `SPEC.md`, `PLAN.md`, audit/debug notes, `AGENTS.md`, or environment notes to a project. Read existing project and company docs as evidence; change project files only for the actual task.
 - **Source precedence:** Current user instructions → current repository/Git/runtime evidence → existing project docs → personal notes → generic assumptions. Never let a stale personal plan override current code. Keep secrets out of personal notes.
 - **Engineering judgment:** Skills explain a significant decision's reason and tradeoff briefly when useful, without turning routine work into a tutorial. Repeatable mechanics belong in project scripts and CI.
 - **Execution:** DEV handoffs use the centralized [execution policy](.agents/skills/references/execution-policy.md). Spend more capability on uncertainty and risk; use a lighter tier when a sound plan makes work deterministic. Production debugging is read-only; production deployment needs approval for the concrete action.
