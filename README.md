@@ -1,22 +1,30 @@
-# AI Skills for Codex and Claude Code
+# Codex Product and Engineering Harness
 
-One shared skill source for product design and software development. The UX skills help a designer investigate, explore, prototype, systematize, finalize, and validate product experiences. They do not implement production application code. DEV skills own engineering implementation.
+This repository contains a Codex-native product and engineering workflow harness optimized for professional web development, with a strong focus on Ruby on Rails applications. The UX skills investigate, explore, prototype, systematize, finalize, and validate product experiences. DEV skills own engineering implementation.
 
-Codex invocation uses `$skill-name`; Claude Code uses `/skill-name`. Examples below use Codex syntax. Skills inspect durable repository and Figma context on every invocation, so a workflow can span chats. **Chat is working memory; repository artifacts are durable product memory; Figma is the durable design artifact.**
+Invoke a Codex skill with `$skill-name`. Skills inspect relevant durable repository and Figma context, so a workflow can span Codex conversations. **Conversation is working memory; repository artifacts are durable project knowledge; Figma is the durable design artifact.**
+
+## Codex-native architecture
+
+| Codex workflow and orchestration | Reusable engineering knowledge |
+| --- | --- |
+| Codex skills, `$skill-name` routing, model/reasoning policy, CLI and IDE use, MCP integrations, sandbox/approval boundaries, `AGENTS.md`, and Codex conversation handoffs | Rails and Active Record, database design, testing, security, architecture, concurrency, jobs, and production/release safety |
+
+This split keeps engineering reasoning conceptually reusable while the operational workflow is optimized for Codex. Codex skills coordinate judgment and user goals; internal references hold domain expertise; project scripts/CI perform deterministic operations; repository artifacts preserve stable project facts.
+
+The **Codex IDE integration** (including VS Code) is often convenient for code-oriented discovery, planning, and implementation. **Codex CLI** is often convenient for terminal or system-oriented debugging and release work. These are preferences, not restrictions: both use this harness's skills, `AGENTS.md`, references, repository context, and configured [MCP connections](https://developers.openai.com/learn/docs-mcp). The [Codex CLI](https://learn.chatgpt.com/docs/codex/cli) and [IDE integration](https://learn.chatgpt.com/docs/codex/ide) are two surfaces for the same workflow.
+
+Invoke skills manually in an interactive Codex conversation. For repeatable, non-interactive Codex work, `codex exec` is available in the CLI; project scripts and CI remain the right home for deterministic build, test, and deployment mechanics. Codex sandbox and approval settings govern available tool actions, while a skill's production boundary still requires explicit approval for the concrete deployment action. `dev-debug` remains non-remediating and strictly read-only in production.
 
 ## Agentic Workflow Design Principles
 
-This skill system is intentionally small, modular, and artifact-driven. Its architecture follows current guidance from OpenAI and Anthropic for building reliable agentic workflows.
+This Codex skill system is intentionally small, modular, and artifact-driven. Public workflow guidance is Codex-specific; the engineering playbooks retain reusable, mostly tool-neutral domain knowledge.
 
 The goal is not to prescribe every step the model must take. Instead, the system gives the agent clear goals, boundaries, durable context, and access to the right tools while leaving enough flexibility for the model to reason about the specific project.
 
 ### 1. Prefer simple, composable workflows
 
-Both OpenAI and Anthropic recommend avoiding unnecessary agentic complexity.
-
-Anthropic's guidance on effective agents emphasizes starting with the simplest solution that works and adding orchestration only when it produces measurable value. It distinguishes predictable workflows from fully autonomous agents and recommends simple, composable patterns over elaborate frameworks.
-
-OpenAI similarly recommends keeping skills focused on recognizable workflows rather than accumulating large collections of overlapping instructions.
+Start with the simplest workflow that meets the user goal. Add orchestration only when it produces measurable value. Keep Codex skills focused on recognizable workflows instead of accumulating overlapping instructions.
 
 This project therefore uses a small number of high-level skills:
 
@@ -91,7 +99,7 @@ Skill metadata is part of the agent's context and helps determine which skill sh
 
 OpenAI recommends descriptions that state precisely what the skill does and when it applies. Overly broad descriptions can cause the wrong skill to be loaded, and large numbers of overlapping descriptions can compete for limited context.
 
-Anthropic makes a similar recommendation for agent tools: each capability should have a clear and distinct purpose, because overlapping capabilities create ambiguous decision points for the agent.
+Each skill should have a distinct purpose; overlapping triggers make Codex routing ambiguous.
 
 Therefore:
 
@@ -110,9 +118,7 @@ Detailed workflow instructions belong inside `SKILL.md`, not in the skill descri
 
 ### 4. Use namespaces to make boundaries obvious
 
-The `ux-` and `dev-` prefixes are deliberate.
-
-Anthropic recommends namespacing agent tools when multiple related capabilities coexist, because clear naming helps the model distinguish their functional boundaries and select the appropriate capability.
+The `ux-` and `dev-` prefixes make skill boundaries visible during Codex selection.
 
 The same principle is applied here to skills:
 
@@ -131,7 +137,7 @@ Context is a finite resource.
 
 OpenAI recommends progressive disclosure for skills: expose enough information for the model to know that a capability exists, then load detailed instructions and supporting resources only when they are relevant.
 
-Anthropic describes context engineering similarly: effective agents should work with the smallest set of high-signal information needed for the current task rather than filling the context window with every potentially useful piece of information.
+Codex should load the smallest set of high-signal context needed for the current task instead of every potentially useful document.
 
 For that reason, this project does not require every skill to read every document.
 
@@ -178,7 +184,7 @@ ask the user everything
 → ignore available project context
 ```
 
-This follows the broader agentic pattern recommended by both organizations: models should use tools and retrieval to acquire relevant context as they work rather than forcing all information into the initial prompt.
+Repository-first investigation lets Codex resolve discoverable facts before interrupting the user.
 
 A discovery skill should therefore distinguish:
 
@@ -198,7 +204,7 @@ and only interrupt the user when unresolved information could materially change 
 
 Chat history is useful working memory, but it should not be the only place where important decisions live.
 
-Long-running agentic tasks continuously accumulate context. Anthropic recommends actively curating context rather than allowing all previous information to accumulate indefinitely.
+Long-running Codex conversations accumulate context, so durable decisions belong in owned artifacts rather than only in chat history.
 
 OpenAI likewise recommends keeping persistent repository instructions and supporting documentation focused and current rather than continually expanding `AGENTS.md` or prompts with every past decision.
 
@@ -272,7 +278,7 @@ Modern models benefit from clear goals and constraints but can perform worse whe
 
 OpenAI notes that increasingly capable models require less procedural scaffolding and that elaborate skill "itineraries" can become counterproductive.
 
-Anthropic similarly recommends giving agents clear instructions at the right level of abstraction rather than either hardcoding brittle decision trees or relying on vague guidance.
+Give Codex clear goals and boundaries without brittle decision trees or vague instructions.
 
 Skills should therefore specify:
 
@@ -369,7 +375,7 @@ Skills should therefore orchestrate tools around goals instead of duplicating to
 
 ### 12. Tool and skill outputs should maximize signal, not volume
 
-Anthropic's agent-tool guidance emphasizes returning relevant, interpretable context rather than dumping large amounts of low-value information into the model's context window. It also recommends filtering, pagination, concise representations, and semantically meaningful identifiers where appropriate.
+Tool results should provide relevant, interpretable context. Filter or paginate large outputs and preserve meaningful identifiers.
 
 The same principle applies to workflow artifacts.
 
@@ -397,7 +403,7 @@ over:
 
 Agentic systems benefit from verification loops rather than treating the first generated result as final.
 
-Both OpenAI and Anthropic emphasize testing and evaluation as core parts of reliable agentic systems. Anthropic specifically recommends evaluation-driven development for tools and agents, while OpenAI recommends verification appropriate to the task rather than blindly running every possible check.
+Verification should match the task risk. Behavioral evals test Codex workflow changes; application tests and independent review test implementation.
 
 This workflow therefore gives validation and review explicit roles:
 
@@ -411,7 +417,7 @@ implementation → dev-review
 
 Starting these evaluation passes in a fresh chat can sometimes be useful because it reduces anchoring on the reasoning that created the artifact.
 
-This is a workflow choice derived from the broader context-management principles above, not a requirement of either OpenAI or Anthropic.
+This is a deliberate Codex workflow choice: a fresh review conversation can reduce anchoring while durable artifacts preserve context.
 
 The important requirement is that a fresh session must be able to reconstruct the necessary context from durable artifacts.
 
@@ -448,7 +454,7 @@ Agent behavior changes as models, tools, MCP servers, and project requirements e
 
 OpenAI explicitly recommends periodically revisiting skills and `AGENTS.md` because instructions that helped older models can become redundant or even counterproductive with newer ones.
 
-Anthropic recommends an evaluation-driven approach: test agents on realistic tasks, inspect where they fail or become confused, and improve tools and instructions based on observed behavior rather than intuition alone.
+Use realistic Codex evals to observe failure, identify its cause, and change the smallest useful instruction or tool surface.
 
 Therefore, treat these skills as versioned product infrastructure.
 
@@ -586,9 +592,10 @@ A DEV skill may finish with:
 ```text
 Next: $dev-plan
 Execution: COMPLEX / Medium
+Recommended Codex model: <mapped model, only when available>
 ```
 
-The **skill** names the next user-goal workflow step. The **execution tier** estimates the capability needed for that next step. The shared [execution policy](.agents/skills/references/execution-policy.md) defines FAST, ROUTINE, COMPLEX, and HARD and holds the single current model mapping. Concrete model names can change; if availability is unknown, use tier and reasoning only. Spend stronger models on uncertainty and risk, then recommend a smaller/faster tier when a good plan makes implementation deterministic. A complete plan may hand off to `ROUTINE / Low` even if planning used `COMPLEX / Medium`.
+The **skill** names the next user-goal workflow step. The **execution tier** estimates the capability needed for that next step. The shared [Codex execution policy](.agents/skills/references/execution-policy.md) defines FAST, ROUTINE, COMPLEX, and HARD and holds the single current Codex model mapping. Concrete model names can change; if availability is unknown, use tier and reasoning only. Spend stronger models on uncertainty and risk, then recommend a smaller/faster tier when a good plan makes implementation deterministic. A complete plan may hand off to `ROUTINE / Low` even if planning used `COMPLEX / Medium`. When Codex model availability is unknown, omit the model line.
 
 Internal [engineering playbooks](.agents/skills/references/engineering/README.md) supply Rails, database, security, API, observability, source verification, and release expertise only when relevant. When dependency behavior affects a decision, check the installed version and authoritative upstream docs. Git history helps explain unusual architecture, regression timing, change pressure, and exact release identity. A static copy change does not need a database lecture.
 
@@ -609,7 +616,7 @@ dev-discovery        dev-debug             dev-rails-audit
 → dev-release        → dev-release         → dev-release
 ```
 
-`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Prefer a fresh chat for independent `dev-review`. Discovery, debugging, and audit findings can hand off in the same chat; durable SPEC/PLAN and stable project artifacts carry knowledge across chats.
+`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Prefer a fresh Codex conversation for independent `dev-review`. Discovery, debugging, and audit findings can hand off in the same chat; durable SPEC/PLAN and stable project artifacts carry knowledge across chats.
 
 The release skill performs evidence-based preflight, requests explicit approval immediately before a concrete production deploy, uses the repository's scripts/CI for deterministic operations, and verifies deployed health and behavior afterward.
 
@@ -752,11 +759,11 @@ Figma-oriented skills use Figma MCP: `ux-user-flow`, `ux-wireframe`, `ux-design-
 
 Reuse an existing file that already serves the purpose; do not create duplicates. `ux-prototype-html` creates a browser prototype, not a Figma artifact. The UX-to-DEV handoff is the durable SPEC, Figma links, design-system contract, validation findings, and approved design—not a chat transcript.
 
-## Same chat or a new chat?
+## Same Codex conversation or a new one?
 
 Stay in the same chat while resolving ambiguity, when one skill directly continues the reasoning of another, or when rapid iteration is useful. `ux-discovery → ux-wireframe` and `ux-wireframe → ux-prototype-html` can often stay together.
 
-Prefer a fresh chat for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained work may use active chat context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, `dev-rails-audit → dev-plan → dev-implement`, `dev-rails-audit → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
+Prefer a fresh Codex conversation for an independent critique, a clean handoff to engineering, or when a thread has become long. `ux-validate`, `dev-discovery`, and `dev-review` often benefit from fresh eyes. Intentionally chained Codex skills may use active conversation context: `dev-debug → dev-implement`, `dev-debug → dev-plan → dev-implement`, `dev-rails-audit → dev-plan → dev-implement`, `dev-rails-audit → dev-implement`, and `ux-discovery → ux-wireframe` are useful same-chat flows. Knowledge that must survive across chats, people, or long-running work belongs in repository/Figma/code artifacts; transient diagnosis and hypotheses normally remain in chat.
 
 ## Language policy
 
@@ -875,7 +882,7 @@ Those are responsibilities of the skill. It may ask a focused question when the 
 
 ## Practical workflows
 
-Examples are copy-pasteable Codex invocations. In Claude Code, invoke the same skill as `/ux-discovery`, etc. Each invocation expresses intent; the text underneath describes what the skill automatically recovers, may ask, and persists.
+Examples are copy-pasteable Codex skill invocations. Each expresses intent; the text underneath describes what the skill recovers, may ask, and persists.
 
 ### A — Completely new product
 
@@ -976,18 +983,12 @@ DEV skills consume product context, requirements, design links/system, and valid
 
 ## Installation
 
-The canonical source is `.agents/skills/`. Codex reads it directly. `.claude/skills/` contains symlinks to those same skill folders for Claude Code; these are links, not duplicated files.
-
-```text
-.agents/skills/                  # one copy of skills and resources
-.claude/settings.json            # Claude-specific invocation policy
-.claude/skills/<skill-name>      # symlink to .agents/skills/<skill-name>
-```
-
-Clone and open the repository in either host. Git must preserve symlinks; if a platform/client does not, enable symlink support or copy the canonical skill folders into `.claude/skills/` locally. Codex-only metadata such as `agents/openai.yaml` is ignored by Claude Code. The checked-in Claude setting keeps visual direction manually invoked, matching its Codex metadata.
-
-Global installation is also possible by copying each skill folder into `~/.agents/skills/` for Codex or `~/.claude/skills/` for Claude Code.
+The canonical Codex skills live in `.agents/skills/`; `AGENTS.md` supplies small repository-wide instructions. Clone and open this repository in Codex CLI or the Codex IDE integration. Both surfaces use the same repository skills, references, and project context. A skill may include Codex metadata in `agents/openai.yaml`, including invocation policy. For global use, copy the desired skill folders into a Codex skills directory supported by the current installation.
 
 ## UX / DEV boundary
 
 UX produces specs, Figma artifacts, visual/design-system documentation, validation findings, and the standalone HTML prototype. It never implements production application code. Once design decisions and acceptance criteria are ready, DEV takes over technical discovery, planning, implementation, and review using the durable artifacts.
+
+## Influences
+
+The workflow draws on public OpenAI Codex guidance, Rails architecture literature, and general ideas from other agent workflow systems, including Anthropic. This is attribution only; this repository does not maintain operational compatibility with those systems.

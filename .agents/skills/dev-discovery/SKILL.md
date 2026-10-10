@@ -37,7 +37,7 @@ Use the [stack-aware engineering router](../references/engineering/README.md). D
 
 ## User interaction
 
-This is a decision-oriented skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
+Use [the Codex interactive decision policy](../references/interactive-decision-policy.md) for consequential questions and the active session's Plan-mode/write boundary. Do not require a slash command before using this skill.
 
 Investigate code, tests, configuration, documentation, and current behavior before asking. Treat supplied issue links, documents, API references, logs, and code links as additional evidence; verify them against the repository where appropriate. Ask only about unresolved externally visible behavior or material business, security, data, API, compatibility, rollout, or hard-to-reverse architecture decisions. Recommend an option when repository evidence supports it. Do not ask the user where something is implemented; search the repository.
 

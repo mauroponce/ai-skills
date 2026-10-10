@@ -30,7 +30,7 @@ Use the actual repository and CI evidence. A previous green run on another commi
 
 ## Production approval boundary
 
-Do all safe preflight work first. Immediately before the production deployment action, present a compact, reviewable release card: target environment, exact revision/artifact, migration behavior, principal risks, rollback/recovery path, and verification plan. Obtain explicit approval for that concrete production action. Do not ask repeatedly for low-risk preflight work. If revision, target, or material risk changes after approval, re-evaluate and obtain approval for the changed action. Staging and other external mutations also require authorization when it is missing.
+Codex sandbox permission to run a command is separate from approval of the production release. Do all safe preflight work first. Immediately before the production deployment action, present a compact, reviewable release card: target environment, exact revision/artifact, migration behavior, principal risks, rollback/recovery path, and verification plan. Obtain explicit approval for that concrete production action. Do not ask repeatedly for low-risk preflight work. If revision, target, or material risk changes after approval, re-evaluate and obtain approval for the changed action. Staging and other external mutations also require authorization when it is missing.
 
 ## Execute and observe
 

@@ -15,7 +15,7 @@ The user's explicit instructions take precedence over workflow defaults in this 
 
 ## User interaction
 
-This is a decision-oriented planning skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
+Use [the Codex interactive decision policy](../references/interactive-decision-policy.md) for consequential questions and the active session's Plan-mode/write boundary. Do not require a slash command before using this skill.
 
 Consume decisions from `SPEC.md`, an active diagnosis or selected audit findings when intentionally chained in the same chat, and verified repository structure. For audit findings, preserve the cited evidence, uncertainty, production constraints, and measurement needed; do not repeat a discovery questionnaire or treat a candidate as confirmed. For a diagnosed bug, plan root-cause elimination, regression prevention, relevant tests, and rollout/migration concerns rather than repeating discovery. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
 

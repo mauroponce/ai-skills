@@ -35,7 +35,7 @@ Follow [workflow governance](../references/workflow-governance.md): begin with t
 
 ## User interaction
 
-This is a decision-oriented skill intended to start in Plan mode (`/plan`). It cannot switch the host's mode. See [the shared interaction policy](../references/interactive-decision-policy.md) for the Codex and Claude Code interaction rules, including when to leave read-only Plan mode to save artifacts.
+Use [the Codex interactive decision policy](../references/interactive-decision-policy.md) for consequential questions and the active session's Plan-mode/write boundary. Do not require a slash command before using this skill.
 
 Investigate existing UX, application behavior, specs, and Figma before interviewing. Keep questions focused on unresolved product decisions such as target user/outcome, workflow behavior, information hierarchy, material states, permissions, navigation, success criteria, and scope. Leave visual-style preferences to `ux-visual-direction`. Use native structured questions when available, recommend evidence-supported options, and stop once design can proceed without guessing core behavior.
 
