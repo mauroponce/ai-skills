@@ -4,6 +4,8 @@
 
 Use this pattern in every skill: inspect the minimum high-signal context, understand the task, clarify only material ambiguity, act, persist durable knowledge when it must survive, then check the skill's Definition of Done. Intentionally chained skills may consume active conversation context; a new chat must rely on durable artifacts for knowledge that needs to survive across sessions, people, or long-running work.
 
+For DEV handoffs, use the shared [execution policy](execution-policy.md) to recommend the next skill and cheapest suitable capability tier/reasoning. Skill routing follows the user goal; model choice follows the next step's uncertainty and risk. Do not scatter concrete model names across skills.
+
 The user supplies intent, task-specific constraints, and optional references. The skill supplies the professional workflow. A user never needs to name repository paths, repeat language policy, request inspection, or restate reuse, durability, or validation rules already encoded here. Treat supplied screenshots, links, Figma URLs, documents, issue links, code links, and notes as evidence relevant to the skill; interpret their contribution rather than copying them literally.
 
 Load additional repository, Figma, implementation, or research context only when it can change the current decision or evaluation. Choose routine organization, relevant files, existing components, prototype internals, and comparable local conventions autonomously. Ask only when product behavior, a durable visual/system direction, a hidden requirement, or a high-impact/destructive action remains materially ambiguous.
@@ -22,6 +24,10 @@ Before finishing:
 6. Preserve unrelated existing documentation.
 
 The task is incomplete when knowledge that must survive beyond the active workflow exists only in chat history. Transient investigation, hypotheses, and same-chat handoffs do not require a new artifact by default.
+
+## Mechanism and knowledge boundaries
+
+A user goal needing judgment belongs in a public skill. Deterministic repeatable operations belong in scripts, CI, or tasks. Reusable domain expertise belongs in internal playbooks. Stable project-specific facts belong in durable repository artifacts. Conversation carries temporary hypotheses and intentionally chained handoffs. Keep `AGENTS.md` small, stable, and repository-wide; never place a feature requirement, incident diary, or long playbook there.
 
 ## Artifact ownership
 

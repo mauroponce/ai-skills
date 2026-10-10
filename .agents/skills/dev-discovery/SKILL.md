@@ -175,6 +175,13 @@ Create an ADR under `engineering/decisions/` only when a decision is:
 
 Most discovery sessions should create zero ADRs. Do not create ADRs for ordinary reversible implementation choices.
 
+## RED FLAGS
+
+- Planning from generic stack assumptions before inspecting the repository.
+- Treating an unusual design as a mistake without checking relevant Git history.
+- Persisting transient guesses or feature requirements in `AGENTS.md`.
+- Recommending a version-sensitive framework behavior from memory when it changes the decision.
+
 ## 8. Discovery completion gate
 
 Discovery is ready for planning when:
@@ -198,7 +205,7 @@ Report concisely, in the conversation language:
 - remaining risks/unknowns;
 - whether the initiative is ready for `dev-plan`.
 
-Do not automatically invoke another skill.
+Do not automatically invoke another skill. For a ready initiative, recommend the next step and execution tier using [execution policy](../references/execution-policy.md).
 
 ## Definition of Done
 

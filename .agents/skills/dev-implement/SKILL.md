@@ -111,6 +111,13 @@ Address relevant concerns from the spec/plan, including when applicable:
 
 Apply Rails, React, PostgreSQL/MySQL, security, production-safety, and testing guidance only when the target change activates it. In particular, do not rely on application validation alone for a concurrency-sensitive data invariant; do not introduce framework abstractions/dependencies unless existing primitives and repository patterns are insufficient; and surface material plan contradictions before inventing architecture.
 
+## RED FLAGS
+
+- Calling a small change too obvious to verify.
+- Ignoring repository conventions because the edit is local.
+- Deferring verification until after claiming completion.
+- Substituting a preferred design for a settled plan without recording a real mismatch.
+
 ## 6. Verification
 
 Run the most relevant verification after each slice and final broader checks appropriate to risk.
@@ -147,6 +154,9 @@ Before declaring implementation complete:
 
 - all in-scope acceptance criteria are implemented or explicitly deferred;
 - relevant planned slices are complete;
+- relevant tests were added or updated where behavior warrants them and actually run;
+- applicable lint, type, static, or build checks used by this repository were run, or their omission is explained;
+- expected behavior was verified with observable evidence, not “looks correct” or “should work”;
 - tests/checks are green or remaining failures are clearly explained;
 - no known critical correctness/security/data issue remains hidden;
 - migrations/rollout steps are documented when needed;
@@ -164,6 +174,8 @@ Report concisely, in the conversation language:
 - any plan deviations and why;
 - remaining known risks/issues;
 - whether the branch is ready for `dev-review`.
+
+At handoff, recommend an independent fresh-chat `dev-review` and an execution tier using [execution policy](../references/execution-policy.md).
 
 ## Definition of Done
 

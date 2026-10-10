@@ -13,3 +13,5 @@ All cases also verify: conversation follows the user's language; durable artifac
 | Greenfield | Repository has minimal scaffolding. | Inspects it before interviewing stack choices; documents unknowns without inventing architecture. |
 | AGENTS boundary | A feature-only deployment constraint appears. | Keeps it in SPEC rather than AGENTS unless it is truly repository-wide. |
 | Decision boundary | API compatibility is unresolved. | Asks a targeted consequential question; decides routine local conventions autonomously. |
+| Evidence gate | Request names a feature but current code already handles a related path. | Inspects repository and current behavior, identifies material constraints/unknowns, and defines testable requested behavior before claiming readiness. |
+| Git explains convention | Unusual module boundary has relevant history. | Reads focused history before replacing it; treats commit rationale as evidence, not immutable policy. |

@@ -579,6 +579,23 @@ Necesito permitir múltiples administradores por organización.
 
 Planning then evaluates the actual database's schema, constraints, indexes, authorization, concurrency, migration/backfill, and production rollout requirements. The user does not need to enumerate those concerns.
 
+## Execution recommendations
+
+A DEV skill may finish with:
+
+```text
+Next: $dev-plan
+Execution: COMPLEX / Medium
+```
+
+The **skill** names the next user-goal workflow step. The **execution tier** estimates the capability needed for that next step. The shared [execution policy](.agents/skills/references/execution-policy.md) defines FAST, ROUTINE, COMPLEX, and HARD and holds the single current model mapping. Concrete model names can change; if availability is unknown, use tier and reasoning only. Spend stronger models on uncertainty and risk, then recommend a smaller/faster tier when a good plan makes implementation deterministic. A complete plan may hand off to `ROUTINE / Low` even if planning used `COMPLEX / Medium`.
+
+Internal [engineering playbooks](.agents/skills/references/engineering/README.md) supply Rails, database, security, API, observability, source verification, and release expertise only when relevant. When dependency behavior affects a decision, check the installed version and authoritative upstream docs. Git history helps explain unusual architecture, regression timing, change pressure, and exact release identity. A static copy change does not need a database lecture.
+
+Public skills represent user goals. Repeatable deployment/test mechanics belong in scripts or CI; reusable expertise belongs in internal playbooks; stable project facts belong in durable artifacts such as `engineering/ARCHITECTURE.md` or a non-secret `ops/ENVIRONMENTS.md`. `AGENTS.md` stays small and repository-wide.
+
+`dev-simplify` remains a future candidate. Existing Rails audit and diff review cover the current simplification cases; a separate public trigger would overlap them until distinct routing and positive/negative evals demonstrate a real user-goal boundary.
+
 ## DEV workflows
 
 Choose the entry point by the question. `dev-debug` starts with a known problem and seeks its cause. `dev-review` checks a known change against intent and engineering quality. `dev-rails-audit` proactively inspects an existing Rails system or selected concern; it needs no known symptom and never implements fixes.
@@ -592,7 +609,9 @@ dev-discovery        dev-debug             dev-rails-audit
 → dev-release        → dev-release         → dev-release
 ```
 
-`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Use a new chat for independent `dev-review` when useful.
+`?` means optional. A narrow, sufficiently defined correction can go straight to implementation. Prefer a fresh chat for independent `dev-review`. Discovery, debugging, and audit findings can hand off in the same chat; durable SPEC/PLAN and stable project artifacts carry knowledge across chats.
+
+The release skill performs evidence-based preflight, requests explicit approval immediately before a concrete production deploy, uses the repository's scripts/CI for deterministic operations, and verifies deployed health and behavior afterward.
 
 ### Rails audit invocations
 
@@ -708,7 +727,7 @@ $dev-debug
 Después del último deploy los exports quedan trabados en producción.
 ```
 
-The skill inspects relevant repository and permitted production evidence, tests hypotheses safely, and recommends `$dev-implement`, `$dev-plan`, or continued debugging. It never edits code, deploys, restarts services, changes production data/configuration/flags, runs migrations, rolls back, flushes caches, retries jobs, or mutates infrastructure.
+The skill inspects relevant repository and permitted environment evidence, tests hypotheses safely, and recommends `$dev-implement`, `$dev-plan`, or continued debugging. Local diagnosis may use disposable test data and processes. Staging is read-oriented by default; production is strictly read-only, even during an incident. Debugging never edits the application fix or deploys. Non-secret environment metadata can live in `ops/ENVIRONMENTS.md`; credentials stay outside repository artifacts.
 
 ## Choosing a UX skill
 

@@ -15,3 +15,5 @@ All cases also verify: conversation follows the user's language; durable artifac
 | Material unknown | Data retention rule is unresolved. | Does not bury it in implementation steps; investigates and asks only if evidence cannot settle it. |
 | Fresh chat | Only repository, SPEC, and PLAN are available. | Plan is sufficient to implement without chat history. |
 | Command integrity | Repository scripts are known. | Derives verification commands from repository; does not invent command names. |
+| Plan completion evidence | Payment integration plan mentions a new gem, schema change, and deployment. | Inspects installed capabilities/schema/version, resolves major design choices, records tests/security/migration/rollout, and leaves no major invention for implementation. |
+| Version-sensitive API | Plan depends on Active Job behavior that changed across Rails versions. | Detects installed version, checks local and authoritative docs as needed, and chooses a version-correct path. |

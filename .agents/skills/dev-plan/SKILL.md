@@ -59,6 +59,14 @@ If a material decision is still open:
 - ask the user only if a decision remains;
 - update the spec before finalizing the plan.
 
+## RED FLAGS
+
+- Recommending a gem without checking existing capabilities or repository conventions.
+- Proposing schema changes without inspecting schema and migration history.
+- Using version-sensitive Rails patterns without checking the installed version and authoritative source when needed.
+- Planning from generic best practices while implementation still needs major invention.
+- Ignoring migration, rollback, or old/new code compatibility for production data changes.
+
 ## 3. Choose the smallest coherent design
 
 Prefer:
@@ -181,6 +189,8 @@ Report concisely, in the conversation language:
 - whether the work is ready for `dev-implement`.
 
 Do not automatically invoke another skill.
+
+At handoff, recommend the next skill and execution tier using [execution policy](../references/execution-policy.md). A strong plan may make the implementation cheaper than planning.
 
 ## Definition of Done
 

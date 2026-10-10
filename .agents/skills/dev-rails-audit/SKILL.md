@@ -34,6 +34,15 @@ Select lenses from the code and scope, rather than applying every item mechanica
 
 Callbacks and counter caches are neither inherently bad nor inherently useful. Show the actual side effect or repeated count and account for write overhead, historical backfill, and consistency. Likewise, do not propose Redis, new indexes, jobs, memoization, gems, dependency injection, or lower-level SQL merely because code looks busy. An architectural extraction does not fix a bad query; a cache or job does not automatically solve ownership. It is valid to conclude that an inspected area needs no meaningful change.
 
+## RED FLAGS
+
+- Calling a model “fat” as proof that it needs a service.
+- Recommending a state machine because an enum exists.
+- Recommending an index because a column is filtered without checking query shape and existing indexes.
+- Recommending caching without reuse, invalidation, and stale-data analysis.
+- Recommending a job without retry, idempotency, and user-visible completion behavior.
+- Treating churn or a preferred architecture as proof of poor design.
+
 ## Production evidence
 
 By default inspect repository and safe local/test evidence only, even if production credentials exist. If the user explicitly asks for production-backed evidence, load [runtime diagnostics](../references/engineering/runtime-diagnostics.md) and [production safety](../references/engineering/production-safety.md), resolve access from existing environment metadata, and use only bounded read-only traces, logs, metrics, queue/cache observations, SQL, or safe plans. Correlate observations with code. Never run expensive production diagnostics automatically; never run production `EXPLAIN ANALYZE` without establishing that it is safe. Never deploy, migrate, toggle flags, flush cache, retry jobs, restart, kill processes, or mutate production data/configuration/infrastructure.
@@ -44,7 +53,7 @@ Assign stable IDs in the current audit: `RAILS-001`, `RAILS-002`, etc. Order by 
 
 For architectural findings, also explain the architectural pressure, current carrying cost or change amplification, and why the recommended boundary earns its added concepts. Mention a plausible alternative and why it is less suitable when that clarifies a significant trade-off. Use concise decision rationale, not a purity label or hidden reasoning transcript. Distinguish **Finding**, **Observation**, **Candidate**, **Measure First**, and **No Action Recommended**; only actionable, supported issues need IDs. Rank by correctness, security, data integrity, reliability, performance, and demonstrated architectural cost, considering change frequency, blast radius, implementation cost, reversibility, and confidence without numerical scoring. A serious uniqueness race outranks pass-through service cleanup.
 
-For a general audit, summarize only populated areas such as correctness/data integrity, performance, architecture/workflow, sustainability, reliability/jobs, and measure-first. Finish with **Quick Wins**, **Strategic**, **Measure First**, and **Housekeeping** groups, listing IDs only where appropriate; then name the highest-value next action. Findings remain directly addressable in this chat: `dev-plan` consumes selected IDs for consequential boundaries, workflow/state/transaction redesign, migration, or multi-component work; `dev-implement` may consume a narrow, sufficiently defined finding after checking repository state. The user need not restate the finding. If direct implementation of an architectural finding would require material choices, route it to `dev-plan`; a clear N+1 can proceed directly. Do not invoke either skill automatically.
+For a general audit, summarize only populated areas such as correctness/data integrity, performance, architecture/workflow, sustainability, reliability/jobs, and measure-first. Finish with **Quick Wins**, **Strategic**, **Measure First**, and **Housekeeping** groups, listing IDs only where appropriate; then name the highest-value next action. Findings remain directly addressable in this chat: `dev-plan` consumes selected IDs for consequential boundaries, workflow/state/transaction redesign, migration, or multi-component work; `dev-implement` may consume a narrow, sufficiently defined finding after checking repository state. The user need not restate the finding. If direct implementation of an architectural finding would require material choices, route it to `dev-plan`; a clear N+1 can proceed directly. Recommend its execution tier using [execution policy](../references/execution-policy.md). Do not invoke either skill automatically.
 
 ## Definition of Done
 

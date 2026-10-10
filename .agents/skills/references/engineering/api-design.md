@@ -1,0 +1,3 @@
+# API and Integration Design
+
+Load when a public/internal API or external integration contract matters. Identify consumers, version and compatibility expectations, authentication/authorization, validation, error semantics, idempotency, timeouts, retries, pagination/rate limits, and observability. For webhooks, verify signatures against raw input as required by the provider, persist a deduplication key where needed, and define when acknowledgement occurs relative to durable work. Use the provider's current official documentation for version-sensitive behavior. Do not apply this playbook to a local copy or style change.

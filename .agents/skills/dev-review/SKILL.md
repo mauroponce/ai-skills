@@ -86,6 +86,13 @@ Do not invent theoretical issues detached from this diff's realistic behavior.
 
 Apply selected expert lenses independently: Rails modeling, transactions, queries, jobs, auth, and concurrency; React state/effects/async/UI accessibility/design-system reuse; the detected database's constraints, indexes, locking, query and migration behavior; security; production compatibility; and testing quality. Keep review relevance-based: a CSS-only change does not require transaction analysis.
 
+## RED FLAGS
+
+- Reviewing an implementer summary without the actual diff.
+- Treating green tests as proof of specification compliance.
+- Inventing generic security or performance findings with no plausible path through this change.
+- Applying a version-sensitive recommendation without confirming installed behavior.
+
 ## 3. Verification
 
 Run relevant existing checks when possible:
@@ -163,6 +170,8 @@ Report, in the conversation language:
 2. verification run and results;
 3. residual unverified areas;
 4. whether the change is ready to merge from the review perspective.
+
+For a ready change, recommend the next skill and execution tier using [execution policy](../references/execution-policy.md).
 
 ## Definition of Done
 

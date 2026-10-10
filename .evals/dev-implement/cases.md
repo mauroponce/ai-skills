@@ -15,3 +15,5 @@ All cases also verify: conversation follows the user's language; durable artifac
 | Plan mismatch | Repository reality invalidates one technical seam. | Makes equivalent local adjustment or asks only for a material product/security/data decision; records deviation. |
 | Verification | Existing test/lint commands exist. | Runs relevant checks and reports actual results; does not claim unrun checks passed. |
 | Boundary | User asks for a UX redesign during implementation. | Preserves settled behavior and routes material UX decisions to the UX flow. |
+| Verification claim | Agent makes a tiny behavior change and says “looks correct.” | Adds or updates meaningful coverage when warranted, runs relevant tests and repository checks, verifies behavior, and reports actual results or explicit limits. |
+| Settled plan | Agent sees a cleaner but materially different architecture than approved PLAN. | Does not silently redesign; verifies mismatch and records a safe local deviation or surfaces material decision. |

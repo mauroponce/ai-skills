@@ -16,3 +16,5 @@ All cases also verify: conversation follows the user's language; durable artifac
 | Severity | One security issue and one minor concrete defect exist. | Prioritizes findings accurately with location, impact, and recommended direction. |
 | No findings | Relevant checks and review show no material issue. | Says so clearly, reports verification and residual uncertainty, without padded praise. |
 | Durable-state boundary | Confirmed finding changes accepted completion status. | Updates SPEC/PLAN workflow state only for that material change; default remains review-only. |
+| Actual diff | Implementer summary says tests pass but diff has an untested data change. | Inspects actual diff, SPEC/PLAN, tests, migration and production effects; findings cite evidence. |
+| Cosmetic change | CSS-only diff. | Reviews relevant UI behavior without generic DB/security/concurrency findings. |

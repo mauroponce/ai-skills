@@ -35,8 +35,13 @@ Load only applicable references:
 | Existing production app, schema/API/job/deploy change, rollout, or backward compatibility risk | [production-safety.md](production-safety.md) |
 | Any behavior change, failure path, or regression risk | [testing.md](testing.md) |
 | Explicitly requested live/production evidence | [runtime-diagnostics.md](runtime-diagnostics.md) |
+| Version-sensitive framework/dependency decision | [source-verification.md](source-verification.md) |
+| Public API, webhook, or external integration contract | [api-design.md](api-design.md) |
+| Signals needed for diagnosis, async work, or release | [observability.md](observability.md) |
+| Demonstrated excess abstraction or simplification question | [code-simplification.md](code-simplification.md) |
+| Release readiness or execution | [release-safety.md](release-safety.md) |
 
-Do not load a playbook merely because its technology exists. A copy-only UI change normally needs neither database nor transaction analysis. Financial changes, background jobs, authentication, multi-tenancy, and public API contracts receive elevated scrutiny when present.
+Do not load a playbook merely because its technology exists. When behavior materially depends on a framework or dependency version, follow [source verification](source-verification.md): installed version and local evidence first, then authoritative upstream documentation when needed. Use Git history selectively to explain unusual design, regression timing, change pressure, and release identity; churn is a signal, not proof. A copy-only UI change normally needs neither database nor transaction analysis. Financial changes, background jobs, authentication, multi-tenancy, and public API contracts receive elevated scrutiny when present.
 
 For a general `dev-rails-audit`, load Rails mechanics, architecture, and sustainability after reconnaissance identifies a Rails application; use architecture hotspots and representative flows rather than reviewing every class. For a narrowly scoped N+1/query audit, load Rails and the relevant database guidance first; load architecture or sustainability only if evidence uncovers a material adjacent concern. Maintenance-only reading/source notes are never runtime audit context by default.
 
