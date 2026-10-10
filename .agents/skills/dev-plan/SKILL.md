@@ -9,7 +9,7 @@ Use this skill to decide **how** to implement already-understood behavior.
 
 ## Invocation contract
 
-The user can invoke this after discovery, an active `dev-debug` diagnosis, or selected `dev-rails-audit` findings without repeating paths, conventions, or finding text. Resolve the active initiative from active-chat or personal context, current repository evidence, and any active diagnosis or `RAILS-###` IDs in the same conversation. Verify finding evidence against current code; ask only when multiple plausible initiatives or a material decision remain unresolved.
+The user can invoke this after discovery, an active `dev-debug` diagnosis, or selected `dev-audit` findings without repeating paths, conventions, or finding text. Resolve the active initiative from active-chat or personal context, current repository evidence, and any active diagnosis or `AUDIT-###` IDs in the same conversation. Verify finding evidence against current code; ask only when multiple plausible initiatives or a material decision remain unresolved.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -19,11 +19,11 @@ Use [the Codex interactive decision policy](../references/interactive-decision-p
 
 Consume confirmed requirements from active chat, personal notes, or existing project documentation, an active diagnosis or selected audit findings when intentionally chained in the same chat, and verified repository structure. For audit findings, preserve the cited evidence, uncertainty, production constraints, and measurement needed; do not repeat a discovery questionnaire or treat a candidate as confirmed. For a diagnosed bug, plan root-cause elimination, regression prevention, relevant tests, and rollout/migration concerns rather than repeating discovery. If a material product, security, data, contract, or architecture decision remains open, investigate first and resolve it before finalizing the plan. Ask only when evidence cannot settle it; recommend a supported option. Do not interview about ordinary implementation details. A plan with an unresolved material decision is not ready for implementation.
 
-For a selected architecture finding, compare the smallest Rails/repository-native correction with the proposed boundary, state the pressure each addresses and its carrying cost, and plan incremental migration, behavior preservation, transaction/async safety, and verification where relevant. Do not turn the audit's directional recommendation into an unexamined global style rule.
+For a selected architecture finding, compare the smallest repository-native correction with the proposed boundary, state the pressure each addresses and its carrying cost, and plan incremental migration, behavior preservation, transaction/async safety, and verification where relevant. Do not turn the audit's directional recommendation into an unexamined global style rule.
 
 Follow [workflow governance](../references/workflow-governance.md). This skill produces the implementation plan in chat by default; save it in the personal workspace only when cross-chat use is likely. It does not modify the target repository.
 
-Read the [stack-aware engineering router](../references/engineering/README.md) and load only playbooks selected by the detected stack and task risk. Apply correctness/security/data integrity first, then explicit initiative decisions, repository architecture and conventions, demonstrated architectural pressure, framework/database idioms, and general preference. Surface a dangerous local convention rather than reproducing it.
+Read the [engineering router](../references/engineering/README.md), detect the stack, and load only cross-cutting references selected by task risk. Verify material version-specific behavior with authoritative sources. Apply correctness/security/data integrity first, then explicit initiative decisions, repository architecture and conventions, demonstrated architectural pressure, framework/database idioms, and general preference. Surface a dangerous local convention rather than reproducing it.
 
 ## Language policy
 
@@ -61,7 +61,7 @@ If a material decision is still open:
 
 - Recommending a gem without checking existing capabilities or repository conventions.
 - Proposing schema changes without inspecting schema and migration history.
-- Using version-sensitive Rails patterns without checking the installed version and authoritative source when needed.
+- Using version-sensitive framework patterns without checking the installed version and authoritative source when needed.
 - Planning from generic best practices while implementation still needs major invention.
 - Ignoring migration, rollback, or old/new code compatibility for production data changes.
 
@@ -125,7 +125,7 @@ Include only what applies:
 - test strategy;
 - documentation changes.
 
-For applicable Rails, React, database, security, production, and testing lenses, record the decision or verification needed in the plan rather than pasting a generic checklist. Treat schema changes in production as migration-safety work; treat auth, OAuth/OIDC, payments, jobs, multi-tenancy, public contracts, and concurrency as elevated-risk triggers.
+For applicable framework, frontend, database, security, production, and testing lenses, record the decision or verification needed in the plan rather than pasting a generic checklist. Treat schema changes in production as migration-safety work; treat auth, OAuth/OIDC, payments, jobs, multi-tenancy, public contracts, and concurrency as elevated-risk triggers.
 
 ## 6. Use disposable experiments when facts require execution
 

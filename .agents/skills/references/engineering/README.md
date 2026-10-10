@@ -1,50 +1,21 @@
-# Stack-Aware Engineering
+# Engineering Context Router
 
-The user may ask how the current system works or what change to make. The DEV workflow remembers to consider Rails, React, the database, security, production safety, testing, compatibility, concurrency, and performance when they materially apply.
+The public DEV skills define goals and boundaries. For each task, inspect the relevant project path and detect its language, framework, frontend, database, queues, tests, and deployment model from dependency manifests and lockfiles, configuration, code, CI, and runbooks. Confirm installed versions when behavior depends on them; a manifest constraint may describe a range. Inspect configuration without exposing secrets.
 
-Operationally: detect → inspect → load relevant expertise → understand → clarify material ambiguity → plan / implement / review → retain useful cross-chat decisions personally → verify.
+Use current project code and tests to establish behavior, and follow its working conventions when they are safe. For a material version-specific claim or an unfamiliar API, consult installed source and authoritative documentation for the **detected version**; state uncertainty if it cannot be verified. Do not borrow conventions from another stack or treat the absence of a local technology guide as lack of support.
 
-## Source precedence
+## Load only relevant cross-cutting references
 
-Resolve decisions in this order:
-
-1. Correctness, security, and data integrity.
-2. Explicit initiative product or technical decisions.
-3. Established repository architecture and conventions.
-4. Demonstrated architectural pressure.
-5. Detected framework and database idioms.
-6. General engineering preferences.
-
-Preserve repository conventions when they work well. Surface concrete correctness, security, concurrency, or data-integrity flaws rather than copying them. For a proactive architecture audit, demonstrated change amplification, hidden workflow risk, or recurring maintenance friction can also justify a targeted recommendation; describe the friction and migration cost instead of treating a different style as wrong.
-
-## Detect, then load
-
-Start from high-signal evidence: Ruby/Rails and dependency files, frontend package/build files, database configuration/schema/migrations, test/CI setup, deployment files, and the target code path. Detect versions where behavior materially differs. Build on an existing architecture profile instead of re-inventorying the application.
-
-Load only applicable references. `dev-explore` selects references that clarify existing behavior; it does not load evaluative architecture playbooks merely to judge the design:
-
-| Signal or task | Load |
+| Task or risk | Reference |
 | --- | --- |
-| Rails application or Ruby backend | [rails.md](rails.md) |
-| General Rails architecture audit, or evidence of workflow/boundary pressure | [rails-architecture.md](rails-architecture.md) |
-| Rails abstraction trade-off, change amplification, or sustained maintenance friction | [rails-sustainability.md](rails-sustainability.md) |
-| React UI, component, or API-consumer work | [react.md](react.md) |
-| PostgreSQL detected and data/query/schema work | [postgresql.md](postgresql.md) |
-| MySQL detected and data/query/schema work | [mysql.md](mysql.md) |
-| Auth, OAuth/OIDC, authorization, sensitive input/output, tenancy, uploads, or external URLs | [web-security.md](web-security.md) |
-| Existing production app, schema/API/job/deploy change, rollout, or backward compatibility risk | [production-safety.md](production-safety.md) |
-| Any behavior change, failure path, or regression risk | [testing.md](testing.md) |
-| Explicitly requested live/production evidence | [runtime-diagnostics.md](runtime-diagnostics.md) |
-| Version-sensitive framework/dependency decision | [source-verification.md](source-verification.md) |
-| Public API, webhook, or external integration contract | [api-design.md](api-design.md) |
-| Signals needed for diagnosis, async work, or release | [observability.md](observability.md) |
-| Demonstrated excess abstraction or simplification question | [code-simplification.md](code-simplification.md) |
-| Release readiness or execution | [release-safety.md](release-safety.md) |
+| Authentication, authorization, tenancy, uploads, or sensitive data | [Web security](web-security.md) |
+| Existing production app, schema, jobs, APIs, or rollout compatibility | [Production safety](production-safety.md) |
+| Behavior change, failure path, or regression risk | [Testing](testing.md) |
+| Explicit live/production evidence request | [Runtime diagnostics](runtime-diagnostics.md) |
+| Version-sensitive framework or dependency behavior | [Source verification](source-verification.md) |
+| Public API, webhook, or integration contract | [API design](api-design.md) |
+| Diagnosis, asynchronous work, or release signals | [Observability](observability.md) |
+| Demonstrated excess abstraction | [Code simplification](code-simplification.md) |
+| Release readiness or execution | [Release safety](release-safety.md) |
 
-Do not load a playbook merely because its technology exists. When behavior materially depends on a framework or dependency version, follow [source verification](source-verification.md): installed version and local evidence first, then authoritative upstream documentation when needed. Use Git history selectively to explain unusual design, regression timing, change pressure, and release identity; churn is a signal, not proof. A copy-only UI change normally needs neither database nor transaction analysis. Financial changes, background jobs, authentication, multi-tenancy, and public API contracts receive elevated scrutiny when present.
-
-For a general `dev-rails-audit`, load Rails mechanics, architecture, and sustainability after reconnaissance identifies a Rails application; use architecture hotspots and representative flows rather than reviewing every class. For a narrowly scoped N+1/query audit, load Rails and the relevant database guidance first; load architecture or sustainability only if evidence uncovers a material adjacent concern. Maintenance-only reading/source notes are never runtime audit context by default.
-
-## Technical profile
-
-`dev-discovery` may retain useful stack facts in concise personal Codex notes for cross-chat work: backend/version/runtime boundaries; frontend integration/version/build/state conventions; database engine/schema format/extensions; testing conventions; and production constraints. Feature decisions stay in chat or personal initiative context. Existing project architecture docs are read as evidence, not automatically edited.
+`dev-explore` uses references only to clarify current behavior; `dev-audit` evaluates relevant risks and architecture from project evidence. A focused task needs only the affected paths and concerns. Use Git history selectively for unusual design, regression timing, or release identity; churn is a signal, not proof. Do not load every reference merely because a technology or risk category exists.

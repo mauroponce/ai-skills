@@ -34,7 +34,7 @@ If the design system and visual direction materially conflict, surface the drift
 
 ## Output and behavior
 
-Create exactly one self-contained file at `~/.codex/workspaces/<project-key>/prototype/<initiative>/prototype.html`, using only HTML, CSS in `<style>`, and vanilla JavaScript in `<script>`. No React, Vue, Svelte, package managers, build tools, framework CDNs, external dependencies, backend, network calls, or remote assets required for core behavior. Start from `assets/prototype-shell.html` when useful and adapt it; do not leave generic demo content.
+Create exactly one self-contained file at `~/.codex/workspaces/<project-key>/prototype/<initiative>/prototype.html`, using only HTML, CSS in `<style>`, and vanilla JavaScript in `<script>`. No frontend framework, package manager, build tool, framework CDN, external dependency, backend, network call, or remote asset required for core behavior. Start from `assets/prototype-shell.html` when useful and adapt it; do not leave generic demo content.
 
 Implement enough behavior to evaluate the question: navigation, forms, validation, dialogs, menus, transitions, simulated loading, errors, success, sample data, keyboard/focus, and responsive behavior as relevant. Use semantic HTML and label the artifact as a prototype. It must run from a basic local HTTP server, e.g. `python3 -m http.server 8000`.
 

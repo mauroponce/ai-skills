@@ -31,7 +31,7 @@ Do not modify the target repository during discovery. A trivial, sufficiently de
 
 Follow [workflow governance](../references/workflow-governance.md): begin with high-signal project context and leave same-chat results in conversation. Save only useful cross-chat context in the personal workspace. This skill does not modify the target repository.
 
-Use the [stack-aware engineering router](../references/engineering/README.md). Detect the stack from high-signal repository evidence, then load only the applicable Rails, React, PostgreSQL/MySQL, security, production-safety, and testing playbooks. Do not load an irrelevant handbook for a local low-risk change.
+Use the [engineering router](../references/engineering/README.md). Detect the stack from high-signal repository evidence, then load only cross-cutting references applicable to the task's security, production, testing, or other risks. Verify material version-specific behavior with authoritative sources; do not research unrelated areas for a local low-risk change.
 
 ## User interaction
 
@@ -79,7 +79,7 @@ For a new/greenfield repo, inspect existing scaffolding before interviewing abou
 
 ## 3. Build or refresh the technical profile
 
-Start with high-signal stack files when present: `.ruby-version`, `Gemfile`/lockfile, Rails config/routes, `config/database.yml`, schema/migrations, `package.json`/lockfiles/build config, frontend entry points, tests/CI, deployment files, job configuration, and auth/authorization/observability seams. Determine only facts useful beyond this feature:
+Start with high-signal stack files when present: dependency manifests and lockfiles, runtime and framework configuration, routes, schema/migrations, frontend entry points, tests/CI, deployment files, job configuration, and auth/authorization/observability seams. Determine only facts useful beyond this feature:
 
 - backend runtime/framework/version and application shape;
 - authentication, authorization, jobs, cache, storage, and local architecture conventions;
@@ -109,7 +109,7 @@ If the request is phrased as an implementation instruction, identify the behavio
 Example:
 
 ```text
-Requested implementation: add Redis locking
+Requested implementation: add distributed locking
 Underlying requirement to verify: prevent duplicate concurrent processing of the same webhook
 ```
 

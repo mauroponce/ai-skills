@@ -19,7 +19,7 @@ This is an independent review skill, not an interview phase. Inspect the actual 
 
 Follow [workflow governance](../references/workflow-governance.md). This skill reports findings in chat by default; save a concise personal note only when a cross-chat handoff needs it. Default review does not modify the target repository.
 
-Read the [stack-aware engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only the applicable internal playbooks. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
+Read the [engineering router](../references/engineering/README.md), detect the changed stack and risk areas, and load only applicable cross-cutting references. Verify material version-specific behavior with authoritative sources. Review with the source precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Existing conventions do not excuse a demonstrated flaw.
 
 ## Language policy
 
@@ -82,7 +82,7 @@ Inspect material risk in categories that apply:
 
 Do not invent theoretical issues detached from this diff's realistic behavior.
 
-Apply selected expert lenses independently: Rails modeling, transactions, queries, jobs, auth, and concurrency; React state/effects/async/UI accessibility/design-system reuse; the detected database's constraints, indexes, locking, query and migration behavior; security; production compatibility; and testing quality. Keep review relevance-based: a CSS-only change does not require transaction analysis.
+Apply selected expert lenses independently using project evidence and the [engineering router](../references/engineering/README.md): framework modeling, transactions, queries, jobs, auth, and concurrency; frontend state, effects, async behavior, accessibility, and design-system reuse; the detected database's constraints, indexes, locking, query and migration behavior; security; production compatibility; and testing quality. Keep review relevance-based: a styling-only change does not require transaction analysis.
 
 ## RED FLAGS
 

@@ -1,6 +1,6 @@
 # Codex development harness
 
-Skills for understanding, designing, implementing, reviewing, and shipping web applications. Invoke one in your project with `$skill-name`; it inspects the current code and uses only the context relevant to the task.
+Skills for understanding, designing, implementing, reviewing, and shipping web applications. Invoke one in your project with `$skill-name`; DEV skills inspect its stack, use relevant [engineering references](.agents/skills/references/engineering/README.md), and check version-specific behavior against authoritative sources.
 
 ## DEV skills
 
@@ -9,7 +9,7 @@ Skills for understanding, designing, implementing, reviewing, and shipping web a
 | `$dev-explore` | Explains how an existing system or flow works. |
 | `$dev-discovery` | Defines a change's behavior, constraints, and open decisions. |
 | `$dev-debug` | Diagnoses a bug or incident without applying a fix. |
-| `$dev-rails-audit` | Finds and prioritizes improvements in a Rails app. |
+| `$dev-audit` | Finds and prioritizes improvements in an existing app. |
 | `$dev-plan` | Designs implementation steps, tests, and rollout. |
 | `$dev-implement` | Changes project code and verifies the result. |
 | `$dev-review` | Independently checks a diff against requirements and engineering risks. |
@@ -30,52 +30,56 @@ Skills for understanding, designing, implementing, reviewing, and shipping web a
 
 ## Example workflows
 
-**New feature — Stripe subscriptions in an existing Rails app**
+**Modes:** `Plan` is for investigation, questions, and decisions without applying changes; `Normal` is for execution (and works for read-only skills too). A mode label applies to all skills on its line. A skill does not switch Codex modes; switch modes in the same chat when needed. `[brackets]` mark optional steps.
+
+**New feature — subscriptions in an existing app**
 
 ```text
 Same chat:
-[$dev-explore "Explain accounts, billing, permissions, and existing payments"]
-→ $dev-discovery "Add Stripe subscriptions"
-→ $dev-plan
-→ $dev-implement
+Normal: [$dev-explore "Explain accounts, billing, permissions, and existing payments"]
+→ Plan: $dev-discovery "Add subscriptions. Inspect the project first; ask me only about material decisions, with clickable options if available."
+→ Plan: $dev-plan
+→ Normal: $dev-implement
 
-New chat: $dev-review "Review the Stripe subscriptions change"
-Then:     $dev-release "Ship to staging"
-Later:    $dev-release "Ship to production"
+New chat, Normal: $dev-review "Review the subscriptions change"
+Then, Normal:     $dev-release "Ship to staging"
+Later, Normal:    $dev-release "Ship to production"
 ```
 
-Brackets mean optional. Use `dev-explore` when the domain is unfamiliar. Discovery settles behavior; planning is useful for integration, data, failure, or rollout decisions. A fresh review reduces anchoring to implementation choices.
+Use `dev-explore` when the domain is unfamiliar. Discovery investigates facts itself and asks only for decisions the project cannot settle; selectable questions depend on the Codex interface. Use `dev-plan` to settle significant technical choices, without repeating discovery. A fresh review reduces anchoring to implementation choices.
 
 **Change in a familiar area — show the account timezone in settings**
 
 ```text
-Same chat: $dev-discovery "Show the account timezone in settings"
-        → [$dev-plan] → $dev-implement
-New chat, when useful: $dev-review
+Same chat, Plan: $dev-discovery "Show the account timezone in settings"
+→ Plan: [$dev-plan]
+→ Normal: $dev-implement
+New chat, Normal when useful: $dev-review
 ```
 
-Skip planning if discovery confirms a small, well-defined change following an existing pattern. For a larger change in a known domain, use `dev-discovery → dev-plan → dev-implement → new-chat dev-review`.
+Use `dev-plan` only if a material technical decision remains; skip it when discovery confirms a small change following an existing pattern.
 
 **Bug — exports get stuck in production**
 
 ```text
-Same chat: $dev-debug "Production exports get stuck"
-        → [$dev-plan] → $dev-implement
-New chat: $dev-review
-Then, if shipping: $dev-release
+Same chat, Normal: $dev-debug "Production exports get stuck"
+→ Plan: [$dev-plan]
+→ Normal: $dev-implement
+New chat, Normal: $dev-review
+Then, Normal if shipping: $dev-release
 ```
 
-Debugging diagnoses; implementation fixes. Add planning when the correction involves material data, architecture, or integration choices.
+Debugging diagnoses; implementation fixes. Use `dev-plan` if the correction involves significant data, architecture, or integration choices.
 
 **Understand or improve an existing app**
 
 ```text
-$dev-explore "Explain how accepting an invitation grants account access"
+Normal: $dev-explore "Explain how accepting an invitation grants account access"
 
-$dev-rails-audit "Focus on performance and architecture"
-→ narrow finding: $dev-implement
-→ structural finding: $dev-plan → $dev-implement
-→ new-chat $dev-review
+Normal: $dev-audit "Focus on performance and architecture"
+→ narrow finding, Normal: $dev-implement
+→ structural finding, Plan: $dev-plan → Normal: $dev-implement
+→ new chat, Normal: $dev-review
 ```
 
 Exploration may be the whole task. An audit recommends changes but does not implement them.
@@ -83,12 +87,12 @@ Exploration may be the whole task. An audit recommends changes but does not impl
 **UX feature flow**
 
 ```text
-$ux-discovery → [$ux-visual-direction] → [$ux-user-flow]
-→ [$ux-wireframe or $ux-prototype-html]
-→ [$ux-design-system] → $ux-final-design → $ux-validate
+Plan: $ux-discovery → [$ux-visual-direction]
+→ Normal: [$ux-user-flow] → [$ux-wireframe or $ux-prototype-html]
+→ Normal: [$ux-design-system] → $ux-final-design → $ux-validate
 ```
 
-Choose only the steps that resolve real uncertainty. For an existing product with a mature design system, discovery may lead directly to final design and validation.
+Choose only steps that resolve real uncertainty. Use Plan mode for visual direction when preferences need discussion; switch to Normal before creating Figma or prototype artifacts. With a mature design system, discovery may lead directly to final design and validation.
 
 ## Working practices
 

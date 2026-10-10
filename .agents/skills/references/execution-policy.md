@@ -9,11 +9,11 @@ Assess scope, architectural ambiguity, production risk, security sensitivity, co
 | Tier | Suitable next work |
 | --- | --- |
 | FAST | Repository inspection, classification, repetitive changes, tiny deterministic edits. |
-| ROUTINE | Conventional Rails CRUD, established patterns, isolated implementation, straightforward debugging, narrow N+1 work, routine release. |
-| COMPLEX | Architecture, multi-layer features, substantial review, complex DB changes/integrations, broad Rails audit, consequential rollout. |
+| ROUTINE | Conventional data entry, established patterns, isolated implementation, straightforward debugging, narrow query optimization, routine release. |
+| COMPLEX | Architecture, multi-layer features, substantial review, complex database changes/integrations, broad audit, consequential rollout. |
 | HARD | Unknown production failures, distributed state/concurrency, sensitive identity or payments failure semantics, difficult legacy architecture or migrations. |
 
-Defaults are tendencies, not fixed assignments: explore ROUTINE for scoped paths and COMPLEX for broad legacy/cross-domain mapping; discovery ROUTINE; plan COMPLEX (ROUTINE for conventional work); implement ROUTINE (FAST when mechanical); debug ROUTINE through HARD; general Rails audit COMPLEX (focused query audit ROUTINE); review COMPLEX (small diff ROUTINE); release ROUTINE (complex migration/rolling compatibility COMPLEX or HARD). A complete plan can lower implementation to ROUTINE / Low even if planning needed COMPLEX / Medium.
+Defaults are tendencies, not fixed assignments: explore ROUTINE for scoped paths and COMPLEX for broad legacy/cross-domain mapping; discovery ROUTINE; plan COMPLEX (ROUTINE for conventional work); implement ROUTINE (FAST when mechanical); debug ROUTINE through HARD; general audit COMPLEX (focused query audit ROUTINE); review COMPLEX (small diff ROUTINE); release ROUTINE (complex migration/rolling compatibility COMPLEX or HARD). A complete plan can lower implementation to ROUTINE / Low even if planning needed COMPLEX / Medium.
 
 ## Current model mapping
 

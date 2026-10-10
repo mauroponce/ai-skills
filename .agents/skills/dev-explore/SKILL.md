@@ -5,7 +5,7 @@ description: Understand how an existing application, subsystem, domain, or end-t
 
 # DEV Explore
 
-Answer **how the existing system works today**. Trace, explain, map, and clarify. Do not change or judge the design unless a limitation must be stated to explain observed behavior. A requested change belongs to `dev-discovery`, a known failure to `dev-debug`, and improvement evaluation to `dev-rails-audit`. None requires `dev-explore` as a prerequisite.
+Answer **how the existing system works today**. Trace, explain, map, and clarify. Do not change or judge the design unless a limitation must be stated to explain observed behavior. A requested change belongs to `dev-discovery`, a known failure to `dev-debug`, and improvement evaluation to `dev-audit`. None requires `dev-explore` as a prerequisite.
 
 ## Boundary and context
 
@@ -13,11 +13,11 @@ This is read-only comprehension. Do not modify code, configuration, schema, data
 
 Follow [workflow governance](../references/workflow-governance.md). Use the user's language for the explanation. Start with the question, relevant `AGENTS.md`/README and existing architecture context, then follow the **smallest repository graph that explains the user's question**. Identify likely entry points, trace references, expand only where behavior depends on an adjacent layer, and stop once the mental model is coherent. A scoped billing question does not justify reading every model, table, controller, or job.
 
-Use the [engineering router](../references/engineering/README.md) selectively for stack facts. Rails mechanics, the detected database, React, API, or security references can clarify behavior when relevant; architecture and sustainability playbooks are evaluative and are not default exploration context. Do not turn a framework version check into external research unless version-sensitive behavior materially affects the explanation.
+Use the [engineering router](../references/engineering/README.md) selectively for stack facts. Trace framework, database, frontend, API, and security behavior in the project; use authoritative version-matched documentation when a mechanism materially affects the explanation. Evaluative architecture or simplification guidance is not default exploration context.
 
 ## Trace the relevant path
 
-For Rails flows, follow whichever of these are present: route or API entry point → controller → actor/authentication and authorization → operation/service/PORO → models and associations → callbacks/validations → tables, constraints, and transactions → jobs and integrations → tests. For a user-facing React/Rails flow, trace screen and action → request → Rails endpoint → domain/persistence → response and UI state. A backend-only question does not require frontend inspection.
+For application flows, follow whichever of these are present: route or API entry point → request handler → actor/authentication and authorization → domain operation or service → models and relationships → callbacks/validation → tables, constraints, and transactions → jobs and integrations → tests. For a user-facing flow, trace screen and action → request → endpoint → domain/persistence → response and UI state. A backend-only question does not require frontend inspection.
 
 For a relationship question, start with the named models, associations, schema and constraints, lifecycle, and authorization; inspect routes only if they explain the relationship. For a broad architecture question, first map major domains, application shape, tenancy, auth, data stores, jobs, integrations, and frontend boundary, then suggest focused areas for deeper exploration. Do not enumerate every file.
 
@@ -25,7 +25,7 @@ Read tests as evidence for intended behavior, edge cases, permissions, workflow 
 
 ## Explain the system
 
-Lead with domain meaning and ownership: what each important concept represents, how it relates to other concepts, its lifecycle, and its role in the requested flow. Explain application structure only as far as it helps comprehension. Do not substitute a list of calls or generic Rails tutorial for a system explanation.
+Lead with domain meaning and ownership: what each important concept represents, how it relates to other concepts, its lifecycle, and its role in the requested flow. Explain application structure only as far as it helps comprehension. Do not substitute a list of calls or generic framework tutorial for a system explanation.
 
 Where relevant, include a compact relationship view and map important models to actual tables. Identify constraints and invariants only when they affect understanding. Distinguish an application validation, database guarantee, authorization rule, and workflow assumption. For tenancy, explain the tenant root, actor/current tenant resolution, scoping, and tenant-aware jobs or cache only where the repository supports them.
 
@@ -37,13 +37,13 @@ Label material uncertainty: **Confirmed** by code/schema/config/tests, **Inferre
 
 The default output is the current Codex conversation. Do not create `SYSTEM_MAP.md`, `DOMAIN.md`, `ARCHITECTURE_MAP.md`, a SPEC, or a PLAN automatically. If understanding must survive another chat, save only a concise personal exploration note with domain concepts, important models/tables, flow, key files, confirmed invariants, and open questions. Do not update project architecture docs or `AGENTS.md` for personal workflow. If the user asks for project-owned documentation, explain the system in chat and route the repository edit to an explicit implementation/documentation task.
 
-A later same-chat `dev-discovery`, `dev-debug`, or `dev-rails-audit` may use this map as context and verify relevant facts against current code. Exploration can finish without a next skill. Teach domain boundaries, ownership, data flow, tenancy, and invariants through this application's evidence when relevant; avoid generic tutorials. If the user clearly wants a change, diagnosis, or evaluation next, recommend the relevant skill and the **next task's** tier through [execution policy](../references/execution-policy.md); do not transition automatically. Narrow exploration is usually ROUTINE; broad legacy or cross-domain comprehension may be COMPLEX. No model name belongs here.
+A later same-chat `dev-discovery`, `dev-debug`, or `dev-audit` may use this map as context and verify relevant facts against current code. Exploration can finish without a next skill. Teach domain boundaries, ownership, data flow, tenancy, and invariants through this application's evidence when relevant; avoid generic tutorials. If the user clearly wants a change, diagnosis, or evaluation next, recommend the relevant skill and the **next task's** tier through [execution policy](../references/execution-policy.md); do not transition automatically. Narrow exploration is usually ROUTINE; broad legacy or cross-domain comprehension may be COMPLEX. No model name belongs here.
 
 ## RED FLAGS
 
 - Reading the whole repository for a scoped relationship or flow question.
 - Describing only file calls without explaining domain roles and lifecycle.
-- Treating a Rails validation as a database guarantee, or an inferred tenant boundary as confirmed.
+- Treating application validation as a database guarantee, or an inferred tenant boundary as confirmed.
 - Turning a service, callback, or enum into an architecture finding without an audit request.
 - Creating durable maps or recommending a next skill when the user only wanted understanding.
 

@@ -27,7 +27,7 @@ Material implementation/architecture decisions and trade-offs. Link ADRs only wh
 
 ## Applicable engineering lenses
 
-Record only task-relevant Rails, React, PostgreSQL/MySQL, security, production-safety, and testing implications. State why an elevated-risk lens does not apply when that omission would otherwise be ambiguous.
+Record only task-relevant framework, frontend, database, security, production-safety, and testing implications. State why an elevated-risk lens does not apply when that omission would otherwise be ambiguous.
 
 ## Data / contracts
 

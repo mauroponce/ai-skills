@@ -1,6 +1,6 @@
 # Testing Playbook
 
-Follow the repository's actual frameworks and conventions (for example RSpec or Minitest; Jest, Vitest, or another frontend runner). Use the smallest test layer that gives confidence: model/unit, service, request/integration, component, interaction, system/browser, or end-to-end.
+Follow the repository's actual test frameworks and conventions. Use the smallest test layer that gives confidence: model/unit, service, request/integration, component, interaction, system/browser, or end-to-end.
 
 Cover meaningful behavior: happy path, important failures, authorization, state transitions, data invariants, and regressions. For concurrency/database work consider constraints, duplicate creation races, transactions, and idempotency. For frontend work test user-observable behavior instead of implementation details.
 

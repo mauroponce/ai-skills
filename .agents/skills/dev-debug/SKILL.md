@@ -9,7 +9,7 @@ Investigate what is broken, establish the strongest evidence-supported explanati
 
 ## Invocation contract
 
-The user only needs to describe the symptom and include any task-specific evidence. Use a preceding same-chat `dev-explore` map where relevant, but verify the implicated path and investigate the failure independently; exploration is never a prerequisite. Recover relevant repository, runtime, deployment, stack, and durable context internally. Do not require the user to request logs, git history, production safety, Rails/React/database analysis, or read-only behavior.
+The user only needs to describe the symptom and include any task-specific evidence. Use a preceding same-chat `dev-explore` map where relevant, but verify the implicated path and investigate the failure independently; exploration is never a prerequisite. Recover relevant repository, runtime, deployment, stack, and durable context internally. Do not require the user to request logs, git history, production safety, stack-specific analysis, or read-only behavior.
 
 ## Safety boundary
 
@@ -31,7 +31,7 @@ Do not modify source, commit, push, deploy, rollback, change configuration/envir
 
 Follow [workflow governance](../references/workflow-governance.md). Start with the symptom, scope/impact, active conversation diagnosis when present, relevant local instructions, architecture context and personal notes, target code path, recent diffs/deploy metadata, and available non-mutating observability evidence. Use progressive disclosure; do not scan the repository or every runtime category blindly.
 
-Read the [stack-aware engineering router](../references/engineering/README.md), detect the implicated stack/risk, and load only useful playbooks. For live/production diagnostics, load [runtime diagnostics](../references/engineering/runtime-diagnostics.md). A Rails query failure may need Rails, PostgreSQL, and production safety; a stuck React interaction may need React plus the implicated API path. Authentication, authorization, sessions, OAuth/OIDC, tokens, tenancy, or sensitive data activate security guidance. Jobs activate job/idempotency/deployment compatibility reasoning. Performance work uses timings, query counts/plans, traces, render behavior, and resource evidence rather than speculative optimization.
+Read the [engineering router](../references/engineering/README.md), detect the implicated stack/risk, and load only useful cross-cutting references. For live/production diagnostics, load [runtime diagnostics](../references/engineering/runtime-diagnostics.md). A query failure may require database behavior and production evidence; a stuck client interaction may require frontend and API evidence. Verify version-sensitive mechanisms against authoritative documentation. Authentication, authorization, sessions, OAuth/OIDC, tokens, tenancy, or sensitive data activate security guidance. Jobs activate job/idempotency/deployment compatibility reasoning. Performance work uses timings, query counts/plans, traces, render behavior, and resource evidence rather than speculative optimization.
 
 ## Diagnostic loop
 

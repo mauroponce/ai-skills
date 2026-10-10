@@ -9,7 +9,7 @@ Use this skill to build work that has already been sufficiently decided.
 
 ## Invocation contract
 
-The user can invoke this after planning, an immediately preceding `dev-debug` diagnosis, or a narrow `dev-rails-audit` finding without repeating details. Recover the active-chat or personal behavior context and plan when present, active diagnosis or selected `RAILS-###` findings from this chat, target code, and material implementation constraints internally.
+The user can invoke this after planning, an immediately preceding `dev-debug` diagnosis, or a narrow `dev-audit` finding without repeating details. Recover the active-chat or personal behavior context and plan when present, active diagnosis or selected `AUDIT-###` findings from this chat, target code, and material implementation constraints internally.
 
 The user's explicit instructions take precedence over workflow defaults in this skill.
 
@@ -19,7 +19,7 @@ This is an execution skill, not an interview phase. Consume confirmed decisions 
 
 Follow [workflow governance](../references/workflow-governance.md). This skill changes task-required project code, tests, migrations, configuration, and explicitly requested project docs. Track material progress or deviations in chat or a useful personal plan; never add repository workflow artifacts.
 
-Read the [stack-aware engineering router](../references/engineering/README.md) when implementation touches a selected technology or risk area, then load only the relevant playbooks. Follow the precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Do not reproduce a demonstrated dangerous convention.
+Read the [engineering router](../references/engineering/README.md) when implementation touches a technology or risk area, then load only relevant cross-cutting references and verify material version-specific behavior. Follow the precedence of correctness/security/data integrity, explicit initiative decisions, repository conventions, demonstrated architectural pressure, framework/database idioms, then general preference. Do not reproduce a demonstrated dangerous convention.
 
 ## Language policy
 
@@ -37,7 +37,7 @@ Start with:
 
 - active behavior contract in chat or personal notes;
 - active-chat or personal plan when present;
-- the immediately preceding `dev-debug` diagnosis or selected `dev-rails-audit` findings when intentionally chained in the same chat;
+- the immediately preceding `dev-debug` diagnosis or selected `dev-audit` findings when intentionally chained in the same chat;
 - actual target code/tests.
 
 Load local instructions, architecture/ADRs, and product/design sources only when they constrain the target change.
@@ -107,7 +107,7 @@ Address relevant concerns from the spec/plan, including when applicable:
 - logs/metrics/auditability;
 - accessibility and design-system compliance for UI code.
 
-Apply Rails, React, PostgreSQL/MySQL, security, production-safety, and testing guidance only when the target change activates it. In particular, do not rely on application validation alone for a concurrency-sensitive data invariant; do not introduce framework abstractions/dependencies unless existing primitives and repository patterns are insufficient; and surface material plan contradictions before inventing architecture.
+Use project evidence and the [engineering router](../references/engineering/README.md) to address framework, frontend, database, security, production-safety, and testing concerns only when the target change activates them. In particular, do not rely on application validation alone for a concurrency-sensitive data invariant; do not introduce framework abstractions/dependencies unless existing primitives and repository patterns are insufficient; and surface material plan contradictions before inventing architecture.
 
 ## RED FLAGS
 
